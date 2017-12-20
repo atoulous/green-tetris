@@ -1,60 +1,55 @@
-import fs  from 'fs'
-import debug from 'debug'
+import { Server } from 'http';
+import Express from 'express';
+import socketio from 'socket.io';
 
-const logerror = debug('tetris:error')
-  , loginfo = debug('tetris:info')
+import appConfig from './config/server';
+import logger from '../helpers/logger';
 
-const initApp = (app, params, cb) => {
-  const {host, port} = params
-  const handler = (req, res) => {
-    const file = req.url === '/bundle.js' ? '/../../build/bundle.js' : '/../../index.html'
-    fs.readFile(__dirname + file, (err, data) => {
-      if (err) {
-        logerror(err)
-        res.writeHead(500)
-        return res.end('Error loading index.html')
-      }
-      res.writeHead(200)
-      res.end(data)
-    })
-  }
+const app = new Express();
+const server = new Server(app);
 
-  app.on('request', handler)
+/**
+ * Start listening web sockets.
+ *
+ * @returns {void}
+ */
+function socketListen() {
+  const io = socketio(server);
 
-  app.listen({host, port}, () =>{
-    loginfo(`tetris listen on ${params.url}`)
-    cb()
-  })
-}
+  io.on('connection', (socket) => {
+    logger.info(`Socket connected: ${socket.id}`);
 
-const initEngine = io => {
-  io.on('connection', function(socket){
-    loginfo("Socket connected: " + socket.id)
     socket.on('action', (action) => {
-      if(action.type === 'server/ping'){
-        socket.emit('action', {type: 'pong'})
+      if (action.type === 'server/ping') {
+        socket.emit('action', { type: 'pong' })
       }
     })
   })
 }
 
-export function create(params){
-  const promise = new Promise( (resolve, reject) => {
-    const app = require('http').createServer()
-    initApp(app, params, () =>{
-      const io = require('socket.io')(app)
-      const stop = (cb) => {
-        io.close()
-        app.close( () => {
-          app.unref()
-        })
-        loginfo(`Engine stopped.`)
-        cb()
-      }
+/**
+ * Start the web app.
+ *
+ * @returns {void}
+ */
+export async function start() {
+  appConfig(app);
+  socketListen();
 
-      initEngine(io)
-      resolve({stop})
-    })
-  })
-  return promise
+  server.listen(app.get('port'));
+}
+
+/**
+ * Stop the web app gracefully.
+ *
+ * @returns {void}
+ */
+export async function stop() {
+  await new Promise((resolve, reject) => server.close(err => (err ? reject(err) : resolve())));
+}
+
+if (!module.parent) {
+  start()
+    .then(() => logger.info('✔ Server running on port', app.get('port')))
+    .catch(err => logger.error(err, '✘ An error happened'));
 }

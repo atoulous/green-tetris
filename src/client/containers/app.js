@@ -1,18 +1,15 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 
-
-const App = ({message}) => {
-  return (
+const App = ({ message }) => (
+  <div>
+    <span>Hello word</span>
     <span>{message}</span>
-  )
-}
+  </div>
+);
 
-const mapStateToProps = (state) => {
-  return {
-    message: state.message
-  }
-}
-export default connect(mapStateToProps, null)(App)
+const mapStateToProps = (state) => ({
+  message: state.message
+});
 
-
+export default connect(mapStateToProps, null)(App);
