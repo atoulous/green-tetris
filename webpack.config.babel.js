@@ -3,13 +3,13 @@ import webpack from 'webpack';
 import HappyPack from 'happypack';
 
 const NODE_MODULES = path.resolve(__dirname, 'node_modules');
-const CLIENT = path.resolve(__dirname, 'src', 'client');
+const CLIENT = path.resolve(__dirname, 'src/client');
 
 export default {
   devtool: 'eval',
   entry: [
     'babel-polyfill',
-    './src/client/routes.js'
+    path.join(CLIENT, 'index.js')
   ],
   output: {
     path: path.join(CLIENT, 'build'),

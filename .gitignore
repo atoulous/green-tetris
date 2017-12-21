@@ -58,4 +58,6 @@ typings/
 .env
 
 # IntelliJ IDEA
-.idea
+
+# build
+src/client/build
