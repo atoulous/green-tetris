@@ -9,10 +9,10 @@ export default {
   devtool: 'eval',
   entry: [
     'babel-polyfill',
-    './src/client/index.js'
+    './src/client/routes.js'
   ],
   output: {
-    path: path.join(CLIENT, 'assets/build'),
+    path: path.join(CLIENT, 'build'),
     filename: 'bundle.js',
     hotUpdateChunkFilename: 'hot/hot-update.js',
     hotUpdateMainFilename: 'hot/hot-update.json'

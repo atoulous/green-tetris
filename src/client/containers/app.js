@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 const App = ({ message }) => (
   <div>
-    <span>Hello word</span>
+    <span>Hello word !</span>
+    <br />
     <span>{message}</span>
   </div>
 );

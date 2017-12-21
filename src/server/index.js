@@ -1,31 +1,13 @@
 import { Server } from 'http';
 import Express from 'express';
-import socketio from 'socket.io';
 
-import appConfig from './config/server';
-import logger from '../helpers/logger';
+import appConfig from './config/app';
+import routesConfig from './config/routes';
+import logger from './helpers/logger';
+import socketio from './helpers/socketio';
 
 const app = new Express();
 const server = new Server(app);
-
-/**
- * Start listening web sockets.
- *
- * @returns {void}
- */
-function socketListen() {
-  const io = socketio(server);
-
-  io.on('connection', (socket) => {
-    logger.info(`Socket connected: ${socket.id}`);
-
-    socket.on('action', (action) => {
-      if (action.type === 'server/ping') {
-        socket.emit('action', { type: 'pong' })
-      }
-    })
-  })
-}
 
 /**
  * Start the web app.
@@ -34,7 +16,9 @@ function socketListen() {
  */
 export async function start() {
   appConfig(app);
-  socketListen();
+  routesConfig(app);
+
+  socketio.listen(server);
 
   server.listen(app.get('port'));
 }

@@ -1,16 +1,15 @@
 import Express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import helmet from 'helmet';
 import session from 'express-session';
+import bodyParser from 'body-parser';
 import moment from 'moment-timezone';
+import helmet from 'helmet';
+import path from 'path';
 
 import config from './index';
 
 moment.tz.setDefault(config.localization.timezone);
 
 const CLIENT = path.resolve(__dirname, '../..', 'client');
-const INDEX = path.resolve(__dirname, '../..', 'client', 'index.html');
 
 /**
  * App configuration.
@@ -21,13 +20,10 @@ const INDEX = path.resolve(__dirname, '../..', 'client', 'index.html');
 export default (app) => {
   app.set('port', config.port);
 
-  /** use ejs templates */
-  // app.set('view engine', 'ejs');
-  // app.set('views', CLIENT);
+  /** define client folder as static */
+  app.use(Express.static(path.resolve(CLIENT)));
 
-  /** define the folder that will be used for static assets */
-  app.use(Express.static(path.resolve(CLIENT, 'assets')));
-
+  /** middlewares */
   app.use(bodyParser.json({ limit: '5mb' }));
   app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
   app.use(helmet());
@@ -39,5 +35,4 @@ export default (app) => {
     cookie: { secure: false }
   }));
 
-  app.get('*', (req, res) => res.status(200).sendFile(INDEX));
 };

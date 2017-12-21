@@ -138,7 +138,7 @@ Thanks to the hook you can react to actions, just to check a new state after an 
 In our sample, we register a callback when `ALERT_POP` will be dispatched and check that `state.message`is right. Callback is called after reducers.
 
 
-#### server.js
+#### app.js
 
 Very similar to previous test, but offer to test server code involved in a client action. You can use this kind of solution to test a pipeline like `action -> fetch -> action -> reducer`. Here client / server communication is based on socket.io and we use a middleware inspired by [redux-socket.io](https://github.com/itaylor/redux-socket.io) to transparantly dispatch and receive socket.io messages. So our test covers  `action -> socket.emit -> server code -> client socket callback -> action -> reducer`. I do not know if it’s still a unit test, but it’s a useful solution to test.
 
@@ -209,14 +209,14 @@ $ npm run srv-dist
 > DEBUG=tetris:* babel src --out-dir dist
 
 src/client/actions/alert.js -> dist/client/actions/alert.js
-src/client/actions/server.js -> dist/client/actions/server.js
+src/client/actions/app.js -> dist/client/actions/app.js
 src/client/components/test.js -> dist/client/components/test.js
 src/client/containers/app.js -> dist/client/containers/app.js
-src/client/index.js -> dist/client/index.js
+src/client/routes.js -> dist/client/routes.js
 src/client/middleware/storeStateMiddleWare.js -> dist/client/middleware/storeStateMiddleWare.js
 src/client/reducers/alert.js -> dist/client/reducers/alert.js
-src/client/reducers/index.js -> dist/client/reducers/index.js
-src/server/index.js -> dist/server/index.js
+src/client/reducers/routes.js -> dist/client/reducers/routes.js
+src/server/routes.js -> dist/server/routes.js
 src/server/main.js -> dist/server/main.js
 
 $ npm run client-dist
