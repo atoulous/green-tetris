@@ -26,7 +26,8 @@
   },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "extends": "airbnb",
   "parser": "babel-eslint",
@@ -209,7 +210,7 @@
     "sort-vars": 0, //sort variables within the same declaration block
     "space-after-keywords": 0, //require a space after certain keywords (fixable)
     "space-before-blocks": [1, "always"], //require or disallow a space before blocks (fixable)
-    "space-before-function-paren": [1, "never"], //require or disallow a space before function opening parenthesis (fixable)
+    "space-before-function-paren": [0, "never"], //require or disallow a space before function opening parenthesis (fixable)
     "space-before-keywords": [0, "never"], //require a space before certain keywords (fixable)
     "space-in-parens": [1, "never"], //require or disallow spaces inside parentheses
     "space-infix-ops": 1, //require spaces around operators (fixable)

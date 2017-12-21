@@ -1,9 +1,9 @@
 import chai from "chai"
 import {startServer, configureStore} from './helpers/server'
-import rootReducer from '../src/client/reducers'
-import {ping} from '../src/client/actions/server'
+import rootReducer from '../../src/client/reducers/index'
+import {ping} from '../../src/client/actions/server'
 import io from 'socket.io-client'
-import params from '../params'
+import params from '../../params'
 
 chai.should()
 

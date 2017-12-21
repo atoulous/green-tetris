@@ -20,7 +20,7 @@ export async function start() {
 
   socketio.listen(server);
 
-  server.listen(app.get('port'));
+  await server.listen(app.get('port'));
 }
 
 /**

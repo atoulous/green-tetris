@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import * as server from '../../src/server/index';
+import * as server from '../../../src/server/index';
 
 export const startServer = (params, cb) => {
   server.create(params)

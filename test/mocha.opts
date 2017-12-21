@@ -1,3 +1,8 @@
---require chai
--R spec
---ui bdd
+--bail
+--timeout 10000
+--recursive
+--require babel-polyfill
+--require test/client.setup.js
+--require test/setup.js
+
+--compilers js:babel-core/register
