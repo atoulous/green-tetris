@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const App = ({ message }) => (
@@ -9,7 +10,15 @@ const App = ({ message }) => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
+App.propTypes = {
+  message: PropTypes.string
+};
+
+App.defaultProps = {
+  message: 'default message'
+};
+
+const mapStateToProps = state => ({
   message: state.message
 });
 

@@ -10,10 +10,11 @@
     "client-dev": "webpack -d --watch --colors --hot",
     "server-dist": "DEBUG=tetris:* babel src --out-dir dist",
     "client-dist": "NODE_ENV=production webpack --progress --colors",
-    "test": "mocha --require babel-core/register --reporter spec",
+    "test": "jest test",
     "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "debug": "^3.1.0",
     "ejs": "^2.5.7",
@@ -21,7 +22,9 @@
     "express-session": "^1.15.6",
     "helmet": "^3.9.0",
     "html": "^1.0.0",
+    "http-status-codes": "^1.3.0",
     "moment-timezone": "^0.5.14",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
@@ -51,7 +54,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "happypack": "^4.0.0",
-    "mocha": "^4.0.1",
+    "jest": "^22.1.4",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.0",
     "npm-run-all": "^4.1.2",
@@ -59,6 +62,7 @@
     "sass-loader": "^6.0.6",
     "sinon": "^4.1.3",
     "style-loader": "^0.19.1",
+    "supertest": "^3.0.0",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-dev-server": "^2.9.7",
@@ -68,5 +72,8 @@
     "exclude": [
       "build"
     ]
+  },
+  "jest": {
+    "transform": {}
   }
 }

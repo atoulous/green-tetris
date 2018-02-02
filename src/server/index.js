@@ -4,7 +4,7 @@ import Express from 'express';
 import appConfig from './config/app';
 import routesConfig from './config/routes';
 import logger from './helpers/logger';
-import socketio from './helpers/socketio';
+import * as socketio from './helpers/socketio';
 
 const app = new Express();
 const server = new Server(app);

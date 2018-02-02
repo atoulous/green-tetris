@@ -34,5 +34,4 @@ export default (app) => {
     saveUninitialized: true,
     cookie: { secure: false }
   }));
-
 };

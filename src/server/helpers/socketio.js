@@ -10,7 +10,7 @@ let io;
  * @param {object} server - the http server instance
  * @return {object} the io server instance
  */
-function listen(server) {
+export function listen(server) {
   io = socketio(server);
 
   io.on('connection', (socket) => {
@@ -18,9 +18,9 @@ function listen(server) {
 
     socket.on('action', (action) => {
       if (action.type === 'server/ping') {
-        socket.emit('action', { type: 'pong' })
+        socket.emit('action', { type: 'pong' });
       }
-    })
+    });
   });
 
   return io;
@@ -31,7 +31,7 @@ function listen(server) {
  *
  * @return {object} the io server instance
  */
-function getConnection() {
+export function getConnection() {
   return io;
 }
 
@@ -41,7 +41,7 @@ function getConnection() {
  * @param {Function} [cb] - the callback
  * @return {void}
  */
-function close(cb) {
+export function close(cb) {
   if (!io) {
     cb();
     return;
@@ -50,8 +50,3 @@ function close(cb) {
   io = null;
 }
 
-module.exports = {
-  listen,
-  close,
-  getConnection
-};

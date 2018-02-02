@@ -1,4 +1,4 @@
-export const storeStateMiddleWare = ({ getState }) => (next) => (action) => {
+export default ({ getState }) => next => (action) => {
   const returnValue = next(action);
   window.top.state = getState();
 
