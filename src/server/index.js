@@ -6,8 +6,8 @@ import routesConfig from './config/routes';
 import logger from './helpers/logger';
 import * as socketio from './helpers/socketio';
 
-const app = new Express();
-const server = new Server(app);
+export const app = new Express();
+export const server = new Server(app);
 
 /**
  * Start the web app.
@@ -17,10 +17,14 @@ const server = new Server(app);
 export async function start() {
   appConfig(app);
   routesConfig(app);
-
   socketio.listen(server);
 
-  await server.listen(app.get('port'));
+  try {
+    await server.listen(app.get('port'));
+    logger.info('✔ Server running on port', app.get('port'));
+  } catch (err) {
+    logger.error(err, '✘ An error happened at start');
+  }
 }
 
 /**
@@ -29,11 +33,16 @@ export async function start() {
  * @returns {void}
  */
 export async function stop() {
-  await new Promise((resolve, reject) => server.close(err => (err ? reject(err) : resolve())));
+  socketio.close();
+
+  try {
+    await server.close();
+    logger.info('✔ Server stopped');
+  } catch (err) {
+    logger.error(err, '✘ An error happened at stop');
+  }
 }
 
 if (!module.parent) {
-  start()
-    .then(() => logger.info('✔ Server running on port', app.get('port')))
-    .catch(err => logger.error(err, '✘ An error happened'));
+  start();
 }

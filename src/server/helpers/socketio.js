@@ -41,12 +41,10 @@ export function getConnection() {
  * @param {Function} [cb] - the callback
  * @return {void}
  */
-export function close(cb) {
-  if (!io) {
-    cb();
-    return;
+export function close() {
+  if (io) {
+    io.close();
+    io = null;
   }
-  io.close(cb);
-  io = null;
 }
 

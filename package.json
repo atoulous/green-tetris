@@ -10,7 +10,7 @@
     "client-dev": "webpack -d --watch --colors --hot",
     "server-dist": "DEBUG=tetris:* babel src --out-dir dist",
     "client-dist": "NODE_ENV=production webpack --progress --colors",
-    "test": "jest test",
+    "test": "jest test/server",
     "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "
   },
   "dependencies": {
@@ -35,8 +35,9 @@
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
-    "babel-core": "^6.7.7",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.3",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-__coverage__": "^11.0.0",
     "babel-polyfill": "^6.26.0",
@@ -54,6 +55,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "happypack": "^4.0.0",
+    "http_server": "^1.0.12",
     "jest": "^22.1.4",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.0",
@@ -72,8 +74,5 @@
     "exclude": [
       "build"
     ]
-  },
-  "jest": {
-    "transform": {}
   }
 }
