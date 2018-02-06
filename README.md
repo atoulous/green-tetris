@@ -1,4 +1,6 @@
-# Red Tetris
+# Red Tetris 
+
+[redpellicans/42 subject](https://cdn.intra.42.fr/pdf/pdf/951/red_tetris.fr.pdf)
 
 Networking tetris made with React/Redux and Express
 

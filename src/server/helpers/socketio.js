@@ -46,6 +46,6 @@ export function close(cb) {
     io.close();
     io = null;
   }
-  cb();
+  if (cb) cb();
 }
 
