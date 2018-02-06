@@ -2,7 +2,7 @@ import socketio from 'socket.io';
 
 import logger from './logger';
 
-let io;
+let io = null;
 
 /**
  * Start listening to a server instance.
@@ -41,10 +41,11 @@ export function getConnection() {
  * @param {Function} [cb] - the callback
  * @return {void}
  */
-export function close() {
+export function close(cb) {
   if (io) {
     io.close();
     io = null;
   }
+  cb();
 }
 
