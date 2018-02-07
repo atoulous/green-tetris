@@ -20,7 +20,7 @@ export async function start() {
   socketio.listen(server);
 
   try {
-    await server.listen(app.get('port'));
+    await new Promise((resolve, reject) => server.listen(app.get('port'), err => (err ? reject(err) : resolve())));
     logger.info('✔ Server running on port', app.get('port'));
   } catch (err) {
     logger.error(err, '✘ An error happened at start');
@@ -36,7 +36,7 @@ export async function stop() {
   socketio.close();
 
   try {
-    await server.close();
+    await new Promise((resolve, reject) => server.close(err => (err ? reject(err) : resolve())));
     logger.info('✔ Server stopped');
   } catch (err) {
     logger.error(err, '✘ An error happened at stop');

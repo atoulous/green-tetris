@@ -11,7 +11,7 @@
     "server-dist": "DEBUG=tetris:* babel src --out-dir dist",
     "client-dist": "NODE_ENV=production webpack --progress --colors",
     "test": "jest test/server",
-    "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "
+    "coverage": "jest test/server --coverage"
   },
   "dependencies": {
     "axios": "^0.17.1",
