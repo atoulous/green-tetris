@@ -1,5 +1,2 @@
-import { combineReducers } from 'redux';
-import alert from './alert';
-import alert2 from './alert2';
-
-export default alert;
+export { default as RTCConnectionReducer } from './RTCConnection';
+export { default as alertReducer } from './alert';

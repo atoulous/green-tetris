@@ -1,25 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const App = ({ message }) => (
-  <div>
-    <span>Hello word !</span>
-    <br />
-    <span>{message}</span>
-  </div>
-);
+const App = (props) => {
+  let { message, RTCConns } = props;
 
-App.propTypes = {
-  message: PropTypes.string
+  const sendDataToChannel = (RTCConns) => {
+    RTCConns.forEach(RTCConn => {
+      RTCConn.conn.send('niktamer');
+    });
+  };
+  return (
+
+    <div>
+      <span>{message}</span>
+      <button onClick={() => sendDataToChannel(RTCConns)}>
+        clique ici
+      </button>
+      <span>BOJNOUR THIBO</span>
+    </div>
+  )
 };
 
-App.defaultProps = {
-  message: 'default message'
-};
-
-const mapStateToProps = state => ({
-  message: state.message
+const mapStateToProps = (state) => ({
+  message: state.message,
+  RTCConns: state.RTCConns
 });
 
 export default connect(mapStateToProps, null)(App);
