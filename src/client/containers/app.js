@@ -1,29 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import GridContainer from '../containers/gridContainer';
+import StartDisplay from '../containers/startDisplay';
 
-const App = (props) => {
-  let { message, RTCConns } = props;
+const App = () => (
+  <div>
+    <GridContainer />
+    <StartDisplay />
+  </div>
+)
 
-  const sendDataToChannel = (RTCConns) => {
-    RTCConns.forEach(RTCConn => {
-      RTCConn.conn.send('niktamer');
-    });
-  };
-  return (
-
-    <div>
-      <span>{message}</span>
-      <button onClick={() => sendDataToChannel(RTCConns)}>
-        clique ici
-      </button>
-      <span>BOJNOUR THIBO</span>
-    </div>
-  )
-};
-
-const mapStateToProps = (state) => ({
-  message: state.message,
-  RTCConns: state.RTCConns
-});
-
-export default connect(mapStateToProps, null)(App);
+export default App;
