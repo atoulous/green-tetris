@@ -61,3 +61,4 @@ typings/
 
 # build
 src/client/build
+.DS_Store
