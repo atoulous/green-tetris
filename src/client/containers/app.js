@@ -7,6 +7,6 @@ const App = () => (
     <GridContainer />
     <StartDisplay />
   </div>
-)
+);
 
 export default App;

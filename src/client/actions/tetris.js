@@ -1,15 +1,14 @@
-import { isPiecePlacable } from "../helpers.js";
-import { pieces } from "../constants.js"
+import { isPiecePlacable } from '../helpers';
 
 
 // Constants
-export const DRAW_PIECE = "DRAW_PIECE";
-export const ERASE_PIECE = "ERASE_PIECE";
-export const SET_PIECE = "SET_PIECE";
-export const TOGGLE_PLAY = "TOGGLE_PLAY";
-export const SET_NEW_PIECE = "SET_NEW_PIECE";
-export const REFRESH_GRID_WITHOUT_CURRENT = "REFRESH_GRID_WITHOUT_CURRENT";
-export const INCREASE_SPEED = "INCREASE_SPEED";
+export const DRAW_PIECE = 'DRAW_PIECE';
+export const ERASE_PIECE = 'ERASE_PIECE';
+export const SET_PIECE = 'SET_PIECE';
+export const TOGGLE_PLAY = 'TOGGLE_PLAY';
+export const SET_NEW_PIECE = 'SET_NEW_PIECE';
+export const REFRESH_GRID_WITHOUT_CURRENT = 'REFRESH_GRID_WITHOUT_CURRENT';
+export const INCREASE_SPEED = 'INCREASE_SPEED';
 
 // Action objects
 export function refreshGridWithoutCurrent() {
@@ -29,10 +28,43 @@ export function erasePiece() {
 }
 
 export function setPiece(piece) {
-  return { type: SET_PIECE, piece: piece };
+  return { type: SET_PIECE, piece };
 }
 
-//Action thunk functions
+// Action thunk functions
+
+/*
+** Will drop piece from one x.
+** Draw new grid if needed or set a new piece if current piece can't be placed.
+** We'll compare to grid without current piece to avoid overlay.
+*/
+export function dropPiece() {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    // State is resume. Stop dropping.
+    if (!state.isPlaying) return;
+
+    const { currentPiece, gridWithoutCurrent } = state.tetris;
+    const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
+    const interval = state.tetris.speed;
+
+    // Enough space to place piece.
+    if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
+      dispatch(erasePiece());
+      dispatch(setPiece(nextPiece));
+      dispatch(drawPiece());
+      setTimeout(() => {
+        dispatch(dropPiece());
+      }, interval);
+    } else {
+      // We draw last piece.
+      dispatch(drawPiece());
+      // We set a new piece.
+      dispatch(setNewPiece());
+    }
+  };
+}
 
 
 /*
@@ -45,13 +77,11 @@ export function setNewPiece() {
     // Save grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
     const state = getState();
-    const currentPiece = state.tetris.currentPiece;
-    // We'll compare to grid without current piece to avoid overlay.
-    const gridWithoutCurrent = state.tetris.gridWithoutCurrent;
+    const { currentPiece, gridWithoutCurrent } = state.tetris;
     const interval = state.tetris.speed;
     // Not enough space to place piece. Game is lost.
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
-      console.log("PERDU");
+      console.log('PERDU');
     } else {
       dispatch(drawPiece());
       setTimeout(() => {
@@ -77,44 +107,11 @@ export function togglePlay() {
   };
 }
 
-/*
-** Will drop piece from one x. 
-** Draw new grid if needed or set a new piece if current piece can't be placed.
-** We'll compare to grid without current piece to avoid overlay.
-*/
-export function dropPiece() {
-  return (dispatch, getState) => {
-    const state = getState();
-
-    // State is resume. Stop dropping.
-    if (!state.isPlaying) return;
-
-    const currentPiece = state.tetris.currentPiece;
-    const gridWithoutCurrent = state.tetris.gridWithoutCurrent;
-    const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
-    const interval = state.tetris.speed;
-
-    // Enough space to place piece.
-    if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-      dispatch(erasePiece());
-      dispatch(setPiece(nextPiece));
-      dispatch(drawPiece());
-      console.log("date:", Date.now());
-      setTimeout(() => {
-        dispatch(dropPiece());
-      }, interval);
-    } else {
-      // We draw last piece.
-      dispatch(drawPiece());
-      // We set a new piece.
-      dispatch(setNewPiece());
-    }
-  };
-}
+/* wtf
 
 function tetris(dispatch, getState) {
   const state = getState();
-  let currentPiece = state.tetris.currentPiece;
+  const { currentPiece } = state.tetris;
 
   // If no currentPiece set. We set and draw one.
   if (!currentPiece) {
@@ -122,15 +119,16 @@ function tetris(dispatch, getState) {
   }
 }
 
-/*
-** Will move piece position to left. Re-draw.
 */
+
+/**
+ * Will move piece position to left. Re-draw.
+ */
 export function movePieceLeft() {
   return (dispatch, getState) => {
-    console.log("logPieceLeft");
+    console.log('logPieceLeft');
     const state = getState();
-    const currentPiece = state.tetris.currentPiece;
-    const gridWithoutCurrent = state.tetris.gridWithoutCurrent;
+    const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = { ...currentPiece, ...{ y: currentPiece.y - 1 } };
 
     // Enough space to place piece.
@@ -147,10 +145,9 @@ export function movePieceLeft() {
 */
 export function movePieceRight() {
   return (dispatch, getState) => {
-    console.log("logPieceRight");
+    console.log('logPieceRight');
     const state = getState();
-    const currentPiece = state.tetris.currentPiece;
-    const gridWithoutCurrent = state.tetris.gridWithoutCurrent;
+    const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = { ...currentPiece, ...{ y: currentPiece.y + 1 } };
 
     // Enough space to place piece.
@@ -168,8 +165,7 @@ export function movePieceRight() {
 export function rotatePiece() {
   return (dispatch, getState) => {
     const state = getState();
-    const currentPiece = state.tetris.currentPiece;
-    const gridWithoutCurrent = state.tetris.gridWithoutCurrent;
+    const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = {
       ...currentPiece,
       ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 }
@@ -187,8 +183,7 @@ export function rotatePiece() {
 export function moveDown() {
   return (dispatch, getState) => {
     const state = getState();
-    const currentPiece = state.tetris.currentPiece;
-    const gridWithoutCurrent = state.tetris.gridWithoutCurrent;
+    const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = {
       ...currentPiece,
       ...{ x: currentPiece.x + 1 }

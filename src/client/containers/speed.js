@@ -1,28 +1,22 @@
-import React from "react";
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { increaseSpeed } from "../actions/tetris.js";
-import { connect } from "react-redux";
+import { increaseSpeed as increaseSpeedAction } from '../actions/tetris';
 
-let Speed = props => {
-  console.log("render");
+const Speed = (props) => {
+  console.log('render');
   const { speed, increaseSpeed } = props;
   return <button onClick={increaseSpeed}>{speed}</button>;
 };
 
-const mapStateToProps = state => {
-  return {
-    speed: state.tetris.speed
-  };
-};
+const mapStateToProps = state => ({
+  speed: state.tetris.speed
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    increaseSpeed: () => {
-      dispatch(increaseSpeed());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  increaseSpeed: () => {
+    dispatch(increaseSpeedAction());
+  }
+});
 
-Speed = connect(mapStateToProps, mapDispatchToProps)(Speed);
-
-export default Speed;
+export default connect(mapStateToProps, mapDispatchToProps)(Speed);

@@ -1,7 +1,9 @@
 /*
-** Will apply func on every block of piece. 
+** Will apply func on every block of piece.
 */
-export function forEachBlockInPiece({x, y, t, dir}, func) {
+export function forEachBlockInPiece({
+  x, y, t, dir
+}, func) {
   let row = 0;
   let column = 0;
   const piece = t.blocks[dir];
@@ -21,18 +23,13 @@ export function forEachBlockInPiece({x, y, t, dir}, func) {
 export function isPiecePlacable(piece, grid) {
   let result = true;
   forEachBlockInPiece(piece, (x, y) => {
-    if (!result || !grid[x] || !grid[x][y] || grid[x][y].fill === true) 
-      result = false;
+    if (!result || !grid[x] || !grid[x][y] || grid[x][y].fill === true) { result = false; }
   });
   return result;
 }
 /*
 ** Make a full copy of the grid.
-*/ 
+*/
 export function copyGrid(grid) {
-  return grid.map(row => {
-    return row.map(cell => {
-      return {...cell};
-    })
-  })
+  return grid.map(row => row.map(cell => ({ ...cell })));
 }

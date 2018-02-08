@@ -5,7 +5,7 @@ import ReactDom from 'react-dom';
 
 // Redux
 import { Provider } from 'react-redux';
-import store from './store/store.js';
+import store from './store';
 
 import App from './containers/app';
 

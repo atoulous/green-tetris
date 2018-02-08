@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import tetris from './tetris';
 import connexion from './connexion';
 
@@ -6,6 +8,4 @@ const finalReducer = combineReducers({
   connexion,
 });
 
-export tetris;
-export connexion;
 export default finalReducer;

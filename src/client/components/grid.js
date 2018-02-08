@@ -1,22 +1,19 @@
-import React from "react";
-import Row from "./row.js";
-import Alert from "./alert.js";
-import { keys } from "../constants.js";
+import React from 'react';
+import Row from './row';
+import { keys } from '../constants';
 
 const Grid = ({
   grid,
-  currentPiece,
-  isPlaying,
   movePieceLeft,
   movePieceRight,
   rotatePiece
 }) => {
   const gridStyle = {
-    position: "relative",
-    textAlign: "center"
+    position: 'relative',
+    textAlign: 'center'
   };
 
-  const move = e => {
+  const move = (e) => {
     switch (e.keyCode) {
       case keys.LEFT:
         movePieceLeft();
@@ -35,9 +32,7 @@ const Grid = ({
 
   return (
     <div style={gridStyle} onKeyDown={move} tabIndex="0">
-      {grid.map((e, i) => {
-        return <Row key={i} row={e} />;
-      })}
+      {grid.map((e, i) => <Row key={i} row={e} />)}
     </div>
   );
 };

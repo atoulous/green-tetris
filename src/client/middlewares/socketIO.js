@@ -1,19 +1,21 @@
-export default const socketIoMiddleWare = socket => ({ dispatch, getState }) => {
+import { RTCConnection } from '../actions/connexion';
+
+export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
-    socket.on('peer', newPeer => {
+    socket.on('peer', (newPeer) => {
       if (newPeer.id !== getState().connexion.peer.id) {
         const conn = getState().connexion.peer.connect(newPeer.id);
         conn.on('open', () => {
-          dispatch(RTCConnectionAction(conn));
-        })
+          dispatch(RTCConnection(conn));
+        });
       }
-    })
+    });
   }
-  return next => action => {
+  return next => (action) => {
     if (socket && action.type && action.type.indexOf('server/') === 0) {
       socket.emit('action', action);
     }
     return next(action);
-  }
+  };
 };

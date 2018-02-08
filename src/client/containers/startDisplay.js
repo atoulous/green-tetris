@@ -1,26 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import { connect } from "react-redux";
-import { togglePlay } from "../actions/tetris.js";
+import { connect } from 'react-redux';
+import { togglePlay } from '../actions/tetris';
 
-let StartDisplay = ({ isPlaying, start }) => {
-  return <button onClick={start}>{isPlaying ? "Stop" : "Start"}</button>;
-};
+let StartDisplay = ({ isPlaying, start }) => <button onClick={start}>{isPlaying ? 'Stop' : 'Start'}</button>;
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    start: () => {
-      dispatch(togglePlay());
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  start: () => {
+    dispatch(togglePlay());
+  }
+});
 
-const mapStateToProps = state => {
-  return {
-    isPlaying: state.isPlaying
-  };
-};
+const mapStateToProps = state => ({
+  isPlaying: state.isPlaying
+});
 
-export default (StartDisplay = connect(mapStateToProps, mapDispatchToProps)(
-  StartDisplay
-));
+export default (StartDisplay = connect(mapStateToProps, mapDispatchToProps)(StartDisplay));

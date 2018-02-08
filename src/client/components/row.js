@@ -1,17 +1,18 @@
-import React from "react";
-import Cell from "./cell.js";
+import React from 'react';
+import Cell from './cell';
 
 const Row = ({ row }) => {
   const rowStyle = {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
   };
   return (
     <div style={rowStyle}>
-      {" "}
-      {row.map((e, i) => {
-        return <Cell key={i} fill={e.fill} color={e.color} />;
-      })}
+      {' '}
+      {
+        //eslint-disable next-line
+        row.map((e, i) => <Cell key={i} fill={e.fill} color={e.color} />)
+      }
     </div>
   );
 };

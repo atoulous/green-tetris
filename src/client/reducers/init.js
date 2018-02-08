@@ -1,10 +1,11 @@
-import { params, pieces, heightSize, widthSize } from "../constants.js";
 import io from 'socket.io-client';
 import Peer from 'peerjs';
 
+import { params, pieces, heightSize, widthSize } from '../constants';
+
 /*
 ** Tetris
-*/ 
+*/
 
 // Init array of arrays with all cells as objects.
 function initGrid() {
@@ -24,8 +25,8 @@ function initGrid() {
 // Init new bag of pieces for randomization.
 export function initBag() {
   const bag = [];
-  Object.keys(pieces).forEach(piece => {
-    let pieceCopy = Object.assign({}, pieces[piece]);
+  Object.keys(pieces).forEach((piece) => {
+    const pieceCopy = Object.assign({}, pieces[piece]);
     bag.push(pieceCopy);
     bag.push(pieceCopy);
   });
@@ -47,12 +48,12 @@ export const tetris = {
 
 // Init Socket and webRTC.
 const socket = io(params.server.url);
-const peer = new Peer({key: 'om3fcnn6mllkgldi'});
+const peer = new Peer({ key: 'om3fcnn6mllkgldi' });
 
 
 export const connexion = {
-  socket: socket,
-  peer: peer,
+  socket,
+  peer,
   rtc: [],
 };
 

@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
-const Alert = props => {
+const Alert = (props) => {
   const { message, hidden } = props;
 
   const containerStyle = {
-    display: "flex",
-    justifyContent: "center"
+    display: 'flex',
+    justifyContent: 'center'
   };
   const alertStyle = {
-    position: "relative",
-    bottom: "150px",
-    width: "100px",
-    height: "60px",
-    backgroundColor: "white",
-    border: "solid grey 1px",
-    lineHeight: "60px"
+    position: 'relative',
+    bottom: '150px',
+    width: '100px',
+    height: '60px',
+    backgroundColor: 'white',
+    border: 'solid grey 1px',
+    lineHeight: '60px'
   };
 
   return (
