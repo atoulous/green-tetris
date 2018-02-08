@@ -1,6 +1,6 @@
 import { params } from '../constants';
 
-export default const peerRTCMiddleware = (peer) => ({ dispatch, getState }) => {
+export default (peer) => ({ dispatch, getState }) => {
 
   peer.on('open', (id) => {
     console.log('My peer ID is: ' + id, getState());

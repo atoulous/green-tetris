@@ -1,4 +1,6 @@
-import finalReducer from '../reducers/index';
-import applyMiddleware from '../middlewares/index';
+import { createStore } from 'redux';
 
-export default const store = createStore(finalReducer, applyMiddleware);
+import { finalReducer } from '../reducers/';
+import applyMiddleware from '../middlewares';
+
+export default createStore(finalReducer, applyMiddleware);
