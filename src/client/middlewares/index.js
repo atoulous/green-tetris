@@ -11,9 +11,9 @@ import storeState from './storeState';
 
 export default applyMiddleware(
   thunk,
-  peerRTC,
-  RTCConn,
-  socketIO,
+  // peerRTC,
+  // RTCConn,
+  // socketIO,
   storeState,
   logger
 );

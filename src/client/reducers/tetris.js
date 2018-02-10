@@ -1,9 +1,9 @@
-import { DRAW_PIECE, ERASE_PIECE, SET_PIECE, TOGGLE_PLAY, SET_NEW_PIECE, REFRESH_GRID_WITHOUT_CURRENT, INCREASE_SPEED } from '../actions';
+import  actions from '../actions';
 import { tetris as initialState, initBag } from './init';
 import { forEachBlockInPiece, copyGrid } from '../helpers';
 import { getRandomPieceFromBag, sliceBagFromIndex } from './utils';
 
-
+const { DRAW_PIECE, ERASE_PIECE, SET_PIECE, TOGGLE_PLAY, SET_NEW_PIECE, REFRESH_GRID_WITHOUT_CURRENT, INCREASE_SPEED } = actions;
 /*
 ** On/off
 */
@@ -49,6 +49,7 @@ function setPiece(state, piece) {
 function setNewPiece(state) {
   const currentBag = state.bag.length ? state.bag : initBag();
   const indexPiece = getRandomPieceFromBag(currentBag);
+  console.log(indexPiece);
   const piece = {
     t: currentBag[indexPiece],
     dir: 0,

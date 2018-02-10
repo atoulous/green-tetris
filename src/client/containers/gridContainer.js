@@ -1,9 +1,6 @@
 import { connect } from 'react-redux';
 import {
-  movePieceLeft,
-  movePieceRight,
-  rotatePiece,
-  movePieceDown
+  move
 } from '../actions/tetris';
 import Grid from '../components/grid';
 
@@ -14,18 +11,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  movePieceLeft: () => {
-    dispatch(movePieceLeft());
+  move: (e) => {
+    dispatch(move(e));
   },
-  movePieceRight: () => {
-    dispatch(movePieceRight());
-  },
-  rotatePiece: () => {
-    dispatch(rotatePiece());
-  },
-  movePieceDown: () => {
-    dispatch(movePieceDown());
-  }
 });
 
 const GridContainer = connect(mapStateToProps, mapDispatchToProps)(Grid);

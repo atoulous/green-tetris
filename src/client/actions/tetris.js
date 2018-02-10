@@ -1,4 +1,5 @@
 import { isPiecePlacable } from '../helpers';
+import { keys } from '../constants';
 
 
 // Constants
@@ -43,7 +44,7 @@ export function dropPiece() {
     const state = getState();
 
     // State is resume. Stop dropping.
-    if (!state.isPlaying) return;
+    if (!state.tetris.isPlaying) return;
 
     const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
@@ -124,9 +125,9 @@ function tetris(dispatch, getState) {
 /**
  * Will move piece position to left. Re-draw.
  */
-export function movePieceLeft() {
-  return (dispatch, getState) => {
-    console.log('logPieceLeft');
+function movePieceLeft(dispatch, getState) {
+    
+    console.log('movePieceLeft');
     const state = getState();
     const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = { ...currentPiece, ...{ y: currentPiece.y - 1 } };
@@ -137,15 +138,14 @@ export function movePieceLeft() {
       dispatch(setPiece(nextPiece));
       dispatch(drawPiece());
     }
-  };
 }
 
 /*
 ** Will move piece position to right. Re-draw.
 */
-export function movePieceRight() {
-  return (dispatch, getState) => {
-    console.log('logPieceRight');
+function movePieceRight(dispatch, getState) {
+
+    console.log('movePieceRight');
     const state = getState();
     const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = { ...currentPiece, ...{ y: currentPiece.y + 1 } };
@@ -156,14 +156,13 @@ export function movePieceRight() {
       dispatch(setPiece(nextPiece));
       dispatch(drawPiece());
     }
-  };
 }
 
 /*
 ** Will rotate piece. Re-draw.
 */
-export function rotatePiece() {
-  return (dispatch, getState) => {
+function rotatePiece(dispatch, getState) {
+    console.log('rotatePice');
     const state = getState();
     const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = {
@@ -177,11 +176,11 @@ export function rotatePiece() {
       dispatch(setPiece(nextPiece));
       dispatch(drawPiece());
     }
-  };
 }
 
-export function moveDown() {
-  return (dispatch, getState) => {
+function movePieceDown(dispatch, getState) {
+    
+    console.log('movePieceDown');
     const state = getState();
     const { currentPiece, gridWithoutCurrent } = state.tetris;
     const nextPiece = {
@@ -195,5 +194,23 @@ export function moveDown() {
       dispatch(setPiece(nextPiece));
       dispatch(drawPiece());
     }
-  };
+}
+
+export function move(event) {
+  return (dispatch, getState) => {
+    switch (event.keyCode) {
+      case keys.LEFT:
+        movePieceLeft(dispatch, getState);
+        break;
+      case keys.RIGHT:
+        movePieceRight(dispatch, getState);
+        break;
+      case keys.UP:
+        rotatePiece(dispatch, getState);
+        break;
+      case keys.DOWN:
+        movePieceDown(dispatch, getState)
+        break;
+    }
+  }
 }
