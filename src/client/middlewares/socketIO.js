@@ -4,8 +4,8 @@ export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
     socket.on('peer', (newPeer) => {
-      if (newPeer.id !== getState().connexion.peer.id) {
-        const conn = getState().connexion.peer.connect(newPeer.id);
+      if (newPeer.id !== getState().peer.id) {
+        const conn = getState().peer.connect(newPeer.id);
         conn.on('open', () => {
           dispatch(RTCConnection(conn));
         });

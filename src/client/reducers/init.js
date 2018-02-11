@@ -60,7 +60,7 @@ const peer = new Peer({ key: 'om3fcnn6mllkgldi' });
 export const initialState = {
   socket,
   peer,
-  rtcConns: [],
+  RTCConns: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
   currentPiece: null,
