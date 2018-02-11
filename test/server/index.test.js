@@ -4,7 +4,7 @@ import request from 'supertest';
 
 import { server, app, start, stop } from '../../src/server';
 import logger from '../../src/server/helpers/logger';
-import * as socketio from '../../src/server/helpers/socketio';
+import * as socketio from '../../src/server/webSocket/socketManager';
 
 describe('server/app', () => {
   const sandbox = sinon.sandbox.create();

@@ -1,12 +1,10 @@
-
 import io from 'socket.io-client';
 import Peer from 'peerjs';
 
 // React
+
 import React from 'react';
 import ReactDom from 'react-dom';
-
-// Redux
 import { Provider } from 'react-redux';
 
 // Import package middlewares
