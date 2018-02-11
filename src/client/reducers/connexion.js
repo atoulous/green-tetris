@@ -1,11 +1,8 @@
 
 export function rtcConnexion(state, action) {
   const conn = action.data;
-  console.log('prepare to crash');
-  const RTCConns = state.rtc.length > 0 ?
-    [{ isListened: false, conn }, ...state.rtc] :
-    [{ isListened: false, conn }];
-  return { ...state, rtc: RTCConns};
+  console.log('new conn received --', conn);
+  return { ...state };
 }
 
 export function rtcMessage(state) {

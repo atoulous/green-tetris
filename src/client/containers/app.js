@@ -6,11 +6,9 @@ import StartDisplay from '../containers/startDisplay';
 
 
 const RTCConn = (props) => {
-  console.log('props are -----', props);
   let { RTCConns } = props;
 
   const sendDataToChannel = (RTCConns) => {
-    console.log('prepare to error ', RTCConns);
     RTCConns.forEach(RTCConn => {
       RTCConn.conn.send('niktamer');
     });
@@ -28,7 +26,6 @@ const RTCConn = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log('state cur --', state);
   return ({
     RTCConns: state.RTCConns
   });

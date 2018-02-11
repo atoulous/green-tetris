@@ -17,9 +17,7 @@ class Game {
   }
   broadcast(io, subject, data) {
     this.players.forEach((player) => {
-      console.log('sending msg to player --', player.socket, subject, data);
       io.to(player.socket).emit(subject, data);
-      io.to(player.socket).emit('game', 'oooo');
     });
   }
 }
