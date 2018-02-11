@@ -1,7 +1,7 @@
 import { Server } from 'http';
 import Express from 'express';
 
-import * as socketio from '../../../src/server/helpers/socketio';
+import * as socketio from '../../../src/server/webSocket/socketManager';
 
 describe('server/helpers/socketio', () => {
   describe('#listen', () => {

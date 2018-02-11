@@ -4,7 +4,7 @@ import Express from 'express';
 import appConfig from './config/app';
 import routesConfig from './config/routes';
 import logger from './helpers/logger';
-import * as socketio from './helpers/socketio';
+import * as webSocket from './webSocket/socketManager';
 
 export const app = new Express();
 export const server = new Server(app);
@@ -17,7 +17,7 @@ export const server = new Server(app);
 export async function start() {
   appConfig(app);
   routesConfig(app);
-  socketio.listen(server);
+  webSocket.listen(server);
 
   try {
     await new Promise((resolve, reject) => server.listen(app.get('port'), err => (err ? reject(err) : resolve())));
@@ -33,7 +33,7 @@ export async function start() {
  * @returns {void}
  */
 export async function stop() {
-  socketio.close();
+  webSocket.close();
 
   try {
     await new Promise((resolve, reject) => server.close(err => (err ? reject(err) : resolve())));
