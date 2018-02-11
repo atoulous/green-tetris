@@ -1,4 +1,4 @@
-import  actions from '../actions';
+import actions from '../actions';
 import { tetris as initialState, initBag } from './init';
 import { forEachBlockInPiece, copyGrid } from '../helpers';
 import { getRandomPieceFromBag, sliceBagFromIndex } from './utils';
