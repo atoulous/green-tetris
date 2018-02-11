@@ -3,7 +3,8 @@ import { RTCConnection } from '../actions/connexion';
 export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
-    socket.on('peer', (newPeer) => {
+    socket.on('game', (newPeer) => {
+      console.log('peer received --', newPeer);
       if (newPeer.id !== getState().peer.id) {
         const conn = getState().peer.connect(newPeer.id);
         conn.on('open', () => {

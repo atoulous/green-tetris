@@ -1,4 +1,5 @@
-import { initRow, initBag, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
+import { initBag } from './init';
+import { forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
 
 /*
 ** On/off
@@ -66,18 +67,5 @@ export function refreshGridWithoutCurrent(state) {
 */
 export function increaseSpeed(state) {
   return Object.assign(state, { speed: state.speed - 100 });
-}
-/*
-** Replace full rows by empty rows on top of the grid.
-*/
-export function deleteRows(state, rowsToDelete) {
-  const { grid } = state;
-  let newGrid = grid;
-
-  rowsToDelete.forEach((row) => {
-    newGrid = sliceBagFromIndex(newGrid, row);
-    newGrid.unshift(initRow());
-  });
-  return Object.assign({}, state, { grid: newGrid });
 }
 

@@ -1,4 +1,4 @@
-import { initRow, initBag, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
+import { initBag, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
 
 /*
 ** On/off

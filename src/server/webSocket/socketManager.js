@@ -1,8 +1,12 @@
 import socketio from 'socket.io';
 
+import Game from '../classes/Game';
+import Player from '../classes/Player';
 import logger from '../helpers/logger';
 
 let io = null;
+
+let allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
 
 /**
  * handle game socket input
@@ -11,10 +15,23 @@ let io = null;
  * @return {void}
  */
 export async function handleGameSocket(data) {
-  if (data.path === '/new') {
-    // do new game
-
-    // io.sockets.to().emit('', );
+  const { path } = data;
+  switch (path) {
+    case '/join': {
+      io.emit('game', 'ooo');
+      console.log('new peer joined the game', data);
+      const { room, id, socket } = data;
+      const curGame = allGames.find(game => (game.room === room));
+      console.log('curgramee -', curGame);
+      curGame.broadcast(io, 'game', { path: '/join', id });
+      if (curGame) {
+        curGame.players.push(new Player({ socket, id }));
+      }
+      break;
+    }
+    default:
+      console.log('default triggered');
+      break;
   }
 }
 

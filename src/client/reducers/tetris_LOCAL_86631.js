@@ -1,4 +1,5 @@
-import { initRow, initBag, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
+import { initBag, initRow} from './init';
+import { forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
 
 /*
 ** On/off
@@ -74,10 +75,10 @@ export function deleteRows(state, rowsToDelete) {
   const { grid } = state;
   let newGrid = grid;
 
-  rowsToDelete.forEach((row) => {
+  rowsToDelete.forEach(row => {
     newGrid = sliceBagFromIndex(newGrid, row);
     newGrid.unshift(initRow());
-  });
-  return Object.assign({}, state, { grid: newGrid });
+  }); 
+  return Object.assign({}, state, { grid: newGrid});
 }
 

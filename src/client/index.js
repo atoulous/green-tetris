@@ -20,6 +20,7 @@ import RTCConn from './middlewares/RTCConn';
 import socketIO from './middlewares/socketIO';
 import storeState from './middlewares/storeState';
 
+import { initBag, initGrid } from './helpers';
 import { params } from './constants';
 
 import reducer from './reducers';
@@ -28,11 +29,22 @@ import reducer from './reducers';
 const socket = io(params.server.url);
 const peer = new Peer({ key: 'om3fcnn6mllkgldi' });
 
+export const initialState = {
+  socket,
+  peer,
+  RTCConns: [],
+  gridWithoutCurrent: initGrid(),
+  grid: initGrid(),
+  currentPiece: null,
+  bag: initBag(),
+  speed: 1000,
+};
+
 const middlewares = applyMiddleware(
   thunk,
+  socketIO(socket),
   peerRTC(peer),
   RTCConn,
-  socketIO(socket),
   storeState,
   logger
 );

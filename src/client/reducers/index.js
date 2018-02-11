@@ -11,7 +11,7 @@ import {
 } from './tetris';
 
 import { rtcConnexion, rtcMessage } from './connexion';
-import { initialState } from './init';
+import { initialState } from '../index';
 
 const {
   DRAW_PIECE,
