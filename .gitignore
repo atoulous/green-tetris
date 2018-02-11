@@ -64,3 +64,4 @@ typings/
 src/client/build
 
 .DS_Store
+.idea/workspace.xml

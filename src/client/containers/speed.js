@@ -10,7 +10,7 @@ const Speed = (props) => {
 };
 
 const mapStateToProps = state => ({
-  speed: state.tetris.speed
+  speed: state.speed
 });
 
 const mapDispatchToProps = dispatch => ({
