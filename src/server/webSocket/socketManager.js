@@ -21,7 +21,7 @@ export async function handleGameSocket(data) {
       console.log('new peer joined the game', data);
       const { room, id, socket } = data;
       const curGame = allGames.find(game => (game.room === room));
-      curGame.broadcast(io, 'game', { path: '/join', id });
+      curGame.broadcast(io, '/game', { path: '/join', id });
       if (curGame) {
         curGame.players.push(new Player({ socket, id }));
       }
