@@ -33,6 +33,7 @@ export function initBag() {
   return bag;
 }
 
+/*
 export const tetris = {
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
@@ -41,6 +42,12 @@ export const tetris = {
   speed: 1000,
 };
 
+export const connexion = {
+  socket,
+  peer,
+  rtc: [],
+};
+*/
 
 /*
 ** Connexion
@@ -50,10 +57,13 @@ export const tetris = {
 const socket = io(params.server.url);
 const peer = new Peer({ key: 'om3fcnn6mllkgldi' });
 
-
-export const connexion = {
+export const initialState = {
   socket,
   peer,
-  rtc: [],
+  RTCConns: [],
+  gridWithoutCurrent: initGrid(),
+  grid: initGrid(),
+  currentPiece: null,
+  bag: initBag(),
+  speed: 1000,
 };
-

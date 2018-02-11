@@ -5,8 +5,8 @@ import {
 import Grid from '../components/grid';
 
 const mapStateToProps = state => ({
-  grid: state.tetris.grid,
-  currentPiece: state.tetris.currentPiece,
+  grid: state.grid,
+  currentPiece: state.currentPiece,
   isPlaying: state.isPlaying
 });
 
