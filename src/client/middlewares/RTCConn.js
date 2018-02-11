@@ -1,11 +1,11 @@
-import { params } from '../constants';
+import { RTCConnectionMessage } from '../actions/connexion';
 
-export default ({ dispatch, getState }) => next => action => {
+export default ({ dispatch }) => next => (action) => {
   if (action.type === 'RTC_CONN') {
-    let channel = action.data;
+    const channel = action.data;
     channel.on('data', (data) => {
-      dispatch(RTCConnectionMessageAction(data));
-    })
+      dispatch(RTCConnectionMessage(data));
+    });
   }
   return next(action);
 };
