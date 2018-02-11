@@ -1,8 +1,9 @@
 
 export function rtcConnexion(state, action) {
   const conn = action.data;
-  console.log('new conn received --', conn);
-  return { ...state };
+  let { RTCConns } = state;
+  RTCConns.push({ conn });
+  return { ...state, RTCConns };
 }
 
 export function rtcMessage(state) {

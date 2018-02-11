@@ -18,7 +18,6 @@ export async function handleGameSocket(data) {
   const { path } = data;
   switch (path) {
     case '/join': {
-      io.emit('game', 'ooo');
       console.log('new peer joined the game', data);
       const { room, id, socket } = data;
       const curGame = allGames.find(game => (game.room === room));

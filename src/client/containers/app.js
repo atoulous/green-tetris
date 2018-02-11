@@ -7,6 +7,7 @@ import StartDisplay from '../containers/startDisplay';
 
 const RTCConn = (props) => {
   let { RTCConns } = props;
+  console.log('conns are ---', RTCConns);
 
   const sendDataToChannel = (RTCConns) => {
     RTCConns.forEach(RTCConn => {
