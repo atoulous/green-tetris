@@ -1,3 +1,5 @@
+import { pieces, heightSize, widthSize } from './constants';
+
 /*
 ** Will apply func on every block of piece.
 */
@@ -47,3 +49,30 @@ export function sliceBagFromIndex(bag, index) {
   if (bag.length === 1) return [];
   return [...bag.slice(0, index), ...bag.slice(index + 1)];
 }
+
+// Init array of arrays with all cells as objects.
+export function initGrid() {
+  const grid = [];
+  for (let i = 0; i < heightSize; i++) {
+    const row = [];
+    for (let j = 0; j < widthSize; j++) {
+      row.push({
+        fill: false
+      });
+    }
+    grid.push(row);
+  }
+  return grid;
+}
+
+// Init new bag of pieces for randomization.
+export function initBag() {
+  const bag = [];
+  Object.keys(pieces).forEach((piece) => {
+    const pieceCopy = Object.assign({}, pieces[piece]);
+    bag.push(pieceCopy);
+    bag.push(pieceCopy);
+  });
+  return bag;
+}
+
