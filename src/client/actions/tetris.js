@@ -10,6 +10,7 @@ export const TOGGLE_PLAY = 'TOGGLE_PLAY';
 export const SET_NEW_PIECE = 'SET_NEW_PIECE';
 export const REFRESH_GRID_WITHOUT_CURRENT = 'REFRESH_GRID_WITHOUT_CURRENT';
 export const INCREASE_SPEED = 'INCREASE_SPEED';
+export const DELETE_ROWS = 'DELETE_ROWS';
 
 // Action objects
 export function refreshGridWithoutCurrent() {
@@ -32,6 +33,10 @@ export function setPiece(piece) {
   return { type: SET_PIECE, piece };
 }
 
+export function deleteRows(rowsToDelete) {
+  return { type: DELETE_ROWS, rowsToDelete};
+}
+
 // Action thunk functions
 
 /*
@@ -46,7 +51,7 @@ export function dropPiece() {
     // State is resume. Stop dropping.
     if (!state.isPlaying) return;
 
-    const { currentPiece, gridWithoutCurrent } = state;
+    const { currentPiece, gridWithoutCurrent, grid } = state;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
     const interval = state.speed;
 
@@ -61,6 +66,8 @@ export function dropPiece() {
     } else {
       // We draw last piece.
       dispatch(drawPiece());
+      let rowsToDelete = checkRowsToDelete(grid, currentPiece.x);
+      if (rowsToDelete.length) dispatch(deleteRows(rowsToDelete));
       // We set a new piece.
       dispatch(setNewPiece());
     }
@@ -194,6 +201,27 @@ function movePieceDown(dispatch, getState) {
     dispatch(setPiece(nextPiece));
     dispatch(drawPiece());
   }
+}
+
+function checkRowsToDelete(grid, x) {
+
+  const rowsToDelete = [];
+
+  for (let i = 0; i < 4; i++) {
+    let index = x + i;
+    let row = grid[index];
+    if (!row) break;
+    let isAllCellsFilled = true;
+    row.forEach(cell => {
+      if(cell.fill == false) {
+        isAllCellsFilled = false;
+      }
+    })
+    if (isAllCellsFilled) {
+      rowsToDelete.push(index);
+    }
+  }
+  return rowsToDelete;
 }
 
 export function move(event) {
