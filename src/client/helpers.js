@@ -76,3 +76,45 @@ export function initBag() {
   return bag;
 }
 
+/*
+** Check if row is full
+*/
+export function isRowFull(row) {
+  return is(row, (cell) => (cell.fill === true));
+}
+
+export function isRowDestroyable(row) {
+  return is(row, (cell) => (cell.isDestroyable === true));
+}
+
+export function isRowFullAndDestroyable(row) {
+  return is(row, (cell) => (cell.isDestroyable === true && cell.fill === true));
+}
+
+export function reverseForeach(array, f) {
+  if (array.length == 0) return;
+  for (let i = array.length - 1; i >= 0; i--) {
+    f(array[i], i);
+  }
+}
+
+export function checkRowsToDelete(grid, x) {
+  const rowsToDelete = [];
+  for (let i = 0; i < 4; i++) {
+    let index = x + i;
+    let row = grid[index];
+    if (row && isRowFullAndDestroyable(row))
+      rowsToDelete.push(index);
+  }
+  return rowsToDelete;
+}
+
+function is(array, f) {
+  let is = true;
+  array.forEach((e, i) => {
+    if (!f(e)) is = false;
+  });
+  return is;
+}
+
+

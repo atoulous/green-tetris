@@ -18,11 +18,13 @@ function initGrid() {
 }
 
 
-export function initRow() {
+export function initRow(isFilled = false) {
   const row = [];
   for (let j = 0; j < widthSize; j++) {
     row.push({
-      fill: false
+      fill: isFilled,
+      color: 'grey',
+      isDestroyable: !isFilled,
     });
   }
   return row;

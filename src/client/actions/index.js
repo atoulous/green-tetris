@@ -14,6 +14,7 @@ import {
   movePieceRight,
   moveDown,
   rotatePiece,
+  addRow,
   DRAW_PIECE,
   ERASE_PIECE,
   SET_PIECE,
@@ -22,6 +23,7 @@ import {
   REFRESH_GRID_WITHOUT_CURRENT,
   INCREASE_SPEED,
   DELETE_ROWS,
+  ADD_ROW,
 } from './tetris';
 
 export default {
@@ -35,6 +37,7 @@ export default {
   REFRESH_GRID_WITHOUT_CURRENT,
   INCREASE_SPEED,
   DELETE_ROWS,
+  ADD_ROW,  
   RTCConnection,
   RTCConnectionMessage,
   refreshGridWithoutCurrent,
@@ -49,4 +52,5 @@ export default {
   movePieceRight,
   moveDown,
   rotatePiece,
+  addRow,
 };

@@ -1,4 +1,4 @@
-import { initRow, initBag, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
+import { initRow, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex, isRowFull, reverseForeach } from '../helpers';
 
 /*
 ** On/off
@@ -79,5 +79,24 @@ export function deleteRows(state, rowsToDelete) {
     newGrid.unshift(initRow());
   });
   return Object.assign({}, state, { grid: newGrid });
+}
+/*
+** Add full row to the bottom of the grid.
+*/
+export function addRow(state) {
+  const { grid, gridWithoutCurrent } = state;
+  
+  function addRowToGrid(grid) {
+    let newGrid = copyGrid(grid);
+    let added = false;
+    reverseForeach(grid, (row, index) => {
+      if (!added && !isRowFull(row)) {
+        newGrid[index] = initRow(true);
+        added = true;
+      }
+    })
+    return newGrid;
+  }
+  return Object.assign({}, state, { grid: addRowToGrid(grid), gridWithoutCurrent: addRowToGrid(gridWithoutCurrent) });
 }
 

@@ -11,6 +11,7 @@ export const SET_NEW_PIECE = 'SET_NEW_PIECE';
 export const REFRESH_GRID_WITHOUT_CURRENT = 'REFRESH_GRID_WITHOUT_CURRENT';
 export const INCREASE_SPEED = 'INCREASE_SPEED';
 export const DELETE_ROWS = 'DELETE_ROWS';
+export const ADD_ROW = 'ADD_ROW';
 
 // Action objects
 export function refreshGridWithoutCurrent() {
@@ -35,6 +36,10 @@ export function setPiece(piece) {
 
 export function deleteRows(rowsToDelete) {
   return { type: DELETE_ROWS, rowsToDelete};
+}
+
+export function addRow() {
+  return { type: ADD_ROW };
 }
 
 // Action thunk functions
@@ -64,8 +69,6 @@ export function dropPiece() {
         dispatch(dropPiece());
       }, interval);
     } else {
-      // We draw last piece.
-      dispatch(drawPiece());
       let rowsToDelete = checkRowsToDelete(grid, currentPiece.x);
       if (rowsToDelete.length) dispatch(deleteRows(rowsToDelete));
       // We set a new piece.
@@ -115,115 +118,9 @@ export function togglePlay() {
   };
 }
 
-/* wtf
-
-function tetris(dispatch, getState) {
-  const state = getState();
-  const { currentPiece } = state;
-
-  // If no currentPiece set. We set and draw one.
-  if (!currentPiece) {
-    dispatch(setNewPiece());
-  }
-}
-
-*/
-
-/**
- * Will move piece position to left. Re-draw.
- */
-function movePieceLeft(dispatch, getState) {
-
-  console.log('movePieceLeft');
-  const state = getState();
-  const { currentPiece, gridWithoutCurrent } = state;
-  const nextPiece = { ...currentPiece, ...{ y: currentPiece.y - 1 } };
-
-  // Enough space to place piece.
-  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-    dispatch(erasePiece());
-    dispatch(setPiece(nextPiece));
-    dispatch(drawPiece());
-  }
-}
-
 /*
-** Will move piece position to right. Re-draw.
+** Map key events to actions.
 */
-function movePieceRight(dispatch, getState) {
-
-  console.log('movePieceRight');
-  const state = getState();
-  const { currentPiece, gridWithoutCurrent } = state;
-  const nextPiece = { ...currentPiece, ...{ y: currentPiece.y + 1 } };
-
-  // Enough space to place piece.
-  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-    dispatch(erasePiece());
-    dispatch(setPiece(nextPiece));
-    dispatch(drawPiece());
-  }
-}
-
-/*
-** Will rotate piece. Re-draw.
-*/
-function rotatePiece(dispatch, getState) {
-  console.log('rotatePice');
-  const state = getState();
-  const { currentPiece, gridWithoutCurrent } = state;
-  const nextPiece = {
-    ...currentPiece,
-    ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 }
-  };
-
-  // Enough space to place piece.
-  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-    dispatch(erasePiece());
-    dispatch(setPiece(nextPiece));
-    dispatch(drawPiece());
-  }
-}
-
-function movePieceDown(dispatch, getState) {
-
-  console.log('movePieceDown');
-  const state = getState();
-  const { currentPiece, gridWithoutCurrent } = state;
-  const nextPiece = {
-    ...currentPiece,
-    ...{ x: currentPiece.x + 1 }
-  };
-
-  // Enough space to place piece.
-  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-    dispatch(erasePiece());
-    dispatch(setPiece(nextPiece));
-    dispatch(drawPiece());
-  }
-}
-
-function checkRowsToDelete(grid, x) {
-
-  const rowsToDelete = [];
-
-  for (let i = 0; i < 4; i++) {
-    let index = x + i;
-    let row = grid[index];
-    if (!row) break;
-    let isAllCellsFilled = true;
-    row.forEach(cell => {
-      if(cell.fill == false) {
-        isAllCellsFilled = false;
-      }
-    })
-    if (isAllCellsFilled) {
-      rowsToDelete.push(index);
-    }
-  }
-  return rowsToDelete;
-}
-
 export function move(event) {
   return (dispatch, getState) => {
     switch (event.keyCode) {
@@ -239,6 +136,71 @@ export function move(event) {
       case keys.DOWN:
         movePieceDown(dispatch, getState);
         break;
+      case keys.SPACE: 
+        stickPieceDown(dispatch, getState);
+        break;
     }
   };
 }
+
+function movePieceLeft(dispatch, getState) {
+  console.log('movePieceLeft');
+  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ y: currentPiece.y - 1 }}));
+}
+function movePieceRight(dispatch, getState) {
+  console.log('movePieceRight');
+  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ y: currentPiece.y + 1 }}));
+}
+function rotatePiece(dispatch, getState) {
+  console.log('rotatePice');
+  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 }}));
+}
+function movePieceDown(dispatch, getState) {
+  console.log('movePieceDown');
+  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ x: currentPiece.x + 1 }}));
+}
+// Will move piece to the lowest posible position.
+function stickPieceDown(dispatch, getState) {
+  console.log("stickPieceDown");
+  const state = getState();
+  const { currentPiece, gridWithoutCurrent } = state;
+
+  function tryNextPiece(piece, gridWithoutCurrent) {
+
+    const nextPiece = {
+      ...piece,
+      ...{ x: piece.x + 1 }
+    };
+
+    if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
+      tryNextPiece(nextPiece, gridWithoutCurrent);
+    } else {
+      dispatch(erasePiece());
+      dispatch(setPiece(piece));
+      dispatch(drawPiece());
+    } 
+  }
+  tryNextPiece(currentPiece, gridWithoutCurrent);
+}
+
+/*
+** Utils
+*/
+
+
+/*
+** Draw next piece position as a response to key events.
+*/
+function drawWithNextPiece(dispatch, getState, getNextPiece) {
+  const state = getState();
+  const { currentPiece, gridWithoutCurrent } = state;
+  const nextPiece = getNextPiece(currentPiece);
+
+  // Enough space to place piece.
+  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
+    dispatch(erasePiece());
+    dispatch(setPiece(nextPiece));
+    dispatch(drawPiece());
+  }
+}
+
