@@ -21,6 +21,7 @@ import {
   SET_NEW_PIECE,
   REFRESH_GRID_WITHOUT_CURRENT,
   INCREASE_SPEED,
+  DELETE_ROWS,
 } from './tetris';
 
 export default {
@@ -33,6 +34,7 @@ export default {
   SET_NEW_PIECE,
   REFRESH_GRID_WITHOUT_CURRENT,
   INCREASE_SPEED,
+  DELETE_ROWS,
   RTCConnection,
   RTCConnectionMessage,
   refreshGridWithoutCurrent,

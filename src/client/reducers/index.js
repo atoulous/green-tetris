@@ -6,7 +6,8 @@ import {
   increaseSpeed,
   refreshGridWithoutCurrent,
   setNewPiece,
-  setPiece
+  setPiece,
+  deleteRows,
 } from './tetris';
 
 import { rtcConnexion, rtcMessage } from './connexion';
@@ -20,6 +21,8 @@ const {
   SET_NEW_PIECE,
   REFRESH_GRID_WITHOUT_CURRENT,
   INCREASE_SPEED,
+  DELETE_ROWS,
+
   RTC_CONN,
   RTC_MESSAGE,
 } = actions;
@@ -43,6 +46,8 @@ export default function reducer(state = initialState, action) {
       return increaseSpeed(state);
     case TOGGLE_PLAY:
       return togglePlay(state);
+    case DELETE_ROWS:
+      return deleteRows(state, action.rowsToDelete);
 
     case RTC_CONN:
       return rtcConnexion(state, action);

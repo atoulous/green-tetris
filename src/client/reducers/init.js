@@ -11,15 +11,21 @@ import { params, pieces, heightSize, widthSize } from '../constants';
 function initGrid() {
   const grid = [];
   for (let i = 0; i < heightSize; i++) {
-    const row = [];
-    for (let j = 0; j < widthSize; j++) {
-      row.push({
-        fill: false
-      });
-    }
+    let row = initRow();
     grid.push(row);
   }
   return grid;
+}
+
+
+export function initRow() {
+  const row = [];
+  for (let j = 0; j < widthSize; j++) {
+    row.push({
+      fill: false
+    });
+  }
+  return row;
 }
 
 // Init new bag of pieces for randomization.
