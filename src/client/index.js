@@ -20,7 +20,7 @@ import RTCConn from './middlewares/RTCConn';
 import socketIO from './middlewares/socketIO';
 import storeState from './middlewares/storeState';
 
-import { initBag, initGrid } from './helpers';
+import { initBag, initGrid, initSpectrum } from './helpers';
 import { params } from './constants';
 
 import reducer from './reducers';
@@ -38,6 +38,7 @@ export const initialState = {
   currentPiece: null,
   bag: initBag(),
   speed: 1000,
+  spectrum: initSpectrum(),
 };
 
 const middlewares = applyMiddleware(

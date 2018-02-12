@@ -1,6 +1,7 @@
 import { 
   isPiecePlacable, 
   checkRowsToDelete,
+  getSpectrum,
 } from '../helpers';
 import { keys } from '../constants';
 
@@ -15,6 +16,7 @@ export const REFRESH_GRID_WITHOUT_CURRENT = 'REFRESH_GRID_WITHOUT_CURRENT';
 export const INCREASE_SPEED = 'INCREASE_SPEED';
 export const DELETE_ROWS = 'DELETE_ROWS';
 export const ADD_ROW = 'ADD_ROW';
+export const UPDATE_SPECTRUM = 'UPDATE_SPECTRUM';
 
 // Action objects
 export function refreshGridWithoutCurrent() {
@@ -43,6 +45,10 @@ export function deleteRows(rowsToDelete) {
 
 export function addRow() {
   return { type: ADD_ROW };
+}
+
+export function updateSpectrum(grid) {
+  return { type: UPDATE_SPECTRUM, grid};
 }
 
 // Action thunk functions
@@ -97,6 +103,7 @@ export function setNewPiece() {
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
       console.log('PERDU');
     } else {
+      console.log("SPECTRUM", getSpectrum(gridWithoutCurrent));
       dispatch(drawPiece());
       setTimeout(() => {
         dispatch(dropPiece());
