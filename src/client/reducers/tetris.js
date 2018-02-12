@@ -1,4 +1,13 @@
-import { initRow, forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex, isRowFull, reverseForeach } from '../helpers';
+import {
+  checkRowsToDelete,
+  initRow,
+  initBag,
+  forEachBlockInPiece,
+  copyGrid,
+  getRandomPieceFromBag,
+  sliceBagFromIndex,
+  isRowFull, reverseForeach 
+} from '../helpers';
 
 /*
 ** On/off

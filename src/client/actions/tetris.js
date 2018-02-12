@@ -1,4 +1,7 @@
-import { isPiecePlacable } from '../helpers';
+import { 
+  isPiecePlacable, 
+  checkRowsToDelete,
+} from '../helpers';
 import { keys } from '../constants';
 
 

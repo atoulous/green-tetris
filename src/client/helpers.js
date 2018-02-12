@@ -54,12 +54,7 @@ export function sliceBagFromIndex(bag, index) {
 export function initGrid() {
   const grid = [];
   for (let i = 0; i < heightSize; i++) {
-    const row = [];
-    for (let j = 0; j < widthSize; j++) {
-      row.push({
-        fill: false
-      });
-    }
+    let row = initRow();
     grid.push(row);
   }
   return grid;
@@ -74,6 +69,18 @@ export function initBag() {
     bag.push(pieceCopy);
   });
   return bag;
+}
+
+export function initRow(isFilled = false) {
+    const row = [];
+  for (let j = 0; j < widthSize; j++) {
+    row.push({
+      fill: isFilled,
+      color: 'grey',
+      isDestroyable: !isFilled,
+    });
+  }
+  return row;
 }
 
 /*
