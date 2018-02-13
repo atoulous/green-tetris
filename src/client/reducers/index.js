@@ -14,7 +14,24 @@ import {
 } from './tetris';
 
 import { rtcConnexion, rtcMessage } from './connexion';
-import { initialState } from '../index';
+
+import * as webSocket from '../helpers/webSocket';
+import * as webRTC from '../helpers/webRTC';
+import { initBag, initGrid } from '../helpers';
+
+const socket = webSocket.getClient();
+const peer = webRTC.getPeer({ key: 'om3fcnn6mllkgldi' });
+
+const initialState = {
+  socket,
+  peer,
+  RTCConns: [],
+  gridWithoutCurrent: initGrid(),
+  grid: initGrid(),
+  currentPiece: null,
+  bag: initBag(),
+  speed: 1000,
+};
 
 const {
   DRAW_PIECE,

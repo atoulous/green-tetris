@@ -4,11 +4,11 @@ import RTCTest from '../containers/RTCTest';
 import TetrisView from './tetris-view';
 
 
-const App = () => (
+const Home = () => (
   <div>
     <TetrisView />
     <RTCTest />
   </div>
 );
 
-export default App;
+export default Home;
