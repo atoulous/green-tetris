@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import store from './store/index';
 import App from './components/App';
 
-ReactDom.render(
+
+const Root = () => (
   <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('tetris')
+    <MuiThemeProvider>
+      <App />
+    </MuiThemeProvider>
+  </Provider>
+);
+
+
+ReactDom.render(
+  <Root />
+  , document.getElementById('tetris')
 );

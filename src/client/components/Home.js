@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RTCTest from '../containers/RTCTest';
-import TetrisView from './tetris-view';
+import TetrisView from '../containers/TetrisView';
 
 
 const Home = () => (
