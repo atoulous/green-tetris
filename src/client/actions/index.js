@@ -15,6 +15,7 @@ import {
   moveDown,
   rotatePiece,
   addRow,
+  updateScore,
   DRAW_PIECE,
   ERASE_PIECE,
   SET_PIECE,
@@ -24,6 +25,8 @@ import {
   INCREASE_SPEED,
   DELETE_ROWS,
   ADD_ROW,
+  UPDATE_SPECTRUM,
+  UPDATE_SCORE,
 } from './tetris';
 
 export default {
@@ -37,7 +40,9 @@ export default {
   REFRESH_GRID_WITHOUT_CURRENT,
   INCREASE_SPEED,
   DELETE_ROWS,
-  ADD_ROW,  
+  ADD_ROW,
+  UPDATE_SPECTRUM,
+  UPDATE_SCORE,  
   RTCConnection,
   RTCConnectionMessage,
   refreshGridWithoutCurrent,
@@ -53,4 +58,5 @@ export default {
   moveDown,
   rotatePiece,
   addRow,
+  updateScore,
 };

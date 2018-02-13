@@ -16,6 +16,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const GridContainer = connect(mapStateToProps, mapDispatchToProps)(Grid);
-
-export default GridContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(Grid);

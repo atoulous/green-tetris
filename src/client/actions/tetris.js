@@ -17,6 +17,7 @@ export const INCREASE_SPEED = 'INCREASE_SPEED';
 export const DELETE_ROWS = 'DELETE_ROWS';
 export const ADD_ROW = 'ADD_ROW';
 export const UPDATE_SPECTRUM = 'UPDATE_SPECTRUM';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 // Action objects
 export function refreshGridWithoutCurrent() {
@@ -48,7 +49,11 @@ export function addRow() {
 }
 
 export function updateSpectrum(grid) {
-  return { type: UPDATE_SPECTRUM, grid};
+  return { type: UPDATE_SPECTRUM, grid };
+}
+
+export function updateScore(score) {
+    return { type: UPDATE_SCORE, score };
 }
 
 // Action thunk functions
@@ -79,7 +84,10 @@ export function dropPiece() {
       }, interval);
     } else {
       let rowsToDelete = checkRowsToDelete(grid, currentPiece.x);
-      if (rowsToDelete.length) dispatch(deleteRows(rowsToDelete));
+      if (rowsToDelete.length) {
+        dispatch(updateScore(10));
+        dispatch(deleteRows(rowsToDelete));
+      }
       // We set a new piece.
       dispatch(setNewPiece());
     }
@@ -103,7 +111,7 @@ export function setNewPiece() {
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
       console.log('PERDU');
     } else {
-      console.log("SPECTRUM", getSpectrum(gridWithoutCurrent));
+      dispatch(updateSpectrum(gridWithoutCurrent));
       dispatch(drawPiece());
       setTimeout(() => {
         dispatch(dropPiece());

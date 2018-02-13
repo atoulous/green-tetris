@@ -6,7 +6,9 @@ import {
   copyGrid,
   getRandomPieceFromBag,
   sliceBagFromIndex,
-  isRowFull, reverseForeach 
+  isRowFull, 
+  reverseForeach,
+  getSpectrum,
 } from '../helpers';
 
 /*
@@ -108,4 +110,15 @@ export function addRow(state) {
   }
   return Object.assign({}, state, { grid: addRowToGrid(grid), gridWithoutCurrent: addRowToGrid(gridWithoutCurrent) });
 }
-
+/*
+** Update spectrum from grid.
+*/
+export function updateSpectrum(state, grid) {
+  return Object.assign({}, state, {spectrum: getSpectrum(grid)});
+}
+/*
+** Add value to player socre.
+*/
+export function updateScore(state, score) {
+  return Object.assign({}, state, {score: state.score + score});
+}

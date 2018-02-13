@@ -9,6 +9,8 @@ import {
   setPiece,
   deleteRows,
   addRow,
+  updateSpectrum,
+  updateScore,
 } from './tetris';
 
 import { rtcConnexion, rtcMessage } from './connexion';
@@ -24,6 +26,8 @@ const {
   INCREASE_SPEED,
   DELETE_ROWS,
   ADD_ROW,
+  UPDATE_SPECTRUM,
+  UPDATE_SCORE,
 
   RTC_CONN,
   RTC_MESSAGE,
@@ -52,6 +56,10 @@ export default function reducer(state = initialState, action) {
       return deleteRows(state, action.rowsToDelete);
     case ADD_ROW:
       return addRow(state);
+    case UPDATE_SPECTRUM:
+      return updateSpectrum(state, action.grid);
+    case UPDATE_SCORE: 
+      return updateScore(state, action.score);
 
     case RTC_CONN:
       return rtcConnexion(state, action);
