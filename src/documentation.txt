@@ -13,7 +13,7 @@ ds webSocket, la var allGames sert pour les tests, il faudra la gérer autrement
 
 A faire Pour moi :
 
-le container app.js est agrémenté d'un RTCConn pour l'exemple, le faire plus propre
+le container Home.js est agrémenté d'un RTCConn pour l'exemple, le faire plus propre
 
 je vais implémenter un système de gestions des actions cote front
 de facon a ce que ce soit consistant avec le back
