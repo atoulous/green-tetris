@@ -31,6 +31,9 @@ const initialState = {
   currentPiece: null,
   bag: initBag(),
   speed: 1000,
+  spectrum: initSpectrum(),
+  score: 0,
+  players: [{name: 'Me', id: 0,  score: 0, spectrum: initSpectrum()}],
 };
 
 const {
