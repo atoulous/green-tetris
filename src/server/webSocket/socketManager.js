@@ -6,7 +6,7 @@ import logger from '../helpers/logger';
 
 let io = null;
 
-let allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
+const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
 
 /**
  * handle game socket input
@@ -20,10 +20,10 @@ export async function handleGameSocket(data) {
     case '/join': {
       console.log('new peer joined the game', data);
       const { room, id, socket } = data;
-      const curGame = allGames.find(game => (game.room === room));
-      curGame.broadcast(io, '/game', { path: '/join', id });
-      if (curGame) {
-        curGame.players.push(new Player({ socket, id }));
+      const currrentGame = allGames.find(game => (game.room === room));
+      if (currrentGame) {
+        currrentGame.broadcast(io, '/game', { path: '/join', id });
+        currrentGame.players.push(new Player({ socket, id }));
       }
       break;
     }

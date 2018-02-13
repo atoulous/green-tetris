@@ -20,12 +20,3 @@ export const keys = {
   DOWN: 40,
   SPACE: 32,
 };
-
-
-export const params = {
-  server: {
-    host: '0.0.0.0',
-    port: 3000,
-    get url() { return `http://${this.host}:${this.port}`; },
-  },
-};
