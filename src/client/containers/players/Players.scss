@@ -1,7 +1,14 @@
 .players {
+  margin-left: 15px;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  width: 50%;
-  align-items: start;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  width:30%;
+  justify-content: start;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.players-title {
+  margin-bottom: 20px;
 }

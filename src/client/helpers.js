@@ -51,10 +51,10 @@ export function sliceBagFromIndex(bag, index) {
 }
 
 // Init array of arrays with all cells as objects.
-export  function initGrid() {
+export function initGrid(height = heightSize, width = widthSize) {
   const grid = [];
-  for (let i = 0; i < heightSize; i++) {
-    let row = initRow();
+  for (let i = 0; i < height; i++) {
+    const row = initRow(false, width);
     grid.push(row);
   }
   return grid;
@@ -71,9 +71,9 @@ export function initBag() {
   return bag;
 }
 
-export function initRow(isFilled = false) {
-    const row = [];
-  for (let j = 0; j < widthSize; j++) {
+export function initRow(isFilled = false, width = widthSize) {
+  const row = [];
+  for (let j = 0; j < width; j++) {
     row.push({
       fill: isFilled,
       color: 'grey',
@@ -85,7 +85,7 @@ export function initRow(isFilled = false) {
 
 export function initSpectrum() {
   const spectrum = [];
-  for(let i = 0; i < widthSize; i++) {
+  for (let i = 0; i < widthSize; i++) {
     spectrum.push(heightSize);
   }
   return spectrum;
@@ -95,15 +95,15 @@ export function initSpectrum() {
 ** Check if row is full
 */
 export function isRowFull(row) {
-  return is(row, (cell) => (cell.fill === true));
+  return is(row, cell => (cell.fill === true));
 }
 
 export function isRowDestroyable(row) {
-  return is(row, (cell) => (cell.isDestroyable === true));
+  return is(row, cell => (cell.isDestroyable === true));
 }
 
 export function isRowFullAndDestroyable(row) {
-  return is(row, (cell) => (cell.isDestroyable === true && cell.fill === true));
+  return is(row, cell => (cell.isDestroyable === true && cell.fill === true));
 }
 
 export function reverseForeach(array, f) {
@@ -116,10 +116,9 @@ export function reverseForeach(array, f) {
 export function checkRowsToDelete(grid, x) {
   const rowsToDelete = [];
   for (let i = 0; i < 4; i++) {
-    let index = x + i;
-    let row = grid[index];
-    if (row && isRowFullAndDestroyable(row))
-      rowsToDelete.push(index);
+    const index = x + i;
+    const row = grid[index];
+    if (row && isRowFullAndDestroyable(row)) { rowsToDelete.push(index); }
   }
   return rowsToDelete;
 }
@@ -135,15 +134,15 @@ function is(array, f) {
 ** Takes grid, return array of int representing spectrum
 */
 export function getSpectrum(grid) {
-  let spectrum = initSpectrum();
+  const spectrum = initSpectrum();
   grid.forEach((row, rowIndex) => {
     row.forEach((cell, cellIndex) => {
-        let spectrumValue = spectrum[cellIndex];
-        if (cell.fill === true && rowIndex < spectrumValue) {
-          spectrum[cellIndex] = rowIndex;
-        }
-    })
-  })
+      const spectrumValue = spectrum[cellIndex];
+      if (cell.fill === true && rowIndex < spectrumValue) {
+        spectrum[cellIndex] = rowIndex;
+      }
+    });
+  });
   return spectrum;
 }
 

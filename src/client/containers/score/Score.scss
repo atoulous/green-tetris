@@ -1,4 +1,14 @@
 .score {
-  background-color: grey;
-  margin-bottom: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score div:first-child {
+  font-size: 2em;
+}
+
+.score div:last-child {
+  font-size: 3em;
 }

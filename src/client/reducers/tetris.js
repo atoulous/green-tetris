@@ -6,7 +6,7 @@ import {
   copyGrid,
   getRandomPieceFromBag,
   sliceBagFromIndex,
-  isRowFull, 
+  isRowFull,
   reverseForeach,
   getSpectrum,
 } from '../helpers';
@@ -56,7 +56,6 @@ export function setPiece(state, piece) {
 export function setNewPiece(state) {
   const currentBag = state.bag.length ? state.bag : initBag();
   const indexPiece = getRandomPieceFromBag(currentBag);
-  console.log(indexPiece);
   const piece = {
     t: currentBag[indexPiece],
     dir: 0,
@@ -96,16 +95,16 @@ export function deleteRows(state, rowsToDelete) {
 */
 export function addRow(state) {
   const { grid, gridWithoutCurrent } = state;
-  
+
   function addRowToGrid(grid) {
-    let newGrid = copyGrid(grid);
+    const newGrid = copyGrid(grid);
     let added = false;
     reverseForeach(grid, (row, index) => {
       if (!added && !isRowFull(row)) {
         newGrid[index] = initRow(true);
         added = true;
       }
-    })
+    });
     return newGrid;
   }
   return Object.assign({}, state, { grid: addRowToGrid(grid), gridWithoutCurrent: addRowToGrid(gridWithoutCurrent) });
@@ -114,11 +113,11 @@ export function addRow(state) {
 ** Update spectrum from grid.
 */
 export function updateSpectrum(state, grid) {
-  return Object.assign({}, state, {spectrum: getSpectrum(grid)});
+  return Object.assign({}, state, { spectrum: getSpectrum(grid) });
 }
 /*
 ** Add value to player socre.
 */
 export function updateScore(state, score) {
-  return Object.assign({}, state, {score: state.score + score});
+  return Object.assign({}, state, { score: state.score + score });
 }

@@ -9,10 +9,8 @@ const Grid = ({ grid, move, additionalClasses, rowAdditionalClasses }) => {
   const classNames = `grid ${additionalClasses.join(' ')}`;
 
   return (
-    <div className="game">
-      <div className={classNames} onKeyDown={move} tabIndex="0">
-        {grid.map((e, i) => <Row key={i} row={e} additionalClasses={rowAdditionalClasses} />)}
-      </div>
+    <div className={classNames} onKeyDown={move} tabIndex="0">
+      {grid.map((e, i) => <Row key={i} row={e} additionalClasses={rowAdditionalClasses} />)}
     </div>
   );
 };

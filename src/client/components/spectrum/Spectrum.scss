@@ -5,15 +5,3 @@
   width: 100%;
   align-items: stretch;
 }
-
-.spectrum .row {
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1;
-}
-
-.spectrum .row .cell {
-  border: solid gray 1px;
-  width: 100%;
-  flex: 1;
-}

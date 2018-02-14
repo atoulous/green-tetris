@@ -1,3 +1,19 @@
-.example {
+.grid .row .cell {
+    border: solid gray 1px;
+    display: flex;
+    border-radius: 0;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+}
 
+.spectrum .row .cell {
+    border: solid gray 1px;
+    width: 100%;
+    flex: 1;
+}
+
+.nextPiece .row .cell {
+    width: 15px !important;
+    height: 15px !important;
 }
