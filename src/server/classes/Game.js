@@ -49,9 +49,9 @@ class Game {
   }
 
   formatData(keys) {
-    let formattedData = {};
+    const formattedData = {};
 
-    keys.forEach(key => {
+    keys.forEach((key) => {
       formattedData[key] = this[key];
     });
     return formattedData;

@@ -1,11 +1,11 @@
 J'ai retaillé vite fait l'architecture :
 
 maintenant celle des reducers est consistante avec celle des actions,
-l'équivalent de l'init du reducers se trouve mnt ds index.js
-(les socket et peer ont leur place ds index.js, pas ailleurs)
+l'équivalent de l'init du reducers se trouve mnt ds handleGameSocket.js
+(les socket et peer ont leur place ds handleGameSocket.js, pas ailleurs)
 
 l'architecture des middlewares est consistante avec celle des reducers
-( on fait l'init ds le index.js )
+( on fait l'init ds le handleGameSocket.js )
 
 début d'implémentation des classes Game et Player
 ds webSocket, la var allGames sert pour les tests, il faudra la gérer autrement
