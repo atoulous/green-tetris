@@ -1,6 +1,8 @@
 import Player from '../classes/Player';
 import Game from '../classes/Game';
+import { getConnection } from './socketManager';
 
+const io = getConnection();
 const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
 
 /**
@@ -14,6 +16,7 @@ export default async function (data) {
   switch (path) {
     case '/join': {
       console.log('new peer joined the game', data);
+
       const { room, id, socket } = data;
       const currrentGame = allGames.find(game => (game.room === room));
       if (currrentGame) {

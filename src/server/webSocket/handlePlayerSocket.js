@@ -1,3 +1,7 @@
+import { getConnection } from './socketManager';
+
+const io = getConnection();
+
 /**
  * handle player socket input
  *
