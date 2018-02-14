@@ -9,13 +9,15 @@ import {
   setPiece,
   deleteRows,
   addRow,
+  updateSpectrum,
+  updateScore,
 } from './tetris';
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
 import * as webSocket from '../helpers/webSocket';
 import * as webRTC from '../helpers/webRTC';
-import { initBag, initGrid } from '../helpers';
+import { initBag, initGrid, initSpectrum } from '../helpers';
 
 const socket = webSocket.getClient();
 const peer = webRTC.getPeer({ key: 'om3fcnn6mllkgldi' });
@@ -29,6 +31,9 @@ const initialState = {
   currentPiece: null,
   bag: initBag(),
   speed: 1000,
+  spectrum: initSpectrum(),
+  score: 0,
+  players: [{name: 'Me', id: 0,  score: 0, spectrum: initSpectrum()}, {name: 'You', id: 1,  score: 0, spectrum: initSpectrum()}],
 };
 
 const {
@@ -41,6 +46,8 @@ const {
   INCREASE_SPEED,
   DELETE_ROWS,
   ADD_ROW,
+  UPDATE_SPECTRUM,
+  UPDATE_SCORE,
 
   RTC_CONN,
   RTC_MESSAGE,
@@ -69,6 +76,10 @@ export default function reducer(state = initialState, action) {
       return deleteRows(state, action.rowsToDelete);
     case ADD_ROW:
       return addRow(state);
+    case UPDATE_SPECTRUM:
+      return updateSpectrum(state, action.grid);
+    case UPDATE_SCORE: 
+      return updateScore(state, action.score);
 
     case RTC_CONN:
       return rtcConnexion(state, action);

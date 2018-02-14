@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { togglePlay } from '../actions/tetris';
+import { togglePlay } from '../actions/Tetris';
 
 let StartDisplay = ({ isPlaying, start }) => <button onClick={start}>{isPlaying ? 'Stop' : 'Start'}</button>;
 

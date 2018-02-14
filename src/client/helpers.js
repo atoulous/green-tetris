@@ -51,7 +51,7 @@ export function sliceBagFromIndex(bag, index) {
 }
 
 // Init array of arrays with all cells as objects.
-export function initGrid() {
+export  function initGrid() {
   const grid = [];
   for (let i = 0; i < heightSize; i++) {
     let row = initRow();
@@ -81,6 +81,14 @@ export function initRow(isFilled = false) {
     });
   }
   return row;
+}
+
+export function initSpectrum() {
+  const spectrum = [];
+  for(let i = 0; i < widthSize; i++) {
+    spectrum.push(heightSize);
+  }
+  return spectrum;
 }
 
 /*
@@ -123,5 +131,19 @@ function is(array, f) {
   });
   return is;
 }
-
+/*
+** Takes grid, return array of int representing spectrum
+*/
+export function getSpectrum(grid) {
+  let spectrum = initSpectrum();
+  grid.forEach((row, rowIndex) => {
+    row.forEach((cell, cellIndex) => {
+        let spectrumValue = spectrum[cellIndex];
+        if (cell.fill === true && rowIndex < spectrumValue) {
+          spectrum[cellIndex] = rowIndex;
+        }
+    })
+  })
+  return spectrum;
+}
 
