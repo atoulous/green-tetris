@@ -1,3 +1,8 @@
+/**
+ * Class Game
+ *
+ * @param constructor {Object} - room
+ */
 class Game {
   constructor({ room, }) {
     this._room = room;
