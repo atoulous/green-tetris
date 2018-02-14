@@ -5,9 +5,8 @@ import TetrisView from '../containers/TetrisView';
 
 
 const Home = () => (
-  <div>
+  <div className="container">
     <TetrisView />
-    <RTCTest />
   </div>
 );
 

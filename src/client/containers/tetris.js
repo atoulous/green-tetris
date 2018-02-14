@@ -1,23 +1,19 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 
 import Score from './Score';
 import Game from './Game';
+import NextPiece from '../components/NextPiece/NextPiece';
 
-const style = {
-  height: '100%',
-  width: '100%',
-  padding: '10px',
-};
 
 const Tetris = () => (
   <div className="tetris">
-    <Paper style={style} zDepth={2} rounded={false}>
+    <div className="tetris-meta">
       <Score />
-      <Divider style={{ marginBottom: '10px' }} />
-      <Game />
-    </Paper>
+      <NextPiece />
+    </div>
+    <Divider style={{ marginBottom: '40px' }} />
+    <Game />
   </div>
 );
 
