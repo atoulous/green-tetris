@@ -19,9 +19,7 @@ export default {
   },
   module: {
     loaders: [
-      {
-        test: /\.js$/, loader: 'happypack/loader?id=js', exclude: NODE_MODULES, include: CLIENT,
-      },
+      { test: /\.js$/, loader: 'happypack/loader?id=js', exclude: NODE_MODULES, include: CLIENT },
       { test: [/\.css$/, /\.scss$/], loader: 'happypack/loader?id=style' },
     ],
   },
@@ -31,7 +29,7 @@ export default {
       $: 'jquery',
       jquery: 'jquery',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HappyPack({ id: 'js', loaders: ['babel-loader'] }),

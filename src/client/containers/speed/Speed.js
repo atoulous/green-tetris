@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { increaseSpeed as increaseSpeedAction } from '../actions/tetris';
+import { increaseSpeed as increaseSpeedAction } from '../../actions/tetris';
 
 const Speed = (props) => {
-  console.log('render');
   const { speed, increaseSpeed } = props;
   return <button onClick={increaseSpeed}>{speed}</button>;
 };

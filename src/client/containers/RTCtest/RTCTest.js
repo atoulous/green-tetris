@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const RTCConn = (props) => {
-  let { RTCConns } = props;
+  const { RTCConns } = props;
 
   const sendDataToChannel = (RTCConns) => {
-    RTCConns.forEach(RTCConn => {
+    RTCConns.forEach((RTCConn) => {
       RTCConn.conn.send('niktamer');
     });
   };
@@ -20,10 +20,8 @@ const RTCConn = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return ({
-    RTCConns: state.RTCConns
-  });
-};
+const mapStateToProps = state => ({
+  RTCConns: state.RTCConns
+});
 
 export default connect(mapStateToProps, null)(RTCConn);
