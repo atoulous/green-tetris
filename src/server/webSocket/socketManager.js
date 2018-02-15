@@ -1,64 +1,12 @@
 import socketio from 'socket.io';
 
-import Game from '../classes/Game';
-import Player from '../classes/Player';
 import logger from '../helpers/logger';
-import { allGames } from '../index';
+
+import handlePieceSocket from './handlePieceSocket';
+import handlePlayerSocket from './handlePlayerSocket';
+import handleGameSocket from './handleGameSocket';
 
 let io = null;
-
-/**
- * handle Game socket input
- *
- * @param {Object} data - the data
- * @return {void}
- */
-export async function handleGameSocket(data) {
-  const { path } = data;
-  switch (path) {
-    case '/join': {
-      console.log('new peer joined the Game', data);
-      const { room, id, socket } = data;
-      const currrentGame = allGames.find(game => (game.room === room));
-      if (currrentGame) {
-        currrentGame.broadcast(io, '/game', { path: '/join', id });
-        currrentGame.players.push(new Player({ socket, id }));
-      }
-      break;
-    }
-    default:
-      console.log('default triggered');
-      break;
-  }
-}
-
-/**
- * handle piece socket input
- *
- * @param {Object} data - the data
- * @return {void}
- */
-export async function handlePieceSocket(data) {
-  if (data.path === '/new') {
-    // do new piece
-
-    // io.sockets.to().emit('', );
-  }
-}
-
-/**
- * handle Player socket input
- *
- * @param {Object} data - the data
- * @return {void}
- */
-export async function handlePlayerSocket(data) {
-  if (data.path === '/new') {
-    // do new Player
-
-    // io.sockets.to().emit('', );
-  }
-}
 
 /**
  * Start listening to a server instance.
@@ -72,9 +20,9 @@ export function listen(server) {
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
 
-    socket.on('/game', data => handleGameSocket(data));
-    socket.on('/piece', data => handlePieceSocket(data));
-    socket.on('/player', data => handlePlayerSocket(data));
+    socket.on('/game', data => handleGameSocket(socket, data));
+    socket.on('/piece', data => handlePieceSocket(socket, data));
+    socket.on('/player', data => handlePlayerSocket(socket, data));
   });
 
   return io;

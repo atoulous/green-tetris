@@ -1,3 +1,8 @@
+/**
+ * Class Game
+ *
+ * @param constructor {Object} - room
+ */
 class Game {
   constructor({ room, }) {
     this._room = room;
@@ -49,9 +54,9 @@ class Game {
   }
 
   formatData(keys) {
-    let formattedData = {};
+    const formattedData = {};
 
-    keys.forEach(key => {
+    keys.forEach((key) => {
       formattedData[key] = this[key];
     });
     return formattedData;
