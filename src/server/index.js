@@ -6,8 +6,13 @@ import routesConfig from './config/routes';
 import logger from './helpers/logger';
 import * as webSocket from './webSocket/socketManager';
 
+import Game from './classes/Game';
+
 export const app = new Express();
 export const server = new Server(app);
+
+export const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
+
 
 /**
  * Start the web app.
