@@ -54,7 +54,7 @@ const {
 } = actions;
 
 /*
-** Reducer for tetris-related operations.
+** Reducer for Tetris-related operations.
 */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -78,7 +78,7 @@ export default function reducer(state = initialState, action) {
       return addRow(state);
     case UPDATE_SPECTRUM:
       return updateSpectrum(state, action.grid);
-    case UPDATE_SCORE: 
+    case UPDATE_SCORE:
       return updateScore(state, action.score);
 
     case RTC_CONN:

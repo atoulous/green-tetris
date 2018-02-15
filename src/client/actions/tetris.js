@@ -1,5 +1,5 @@
-import { 
-  isPiecePlacable, 
+import {
+  isPiecePlacable,
   checkRowsToDelete,
   getSpectrum,
 } from '../helpers';
@@ -96,7 +96,7 @@ export function dropPiece() {
 
 
 /*
-** Will set a new piece. Replace current piece. Check if game is lost or start dropping new piece.
+** Will set a new piece. Replace current piece. Check if Game is lost or start dropping new piece.
 */
 export function setNewPiece() {
   return (dispatch, getState) => {
@@ -127,7 +127,7 @@ export function togglePlay() {
   return (dispatch, getState) => {
     dispatch({ type: TOGGLE_PLAY });
     const state = getState();
-    // Start the game for the first time.
+    // Start the Game for the first time.
     if (state.currentPiece === null) {
       dispatch(setNewPiece());
     } else {
@@ -154,7 +154,7 @@ export function move(event) {
       case keys.DOWN:
         movePieceDown(dispatch, getState);
         break;
-      case keys.SPACE: 
+      case keys.SPACE:
         stickPieceDown(dispatch, getState);
         break;
     }
@@ -196,7 +196,7 @@ function stickPieceDown(dispatch, getState) {
       dispatch(erasePiece());
       dispatch(setPiece(piece));
       dispatch(drawPiece());
-    } 
+    }
   }
   tryNextPiece(currentPiece, gridWithoutCurrent);
 }

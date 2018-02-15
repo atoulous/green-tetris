@@ -72,7 +72,7 @@ export function refreshGridWithoutCurrent(state) {
   return Object.assign(state, { gridWithoutCurrent: copyGrid(state.grid) });
 }
 /*
-** Increase `state.speed` to 1/10s.
+** Increase `state.Speed` to 1/10s.
 */
 export function increaseSpeed(state) {
   return Object.assign(state, { speed: state.speed - 100 });

@@ -9,7 +9,7 @@ let io = null;
 const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
 
 /**
- * handle game socket input
+ * handle Game socket input
  *
  * @param {Object} data - the data
  * @return {void}
@@ -18,11 +18,11 @@ export async function handleGameSocket(data) {
   const { path } = data;
   switch (path) {
     case '/join': {
-      console.log('new peer joined the game', data);
+      console.log('new peer joined the Game', data);
       const { room, id, socket } = data;
       const currrentGame = allGames.find(game => (game.room === room));
       if (currrentGame) {
-        currrentGame.broadcast(io, '/game', { path: '/join', id });
+        currrentGame.broadcast(io, '/Game', { path: '/join', id });
         currrentGame.players.push(new Player({ socket, id }));
       }
       break;
@@ -73,7 +73,7 @@ export function listen(server) {
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
 
-    socket.on('/game', data => handleGameSocket(data));
+    socket.on('/Game', data => handleGameSocket(data));
     socket.on('/piece', data => handlePieceSocket(data));
     socket.on('/player', data => handlePlayerSocket(data));
   });
