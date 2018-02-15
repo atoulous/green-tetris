@@ -20,9 +20,9 @@ export function listen(server) {
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
 
-    socket.on('/game', data => handleGameSocket(socket, data));
-    socket.on('/piece', data => handlePieceSocket(socket, data));
-    socket.on('/player', data => handlePlayerSocket(socket, data));
+    socket.on('/game', data => handleGameSocket(data));
+    socket.on('/piece', data => handlePieceSocket(data));
+    socket.on('/player', data => handlePlayerSocket(data));
   });
 
   return io;
