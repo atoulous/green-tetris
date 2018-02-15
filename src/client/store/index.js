@@ -13,7 +13,6 @@ import reducer from '../reducers';
 
 const socket = webSocket.getClient();
 const peer = webRTC.getPeer({ key: '7ie9ooeeas0grpb9' });
-console.log('bonjour  per -', peer);
 
 const middlewares = applyMiddleware(
   thunk,
