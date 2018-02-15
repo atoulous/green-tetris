@@ -3,10 +3,9 @@ import socketio from 'socket.io';
 import Game from '../classes/Game';
 import Player from '../classes/Player';
 import logger from '../helpers/logger';
+import { allGames } from '../index';
 
 let io = null;
-
-const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
 
 /**
  * handle Game socket input

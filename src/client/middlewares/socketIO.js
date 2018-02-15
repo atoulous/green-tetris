@@ -1,4 +1,5 @@
 import { RTCConnection } from '../actions/connexion';
+import { addRTCConn } from '../helpers/webRTC';
 
 export default socket => ({ dispatch, getState }) => {
   if (socket) {
@@ -12,7 +13,7 @@ export default socket => ({ dispatch, getState }) => {
           if (data.id !== state.peer.id) {
             const conn = state.peer.connect(data.id);
             conn.on('open', () => {
-              dispatch(RTCConnection(conn));
+              addRTCConn(conn);
             });
           }
           break;

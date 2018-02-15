@@ -20,7 +20,7 @@ import * as webRTC from '../helpers/webRTC';
 import { initBag, initGrid, initSpectrum } from '../helpers';
 
 const socket = webSocket.getClient();
-const peer = webRTC.getPeer({ key: 'om3fcnn6mllkgldi' });
+const peer = webRTC.getPeer({ key: '7ie9ooeeas0grpb9' });
 
 const initialState = {
   socket,

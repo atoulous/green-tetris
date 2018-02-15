@@ -3,7 +3,7 @@ class Player {
   constructor({ id, socket }) {
     this._socket = socket;
     this._id = id;
-    this._nickname = this.getRandomNickname();
+    this._nickname = 'defaultName';
   }
   get socket() {
     return this._socket;
@@ -22,9 +22,6 @@ class Player {
   }
   set nickname(nickname) {
     this._nickname = nickname;
-  }
-  static async getRandomNickname() {
-    return ('thibault');
   }
 }
 

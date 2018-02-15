@@ -1,8 +1,29 @@
 import Peer from 'peerjs';
 
-let peer;
+import { RTCConnectionMessage } from '../actions/connexion';
+import store from '../store';
 
-export function getPeer(key) {
-  if (peer) return peer;
-  return new Peer({ key });
+let peer = null;
+let RTCConns = [];
+
+export function getPeer({ key }) {
+  if (!peer) peer = new Peer({ key });
+  return peer;
 }
+
+export function getRTCConns() {
+  return RTCConns;
+}
+
+export function addRTCConn(conn) {
+  getRTCConns().push(conn);
+  conn.on('data', (data) => {
+    store.dispatch(RTCConnectionMessage(data));
+  });
+}
+
+export const sendDataToPeers = (data) => {
+  getRTCConns().forEach((channel) => {
+    channel.send(data);
+  });
+};
