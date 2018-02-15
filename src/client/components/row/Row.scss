@@ -1,3 +1,10 @@
-.example {
+.grid .row {
+    display: flex;
+    flex-direction: row;
+}
 
+.spectrum .row {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1;
 }

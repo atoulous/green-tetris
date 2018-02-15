@@ -1,5 +1,6 @@
 .game {
-  min-height: 500px;
-  height: 100%;
-  padding: 0 50px;
+  flex: 4;
+  display:flex;
+  justify-content: center;
+  align-items: flex-start
 }

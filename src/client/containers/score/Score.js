@@ -5,7 +5,8 @@ import './Score.scss';
 
 const Score = ({ score }) => (
   <div className="score">
-    {score}
+    <div><span>Score</span></div>
+    <div><span>{score}</span></div>
   </div>
 );
 
