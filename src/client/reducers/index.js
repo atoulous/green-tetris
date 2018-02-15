@@ -25,6 +25,7 @@ const peer = webRTC.getPeer({ key: 'om3fcnn6mllkgldi' });
 const initialState = {
   socket,
   peer,
+  piecesQueue: [],
   RTCConns: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
@@ -33,7 +34,7 @@ const initialState = {
   speed: 1000,
   spectrum: initSpectrum(),
   score: 0,
-  players: [{name: 'Me', id: 0,  score: 0, spectrum: initSpectrum()}, {name: 'You', id: 1,  score: 0, spectrum: initSpectrum()}],
+  players: [{ name: 'Me', id: 0, score: 0, spectrum: initSpectrum() }, { name: 'You', id: 1, score: 0, spectrum: initSpectrum() }],
 };
 
 const {
@@ -54,7 +55,7 @@ const {
 } = actions;
 
 /*
-** Reducer for tetris-related operations.
+** Reducer for Tetris-related operations.
 */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -78,7 +79,7 @@ export default function reducer(state = initialState, action) {
       return addRow(state);
     case UPDATE_SPECTRUM:
       return updateSpectrum(state, action.grid);
-    case UPDATE_SCORE: 
+    case UPDATE_SCORE:
       return updateScore(state, action.score);
 
     case RTC_CONN:

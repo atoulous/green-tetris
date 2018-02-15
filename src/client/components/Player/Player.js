@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader } from 'material-ui/Card';
 
-import Spectrum from '../spectrum/Spectrum';
+import Spectrum from '../Spectrum/Spectrum';
 
 import './Player.scss';
 

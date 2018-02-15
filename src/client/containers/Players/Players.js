@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Player from '../../components/player/Player';
+import Player from '../../components/Player/Player';
 import './Players.scss';
 
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import Divider from 'material-ui/Divider';
 
-import Score from '../score/Score';
-import Game from '../game/Game';
-import NextPiece from '../nextPiece/NextPiece';
+import Score from '../Score/Score';
+import Game from '../Game/Game';
+import NextPiece from '../NextPiece/NextPiece';
 
 import './Tetris.scss';
 

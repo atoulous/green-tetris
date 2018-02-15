@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ButtonTetris from '../../components/button/Button';
+import ButtonTetris from '../../components/Button/Button';
 import actions from '../../actions';
 
 import './AddRowButton.scss';

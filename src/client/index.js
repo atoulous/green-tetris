@@ -3,9 +3,10 @@ import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import store from './store/index';
+import store from './store';
 import App from './components/App';
 
+// todo add index.js : export { default } from './MyComponentOrContainer.js' in all components and modify all imports
 const Root = () => (
   <Provider store={store}>
     <MuiThemeProvider>
