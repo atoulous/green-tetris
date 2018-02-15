@@ -22,7 +22,7 @@ export async function handleGameSocket(data) {
       const { room, id, socket } = data;
       const currrentGame = allGames.find(game => (game.room === room));
       if (currrentGame) {
-        currrentGame.broadcast(io, '/Game', { path: '/join', id });
+        currrentGame.broadcast(io, '/game', { path: '/join', id });
         currrentGame.players.push(new Player({ socket, id }));
       }
       break;
@@ -73,9 +73,9 @@ export function listen(server) {
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
 
-    socket.on('/Game', data => handleGameSocket(data));
+    socket.on('/game', data => handleGameSocket(data));
     socket.on('/piece', data => handlePieceSocket(data));
-    socket.on('/Player', data => handlePlayerSocket(data));
+    socket.on('/player', data => handlePlayerSocket(data));
   });
 
   return io;

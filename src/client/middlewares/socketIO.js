@@ -3,7 +3,7 @@ import { RTCConnection } from '../actions/connexion';
 export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
-    socket.on('/Game', (data) => {
+    socket.on('/game', (data) => {
       const { path } = data;
       const state = getState();
       switch (path) {

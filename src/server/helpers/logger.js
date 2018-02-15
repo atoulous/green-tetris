@@ -1,7 +1,7 @@
 import debug from 'debug';
 
-const info = debug('Tetris:info');
-const error = debug('Tetris:error');
+const info = debug('tetris:info');
+const error = debug('tetris:error');
 
 export default {
   info,

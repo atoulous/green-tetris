@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const RTCConn = (props) => {
-  const { RTCConns } = props;
+const RTCConn = ({ RTCConns  }) => {
 
   const sendDataToChannel = (channels) => {
     channels.forEach((channel) => {

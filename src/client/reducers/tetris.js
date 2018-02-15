@@ -18,7 +18,7 @@ export function togglePlay(state) {
   return { ...state, isPlaying: !state.isPlaying };
 }
 /*
-** Draw `state.currentPiece` on `state.Grid`.
+** Draw `state.currentPiece` on `state.grid`.
 */
 export function drawPiece(state) {
   const { grid, currentPiece } = state;
@@ -32,7 +32,7 @@ export function drawPiece(state) {
   return Object.assign({}, state, { grid: gridCopy });
 }
 /*
-** Erase `state.currentPiece` on `state.Grid`.
+** Erase `state.currentPiece` on `state.grid`.
 */
 export function erasePiece(state) {
   const { grid, currentPiece } = state;
@@ -72,7 +72,7 @@ export function refreshGridWithoutCurrent(state) {
   return Object.assign(state, { gridWithoutCurrent: copyGrid(state.grid) });
 }
 /*
-** Increase `state.Speed` to 1/10s.
+** Increase `state.speed` to 1/10s.
 */
 export function increaseSpeed(state) {
   return Object.assign(state, { speed: state.speed - 100 });
@@ -116,7 +116,7 @@ export function updateSpectrum(state, grid) {
   return Object.assign({}, state, { spectrum: getSpectrum(grid) });
 }
 /*
-** Add value to Player socre.
+** Add value to Player score.
 */
 export function updateScore(state, score) {
   return Object.assign({}, state, { score: state.score + score });
