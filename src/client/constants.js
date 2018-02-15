@@ -1,5 +1,5 @@
 // Size of grid
-export const heightSize = 10;
+export const heightSize = 20;
 export const widthSize = (heightSize / 3) * 2;
 
 // All pieces
@@ -17,14 +17,6 @@ export const keys = {
   LEFT: 37,
   UP: 38,
   RIGHT: 39,
-  DOWN: 40
-};
-
-
-export const params = {
-  server: {
-    host: '0.0.0.0',
-    port: 3000,
-    get url() { return `http://${this.host}:${this.port}`; },
-  },
+  DOWN: 40,
+  SPACE: 32,
 };

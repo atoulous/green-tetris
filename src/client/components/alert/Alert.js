@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Alert = (props) => {
-  const { message, hidden } = props;
+import './Alert.scss';
 
+const Alert = ({ message, hidden }) => {
   const containerStyle = {
     display: 'flex',
     justifyContent: 'center'
   };
+
   const alertStyle = {
     position: 'relative',
     bottom: '150px',

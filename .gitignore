@@ -60,6 +60,9 @@ typings/
 # IntelliJ IDEA
 .idea
 
+# Visual Code Workspace settings
+src/.vscode/*
+
 # build
 src/client/build
 

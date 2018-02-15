@@ -1,5 +1,15 @@
-import { initBag } from './init';
-import { forEachBlockInPiece, copyGrid, getRandomPieceFromBag, sliceBagFromIndex } from '../helpers';
+import {
+  checkRowsToDelete,
+  initRow,
+  initBag,
+  forEachBlockInPiece,
+  copyGrid,
+  getRandomPieceFromBag,
+  sliceBagFromIndex,
+  isRowFull,
+  reverseForeach,
+  getSpectrum,
+} from '../helpers';
 
 /*
 ** On/off
@@ -46,7 +56,6 @@ export function setPiece(state, piece) {
 export function setNewPiece(state) {
   const currentBag = state.bag.length ? state.bag : initBag();
   const indexPiece = getRandomPieceFromBag(currentBag);
-  console.log(indexPiece);
   const piece = {
     t: currentBag[indexPiece],
     dir: 0,
@@ -68,4 +77,47 @@ export function refreshGridWithoutCurrent(state) {
 export function increaseSpeed(state) {
   return Object.assign(state, { speed: state.speed - 100 });
 }
+/*
+** Replace full rows by empty rows on top of the grid.
+*/
+export function deleteRows(state, rowsToDelete) {
+  const { grid } = state;
+  let newGrid = grid;
 
+  rowsToDelete.forEach((row) => {
+    newGrid = sliceBagFromIndex(newGrid, row);
+    newGrid.unshift(initRow());
+  });
+  return Object.assign({}, state, { grid: newGrid });
+}
+/*
+** Add full row to the bottom of the grid.
+*/
+export function addRow(state) {
+  const { grid, gridWithoutCurrent } = state;
+
+  function addRowToGrid(grid) {
+    const newGrid = copyGrid(grid);
+    let added = false;
+    reverseForeach(grid, (row, index) => {
+      if (!added && !isRowFull(row)) {
+        newGrid[index] = initRow(true);
+        added = true;
+      }
+    });
+    return newGrid;
+  }
+  return Object.assign({}, state, { grid: addRowToGrid(grid), gridWithoutCurrent: addRowToGrid(gridWithoutCurrent) });
+}
+/*
+** Update spectrum from grid.
+*/
+export function updateSpectrum(state, grid) {
+  return Object.assign({}, state, { spectrum: getSpectrum(grid) });
+}
+/*
+** Add value to player socre.
+*/
+export function updateScore(state, score) {
+  return Object.assign({}, state, { score: state.score + score });
+}

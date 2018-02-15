@@ -1,10 +1,9 @@
 
 export function rtcConnexion(state, action) {
   const conn = action.data;
-  const RTCConns = state.rtc.length > 0 ?
-    [{ isListened: false, conn }, ...state.rtc] :
-    [{ isListened: false, conn }];
-  return { ...state, rtc: RTCConns};
+  let { RTCConns } = state;
+  RTCConns.push({ conn });
+  return { ...state, RTCConns };
 }
 
 export function rtcMessage(state) {

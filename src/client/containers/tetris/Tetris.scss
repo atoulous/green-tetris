@@ -1,0 +1,16 @@
+.tetris {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.tetris-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tetris-meta-container {
+  display: flex;
+  align-items: flex-start;
+}

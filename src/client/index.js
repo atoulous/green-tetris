@@ -1,47 +1,27 @@
-import io from 'socket.io-client';
-import Peer from 'peerjs';
-
-// React
-
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-// Import package middlewares
-import thunk from 'redux-thunk';
+import store from './store/index';
+import App from './components/App';
 
-import { createStore, applyMiddleware } from 'redux';
-
-import App from './containers/app';
-// Import local middlewares
-import logger from './middlewares/logger';
-import peerRTC from './middlewares/peerRTC';
-import RTCConn from './middlewares/RTCConn';
-import socketIO from './middlewares/socketIO';
-import storeState from './middlewares/storeState';
-
-import { params } from './constants';
-
-import reducer from './reducers';
-
-// Init Socket and webRTC.
-const socket = io(params.server.url);
-const peer = new Peer({ key: 'om3fcnn6mllkgldi' });
-
-const middlewares = applyMiddleware(
-  thunk,
-  peerRTC(peer),
-  RTCConn,
-  socketIO(socket),
-  storeState,
-  logger
-);
-
-const store = createStore(reducer, middlewares);
-
-ReactDom.render(
+const Root = () => (
   <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('tetris')
+    <MuiThemeProvider>
+      <App />
+    </MuiThemeProvider>
+  </Provider>
 );
+
+const render = RootComponent => (
+  ReactDom.render(
+    <RootComponent />,
+    document.getElementById('tetris')
+  )
+);
+
+render(Root);
+
+/** Hot Module Replacement API */
+if (module.hot) { module.hot.accept(() => render(Root)); }
