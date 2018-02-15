@@ -25,6 +25,5 @@ export default async function (data) {
     }
     default:
       console.log('default triggered');
-      break;
   }
 }

@@ -1,16 +1,18 @@
+import _ from 'lodash';
+
 import pieces from '../helpers/pieces';
 
 /**
  * Class Piece
  *
- * @param constructor {Object} - t, dir, x, y
+ * @param constructor {Object} - init {t, dir, x, y}
  */
 class Piece {
-  constructor({ t, dir, x, y }) {
-    this.t = t || pieces[Math.floor(Math.random() * pieces.length)];
-    this.dir = dir || 0;
-    this.x = x || 0;
-    this.y = y || 0;
+  constructor(init) {
+    this.t = _.get(init, 't', pieces[Math.floor(Math.random() * pieces.length)]);
+    this.dir = _.get(init, 'dir', 0);
+    this.x = _.get(init, 'x', 0);
+    this.y = _.get(init, 'y', 0);
   }
 }
 

@@ -1,4 +1,5 @@
 import { getConnection } from './socketManager';
+import Player from '../classes/Player';
 
 const io = getConnection();
 
@@ -9,9 +10,19 @@ const io = getConnection();
  * @return {void}
  */
 export default async function (data) {
-  if (data.path === '/new') {
-    // do new player
+  const { path } = data;
 
-    // io.sockets.to().emit('', );
+  switch (path) {
+    case '/new': {
+      console.log('new piece nedded', data);
+
+      const { room } = data;
+      const newPlayer = new Player();
+
+      io.to(room).emit(newPlayer);
+      break;
+    }
+    default:
+      console.log('default triggered');
   }
 }
