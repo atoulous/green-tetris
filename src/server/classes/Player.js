@@ -1,13 +1,9 @@
 
-function getRandomNickname() {
-  return ('thibault');
-};
-
 class Player {
   constructor({ id, socket }) {
     this._socket = socket;
     this._id = id;
-    this._nickname = getRandomNickname();
+    this._nickname = this.getRandomNickname();
   }
   get socket() {
     return this._socket;
@@ -27,7 +23,9 @@ class Player {
   set nickname(nickname) {
     this._nickname = nickname;
   }
-
+  static async getRandomNickname() {
+    return ('thibault');
+  }
 }
 
 export default Player;

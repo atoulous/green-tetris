@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const RTCConn = ({ RTCConns }) => {
   const sendDataToChannel = (channels) => {
@@ -16,6 +17,14 @@ const RTCConn = ({ RTCConns }) => {
       <span>BOJNOUR THIBO</span>
     </div>
   );
+};
+
+RTCConn.propTypes = {
+  RTCConns: PropTypes.array,
+};
+
+RTCConn.defaultProps = {
+  RTCConns: [],
 };
 
 const mapStateToProps = state => ({

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { move } from '../../actions/tetris';
-import Grid from '../../components/grid/Grid';
+import Grid from '../../components/Grid/Grid';
 
 import './Game.scss';
 

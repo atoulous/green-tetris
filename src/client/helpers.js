@@ -30,7 +30,7 @@ export function isPiecePlacable(piece, grid) {
   return result;
 }
 /*
-** Make a full copy of the grid.
+** Make a full copy of the Grid.
 */
 export function copyGrid(grid) {
   return grid.map(row => row.map(cell => ({ ...cell })));
@@ -92,7 +92,7 @@ export function initSpectrum() {
 }
 
 /*
-** Check if row is full
+** Check if Row is full
 */
 export function isRowFull(row) {
   return is(row, cell => (cell.fill === true));
@@ -131,7 +131,7 @@ function is(array, f) {
   return is;
 }
 /*
-** Takes grid, return array of int representing spectrum
+** Takes Grid, return array of int representing Spectrum
 */
 export function getSpectrum(grid) {
   const spectrum = initSpectrum();

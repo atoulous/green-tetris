@@ -1,8 +1,8 @@
 import React from 'react';
 
 import RTCTest from '../../containers/RTCtest/RTCTest';
-import Tetris from '../../containers/tetris/Tetris';
-import Players from '../../containers/players/Players';
+import Tetris from '../../containers/Tetris/Tetris';
+import Players from '../../containers/Players/Players';
 
 import './Home.scss';
 

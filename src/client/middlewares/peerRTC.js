@@ -1,8 +1,8 @@
 import { RTCConnection } from '../actions/connexion';
 
 export default peer => ({ dispatch, getState }) => {
-  console.log('peer listener --', peer);
   if (peer) {
+    console.log('peer listener --', peer);
     peer.on('open', (id) => {
       console.log(`My peer ID is: ${id}`, getState());
       const { socket } = getState();

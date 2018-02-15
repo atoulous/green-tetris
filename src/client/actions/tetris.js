@@ -1,5 +1,5 @@
-import { 
-  isPiecePlacable, 
+import {
+  isPiecePlacable,
   checkRowsToDelete,
   getSpectrum,
 } from '../helpers';
@@ -60,8 +60,8 @@ export function updateScore(score) {
 
 /*
 ** Will drop piece from one x.
-** Draw new grid if needed or set a new piece if current piece can't be placed.
-** We'll compare to grid without current piece to avoid overlay.
+** Draw new Grid if needed or set a new piece if current piece can't be placed.
+** We'll compare to Grid without current piece to avoid overlay.
 */
 export function dropPiece() {
   return (dispatch, getState) => {
@@ -96,13 +96,13 @@ export function dropPiece() {
 
 
 /*
-** Will set a new piece. Replace current piece. Check if game is lost or start dropping new piece.
+** Will set a new piece. Replace current piece. Check if Game is lost or start dropping new piece.
 */
 export function setNewPiece() {
   return (dispatch, getState) => {
     // Set new current piece randomly.
     dispatch({ type: SET_NEW_PIECE });
-    // Save grid state without current piece for later comparison.
+    // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
     const state = getState();
     const { currentPiece, gridWithoutCurrent } = state;
@@ -121,13 +121,13 @@ export function setNewPiece() {
 }
 
 /*
-** Action when on/off button is pressed.
+** Action when on/off Button is pressed.
 */
 export function togglePlay() {
   return (dispatch, getState) => {
     dispatch({ type: TOGGLE_PLAY });
     const state = getState();
-    // Start the game for the first time.
+    // Start the Game for the first time.
     if (state.currentPiece === null) {
       dispatch(setNewPiece());
     } else {
@@ -154,7 +154,7 @@ export function move(event) {
       case keys.DOWN:
         movePieceDown(dispatch, getState);
         break;
-      case keys.SPACE: 
+      case keys.SPACE:
         stickPieceDown(dispatch, getState);
         break;
     }
@@ -196,7 +196,7 @@ function stickPieceDown(dispatch, getState) {
       dispatch(erasePiece());
       dispatch(setPiece(piece));
       dispatch(drawPiece());
-    } 
+    }
   }
   tryNextPiece(currentPiece, gridWithoutCurrent);
 }
