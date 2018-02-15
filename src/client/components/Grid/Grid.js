@@ -1,8 +1,9 @@
 import React from 'react';
-import Row from '../row/Row';
+import Row from '../Row/Row';
 
 import './Grid.scss';
 
+// todo add props validation
 const Grid = ({ grid, move, additionalClasses, rowAdditionalClasses }) => {
   if (!rowAdditionalClasses) rowAdditionalClasses = [];
   if (!additionalClasses) additionalClasses = [];

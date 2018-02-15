@@ -1,19 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import './NextPiece.scss';
-import Grid from '../../components/grid/Grid';
+import Grid from '../../components/Grid/Grid';
 import { initGrid, forEachBlockInPiece } from '../../helpers';
 
 const NextPiece = ({ piecesQueue }) => {
-  const nextPiece = pieceQueue[0];
   const grid = initGrid(4, 4);
 
-  forEachBlockInPiece(nextPiece, (x, y) => {
-    const cell = grid[x][y];
-    cell.fill = true;
-    cell.color = nextPiece.t.color;
-  });
+  if (piecesQueue.length > 0) {
+    const nextPiece = piecesQueue[0];
+    forEachBlockInPiece(nextPiece, (x, y) => {
+      const cell = grid[x][y];
+      cell.fill = true;
+      cell.color = nextPiece.t.color;
+    });
+  }
 
   return (
     <div className="nextPiece">
@@ -23,10 +26,16 @@ const NextPiece = ({ piecesQueue }) => {
   );
 };
 
+NextPiece.propTypes = {
+  piecesQueue: PropTypes.array,
+};
+
+NextPiece.defaultProps = {
+  piecesQueue: [],
+};
 
 const mapStateToProps = state => ({
-  pieceQueue: state.pieceQueue,
+  piecesQueue: state.piecesQueue,
 });
-
 
 export default connect(mapStateToProps)(NextPiece);
