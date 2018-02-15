@@ -25,6 +25,7 @@ const peer = webRTC.getPeer({ key: 'om3fcnn6mllkgldi' });
 const initialState = {
   socket,
   peer,
+  piecesQueue: [],
   RTCConns: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
