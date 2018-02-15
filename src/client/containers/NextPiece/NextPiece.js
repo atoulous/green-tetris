@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import './NextPiece.scss';
@@ -25,10 +26,16 @@ const NextPiece = ({ piecesQueue }) => {
   );
 };
 
+NextPiece.propTypes = {
+  piecesQueue: PropTypes.array(),
+};
+
+NextPiece.defaultProps = {
+  piecesQueue: [],
+};
 
 const mapStateToProps = state => ({
   piecesQueue: state.piecesQueue,
 });
-
 
 export default connect(mapStateToProps)(NextPiece);
