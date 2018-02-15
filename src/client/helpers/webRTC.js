@@ -1,13 +1,8 @@
 import Peer from 'peerjs';
 
-let peer;
-
-export function newPeer(key) {
-  return new Peer({ key });
-}
+let peer = null;
 
 export function getPeer(key) {
-  if (peer) return peer;
-
-  return newPeer(key);
+  if (!peer) peer = new Peer({ key });
+  return peer;
 }

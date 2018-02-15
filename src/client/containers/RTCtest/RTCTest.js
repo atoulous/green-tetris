@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const RTCConn = (props) => {
-  const { RTCConns } = props;
-
-  const sendDataToChannel = (RTCConns) => {
-    RTCConns.forEach((RTCConn) => {
-      RTCConn.conn.send('niktamer');
+const RTCConn = ({ RTCConns }) => {
+  const sendDataToChannel = (channels) => {
+    channels.forEach((channel) => {
+      channel.conn.send('niktamer');
     });
   };
 

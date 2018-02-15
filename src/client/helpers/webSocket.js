@@ -1,9 +1,8 @@
 import io from 'socket.io-client';
 
-let client;
+let client = null;
 
 export function getClient() {
-  if (client) return client;
-  client = io.connect('/');
+  if (!client) client = io.connect('/');
   return client;
 }
