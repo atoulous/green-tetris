@@ -27,7 +27,7 @@ const NextPiece = ({ piecesQueue }) => {
 };
 
 NextPiece.propTypes = {
-  piecesQueue: PropTypes.array(),
+  piecesQueue: PropTypes.array,
 };
 
 NextPiece.defaultProps = {
