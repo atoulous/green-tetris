@@ -48,14 +48,14 @@ export async function handlePieceSocket(data) {
 }
 
 /**
- * handle player socket input
+ * handle Player socket input
  *
  * @param {Object} data - the data
  * @return {void}
  */
 export async function handlePlayerSocket(data) {
   if (data.path === '/new') {
-    // do new player
+    // do new Player
 
     // io.sockets.to().emit('', );
   }
@@ -75,7 +75,7 @@ export function listen(server) {
 
     socket.on('/Game', data => handleGameSocket(data));
     socket.on('/piece', data => handlePieceSocket(data));
-    socket.on('/player', data => handlePlayerSocket(data));
+    socket.on('/Player', data => handlePlayerSocket(data));
   });
 
   return io;

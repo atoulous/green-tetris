@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './NextPiece.scss';
-import Grid from '../../components/grid/Grid';
+import Grid from '../../components/Grid/Grid';
 import { initGrid, forEachBlockInPiece } from '../../helpers';
 
 const NextPiece = ({ piecesQueue }) => {

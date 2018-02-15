@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Spectrum from '../../components/spectrum/Spectrum';
+import Spectrum from '../../components/Spectrum/Spectrum';
 
 const mapStateToProps = state => ({
   spectrum: state.spectrum,

@@ -60,8 +60,8 @@ export function updateScore(score) {
 
 /*
 ** Will drop piece from one x.
-** Draw new grid if needed or set a new piece if current piece can't be placed.
-** We'll compare to grid without current piece to avoid overlay.
+** Draw new Grid if needed or set a new piece if current piece can't be placed.
+** We'll compare to Grid without current piece to avoid overlay.
 */
 export function dropPiece() {
   return (dispatch, getState) => {
@@ -102,7 +102,7 @@ export function setNewPiece() {
   return (dispatch, getState) => {
     // Set new current piece randomly.
     dispatch({ type: SET_NEW_PIECE });
-    // Save grid state without current piece for later comparison.
+    // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
     const state = getState();
     const { currentPiece, gridWithoutCurrent } = state;
@@ -121,7 +121,7 @@ export function setNewPiece() {
 }
 
 /*
-** Action when on/off button is pressed.
+** Action when on/off Button is pressed.
 */
 export function togglePlay() {
   return (dispatch, getState) => {
