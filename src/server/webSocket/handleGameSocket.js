@@ -20,7 +20,7 @@ export default async function (data) {
       const { webRTCId, socketId } = data;
 
       addGame(new Game({ room: hash, gameMaster: new Player({ webRTCId, socketId }) }));
-      console.log(' games area -- ', getGames());
+      console.log(' games are -- ', getGames());
       break;
     }
     case '/join': {

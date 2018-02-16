@@ -28,7 +28,7 @@ export default async function (data) {
     case '/nickname': {
       const { nickname, webRTCId, room } = data;
       const game = getGame(room);
-      const player = game.players.find(playeur => (playeur.webRTCId === webRTCId));
+      const player = game.players.find(tmpPlayer => (tmpPlayer.webRTCId === webRTCId));
       player.nickname = nickname;
       game.broadcast(getConnection(), '/player', { path: '/nickname', webRTCId, nickname });
       break;

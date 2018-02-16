@@ -13,7 +13,7 @@ import {
   updateScore,
 } from './tetris';
 
-import { setNickname, addPlayer } from './player';
+import { setNickname, setOwnNickname, addPlayer } from './player';
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
@@ -28,6 +28,7 @@ const initialState = {
   speed: 1000,
   spectrum: initSpectrum(),
   score: 0,
+  nickname: 'defaultName',
   players: [{ nickname: 'Me', webRTCId: 0, score: 0, spectrum: initSpectrum() }, { nickname: 'You', webRTCId: 1, score: 0, spectrum: initSpectrum() }],
 };
 
@@ -48,6 +49,7 @@ const {
   RTC_MESSAGE,
 
   SET_NICKNAME,
+  SET_OWN_NICKNAME,
   ADD_PLAYER,
 } = actions;
 
@@ -86,6 +88,8 @@ export default function reducer(state = initialState, action) {
 
     case SET_NICKNAME:
       return setNickname(state, action);
+    case SET_OWN_NICKNAME:
+      return setOwnNickname(state, action);
     case ADD_PLAYER:
       return addPlayer(state, action);
 

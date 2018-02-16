@@ -7,7 +7,7 @@ export default socket => ({ dispatch, getState }) => {
     socket.on('/player', (data) => {
       const { path } = data;
       switch (path) {
-        case '/player': {
+        case '/nickname': {
           const { webRTCId, nickname } = data;
           dispatch(setNickname({ webRTCId, nickname }));
           break;
@@ -36,11 +36,14 @@ export default socket => ({ dispatch, getState }) => {
     });
   }
   return next => (action) => {
-    console.log('action is -- ', action);
     if (socket && action.type === 'socket') {
       switch (action.data.call) {
         case '/game': {
           socket.emit('/game', action.data);
+          break;
+        }
+        case '/player': {
+          socket.emit('/player', action.data);
           break;
         }
         default:
