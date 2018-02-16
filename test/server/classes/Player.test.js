@@ -5,13 +5,18 @@ describe('classes/player', () => {
   let player;
 
   beforeAll(() => {
-    player = new Player({socket: 'socketId' });
+    player = new Player({ socketId: 'socketId', webRTCId: 'webRTCId' });
   });
-  it('should create player instance', async () => {
-    console.log('play -- ', player);
-
+  it('should success to create player instance', async () => {
     expect(player).not.toBeUndefined();
     expect(player).toHaveProperty('nickname', 'defaultName');
+  });
+
+  it('should fail to create player instance', async () => {
+    function failPlayerCreation() {
+      return new Player({ no: true });
+    }
+    expect(failPlayerCreation).toThrowError(/required/);
   });
 
   it('should change player nickname', async () => {
@@ -19,4 +24,13 @@ describe('classes/player', () => {
     expect(player).toHaveProperty('nickname', 'thibault');
   });
 
+  it('should change player socketId', async () => {
+    player.socketId = 'thibault';
+    expect(player).toHaveProperty('socketId', 'thibault');
+  });
+
+  it('should change player webRTCId', async () => {
+    player.webRTCId = 'thibault';
+    expect(player).toHaveProperty('webRTCId', 'thibault');
+  });
 });
