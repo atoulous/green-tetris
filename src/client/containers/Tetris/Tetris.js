@@ -16,7 +16,7 @@ const Tetris = () => (
         <NextPiece />
       </div>
     </div>
-    <Divider style={{ marginBottom: '40px' }} />
+    <Divider style={{ marginBottom: '40px', marginTop: '40px' }} />
     <Game />
   </div>
 );
