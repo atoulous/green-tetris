@@ -10,7 +10,7 @@ const INDEX = path.resolve(__dirname, '../../client', 'index.html');
  * @returns {void}
  */
 export default (app) => {
-  app.get('/games', (req, res) => {
+  app.get('/api/games', (req, res) => {
     const gamesWaiting = allGames.filter(game => (!game.hasStarted));
     res.json(JSON.stringify(gamesWaiting));
   });

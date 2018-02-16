@@ -36,6 +36,36 @@ const initialState = {
   spectrum: initSpectrum(),
   score: 0,
   players: [{ name: 'Me', id: 0, score: 0, spectrum: initSpectrum() }, { name: 'You', id: 1, score: 0, spectrum: initSpectrum() }],
+  games: [{ id: 1,
+    master: 'jordan',
+    speed: 1000,
+    size: { x: 10, y: 15 },
+    currentPlayers: [{
+      id: 1,
+      name: 'Jordan',
+      isReady: false,
+    }, {
+      id: 234234,
+      name: 'Thibault',
+      isReady: true,
+    }],
+    maxPlayers: 5,
+  }],
+  game: { id: 1,
+    master: 'jordan',
+    speed: 1000,
+    size: { x: 10, y: 15 },
+    currentPlayers: [{
+      id: 1,
+      name: 'Jordan',
+      isReady: false,
+    }, {
+      id: 234234,
+      name: 'Thibault',
+      isReady: true,
+    }],
+    maxPlayers: 5,
+  },
 };
 
 const {
