@@ -5,6 +5,8 @@ import Game from '../classes/Game';
 import { getConnection } from './socketManager';
 import { getGames, addGame } from '../helpers/game';
 
+const io = getConnection();
+
 /**
  * handle game socket input
  *
@@ -30,7 +32,7 @@ export default async function (data) {
       const { room, webRTCId, socketId } = data;
       const currrentGame = getGames().find(game => (game.room === room));
       if (currrentGame) {
-        currrentGame.broadcast(getConnection(), '/game', { path: '/join', webRTCId });
+        currrentGame.broadcast(io, '/game', { path: '/join', webRTCId });
         currrentGame.players.push(new Player({ socketId, webRTCId }));
       }
       break;

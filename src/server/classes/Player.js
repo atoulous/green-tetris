@@ -1,17 +1,15 @@
 /**
  * Class Player
  *
- * @param constructor {Object} - id, socket
+ * @param constructor {Object} - socketId, webRTCid, nickname (optional)
  */
 class Player {
   constructor({ webRTCId = null, socketId = null, nickname = null }) {
-    if (!webRTCId || !socketId) {
-      throw new Error('webRTCId and socketId are required');
-    } else {
-      this._socketId = socketId;
-      this._webRTCId = webRTCId;
-      this._nickname = nickname || 'defaultName';
-    }
+    if (!webRTCId || !socketId) throw new Error('webRTCId and socketId params required');
+
+    this._socketId = socketId;
+    this._webRTCId = webRTCId;
+    this._nickname = nickname || 'Player';
   }
 
   get socketId() {

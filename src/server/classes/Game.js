@@ -4,16 +4,14 @@
  * @param constructor {Object} - room
  */
 class Game {
-  constructor({ room, gameMaster }) {
-    if (!room || !gameMaster) {
-      throw new Error('room and gameMaster are required');
-    } else {
-      this._room = room;
-      this._players = [];
-      this._hasStarted = false;
-      this._settings = {};
-      this._gameMaster = gameMaster;
-    }
+  constructor({ room = null, gameMaster = null }) {
+    if (!room || !gameMaster) throw new Error('room and gameMaster are required');
+
+    this._room = room;
+    this._players = [];
+    this._hasStarted = false;
+    this._settings = {};
+    this._gameMaster = gameMaster;
   }
 
   get gameMaster() {
