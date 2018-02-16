@@ -4,11 +4,12 @@
  * @param constructor {Object} - room
  */
 class Game {
-  constructor({ room, }) {
+  constructor({ room, initiator }) {
     this._room = room;
     this._players = [];
     this._hasStarted = false;
     this._settings = {};
+    this._gameMaster = initiator;
   }
 
   get settings() {
@@ -45,7 +46,8 @@ class Game {
 
   broadcast(io, subject, data) {
     this.players.forEach((player) => {
-      io.to(player.socket).emit(subject, data);
+      console.log('cur player --', player, 'io -', io);
+      io.to(player.socketId).emit(subject, data);
     });
   }
 

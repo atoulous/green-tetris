@@ -2,7 +2,6 @@ import Player from '../classes/Player';
 import Game from '../classes/Game';
 import { getConnection } from './socketManager';
 
-const io = getConnection();
 const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
 
 /**
@@ -17,11 +16,11 @@ export default async function (data) {
     case '/join': {
       console.log('new peer joined the game', data);
 
-      const { room, id, socket } = data;
+      const { room, webRTCId, socketId } = data;
       const currrentGame = allGames.find(game => (game.room === room));
       if (currrentGame) {
-        currrentGame.broadcast(io, '/game', { path: '/join', id });
-        currrentGame.players.push(new Player({ socket, id }));
+        currrentGame.broadcast(getConnection(), '/game', { path: '/join', webRTCId });
+        currrentGame.players.push(new Player({ socketId, webRTCId }));
       }
       break;
     }

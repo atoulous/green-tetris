@@ -3,10 +3,10 @@ import { addRTCConn } from '../helpers/webRTC';
 
 export default peer => ({ dispatch, getState }) => {
   if (peer) {
-    peer.on('open', (id) => {
-      console.log(`My peer ID is: ${id}`, getState());
+    peer.on('open', (webRTCId) => {
+      console.log(`My peer ID is: ${webRTCId}`, getState());
       const { socket } = getState();
-      socket.emit('/game', { path: '/join', id, room: window.location.hash.slice(1), socket: socket.id });
+      socket.emit('/game', { path: '/join', webRTCId, room: window.location.hash.slice(1), socketId: socket.id });
     });
 
     peer.on('connection', (conn) => {

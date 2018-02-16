@@ -10,8 +10,8 @@ export default socket => ({ dispatch, getState }) => {
       switch (path) {
         case '/join': {
           console.log('peer received --', data);
-          if (data.id !== state.peer.id) {
-            const conn = state.peer.connect(data.id);
+          if (data.webRTCId !== state.peer.id) {
+            const conn = state.peer.connect(data.webRTCId);
             conn.on('open', () => {
               addRTCConn(conn);
             });

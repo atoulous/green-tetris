@@ -4,26 +4,26 @@
  * @param constructor {Object} - id, socket
  */
 class Player {
-  constructor({ id, socket }) {
-    this._socket = socket;
-    this._id = id;
+  constructor({ webRTCId, socketId }) {
+    this._socketId = socketId;
+    this._webRTCId = webRTCId;
     this._nickname = 'defaultName';
   }
 
-  get socket() {
-    return this._socket;
+  get socketId() {
+    return this._socketId;
   }
 
-  set socket(socket) {
-    this._socket = socket;
+  set socketId(socketId) {
+    this._socketId = socketId;
   }
 
-  get id() {
-    return this._id;
+  get webRTCId() {
+    return this._webRTCId;
   }
 
-  set id(id) {
-    this._id = id;
+  set webRTCId(webRTCId) {
+    this._webRTCId = webRTCId;
   }
 
   get nickname() {
