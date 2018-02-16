@@ -24,7 +24,16 @@ export default socket => ({ dispatch, getState }) => {
     });
   }
   return next => (action) => {
-    if (socket && action.type && action.type.indexOf('server/') === 0) {
+    console.log('action is -- ', action);
+    if (socket && action.type === 'socket') {
+      switch (action.data.call) {
+        case '/game': {
+          socket.emit('/game', action.data);
+          break;
+        }
+        default:
+          break;
+      }
       socket.emit('action', action);
     }
     return next(action);

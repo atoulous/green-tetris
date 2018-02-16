@@ -52,6 +52,7 @@ const {
 
   RTC_CONN,
   RTC_MESSAGE,
+
 } = actions;
 
 /*
@@ -86,6 +87,7 @@ export default function reducer(state = initialState, action) {
       return rtcConnexion(state, action);
     case RTC_MESSAGE:
       return rtcMessage(state);
+
     default:
       return state;
   }
