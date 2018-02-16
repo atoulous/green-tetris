@@ -1,5 +1,5 @@
 import path from 'path';
-import { allGames } from '../index';
+import { getGames } from '../helpers/game';
 
 const INDEX = path.resolve(__dirname, '../../client', 'index.html');
 
@@ -11,7 +11,7 @@ const INDEX = path.resolve(__dirname, '../../client', 'index.html');
  */
 export default (app) => {
   app.get('/games', (req, res) => {
-    const gamesWaiting = allGames.filter(game => (!game.hasStarted));
+    const gamesWaiting = getGames().filter(game => (!game.hasStarted));
     res.json(JSON.stringify(gamesWaiting));
   });
   app.get('*', (req, res) => res.status(200).sendFile(INDEX));

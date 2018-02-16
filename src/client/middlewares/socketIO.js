@@ -10,8 +10,8 @@ export default socket => ({ dispatch, getState }) => {
       switch (path) {
         case '/join': {
           console.log('peer received --', data);
-          if (data.id !== state.peer.id) {
-            const conn = state.peer.connect(data.id);
+          if (data.webRTCId !== state.peer.id) {
+            const conn = state.peer.connect(data.webRTCId);
             conn.on('open', () => {
               addRTCConn(conn);
             });
@@ -24,7 +24,16 @@ export default socket => ({ dispatch, getState }) => {
     });
   }
   return next => (action) => {
-    if (socket && action.type && action.type.indexOf('server/') === 0) {
+    console.log('action is -- ', action);
+    if (socket && action.type === 'socket') {
+      switch (action.data.call) {
+        case '/game': {
+          socket.emit('/game', action.data);
+          break;
+        }
+        default:
+          break;
+      }
       socket.emit('action', action);
     }
     return next(action);

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RTCTest from '../../containers/RTCtest/RTCTest';
+import NewGameButton from '../../containers/NewGameButton/NewGameButton';
 import Tetris from '../../containers/Tetris/Tetris';
 import Players from '../../containers/Players/Players';
 
@@ -13,6 +14,7 @@ const Home = () => (
       <Players />
     </div>
     <RTCTest />
+    <NewGameButton />
   </div>
 );
 

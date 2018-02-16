@@ -4,11 +4,24 @@
  * @param constructor {Object} - room
  */
 class Game {
-  constructor({ room, }) {
-    this._room = room;
-    this._players = [];
-    this._hasStarted = false;
-    this._settings = {};
+  constructor({ room, gameMaster }) {
+    if (!room || !gameMaster) {
+      throw new Error('room and gameMaster are required');
+    } else {
+      this._room = room;
+      this._players = [];
+      this._hasStarted = false;
+      this._settings = {};
+      this._gameMaster = gameMaster;
+    }
+  }
+
+  get gameMaster() {
+    return this._gameMaster;
+  }
+
+  set gameMaster(gameMaster) {
+    this._gameMaster = gameMaster;
   }
 
   get settings() {
@@ -45,7 +58,7 @@ class Game {
 
   broadcast(io, subject, data) {
     this.players.forEach((player) => {
-      io.to(player.socket).emit(subject, data);
+      io.to(player.socketId).emit(subject, data);
     });
   }
 
