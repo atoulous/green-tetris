@@ -1,20 +1,32 @@
-import { RTCConnection } from '../actions/connexion';
-import { addRTCConn } from '../helpers/webRTC';
+import { setNickname, addPlayer } from '../actions/player';
+import { addRTCConn, getPeer } from '../helpers/webRTC';
 
 export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
+    socket.on('/player', (data) => {
+      const { path } = data;
+      switch (path) {
+        case '/player': {
+          const { webRTCId, nickname } = data;
+          dispatch(setNickname({ webRTCId, nickname }));
+          break;
+        }
+        default:
+          break;
+      }
+    });
     socket.on('/game', (data) => {
       const { path } = data;
-      const state = getState();
       switch (path) {
         case '/join': {
           console.log('peer received --', data);
-          if (data.webRTCId !== state.peer.id) {
-            const conn = state.peer.connect(data.webRTCId);
-            conn.on('open', () => {
-              addRTCConn(conn);
-            });
+          const peer = getPeer();
+          const { webRTCId, nickname } = data;
+          if (webRTCId !== peer.id) {
+            const conn = peer.connect(webRTCId);
+            conn.on('open', () => { addRTCConn(conn); });
+            dispatch(addPlayer({ nickname, webRTCId }));
           }
           break;
         }

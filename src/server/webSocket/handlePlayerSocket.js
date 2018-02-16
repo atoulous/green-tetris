@@ -1,4 +1,5 @@
 import { getConnection } from './socketManager';
+import { getGame } from '../helpers/game';
 import Player from '../classes/Player';
 
 const io = getConnection();
@@ -22,6 +23,14 @@ export default async function (data) {
       const newPlayer = new Player({ room, socketId });
 
       io.to(room).emit(newPlayer);
+      break;
+    }
+    case '/nickname': {
+      const { nickname, webRTCId, room } = data;
+      const game = getGame(room);
+      const player = game.players.find(playeur => (playeur.webRTCId === webRTCId));
+      player.nickname = nickname;
+      game.broadcast(getConnection(), '/player', { path: '/nickname', webRTCId, nickname });
       break;
     }
     default:
