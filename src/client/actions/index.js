@@ -1,5 +1,5 @@
 import * as actionsConnexion from './connexion';
 import * as actionsTetris from './tetris';
-import * as actionsGame from './game';
+import * as actionsSocket from './socket';
 
-export default { ...actionsTetris, ...actionsConnexion, ...actionsGame };
+export default { ...actionsTetris, ...actionsConnexion, ...actionsSocket };
