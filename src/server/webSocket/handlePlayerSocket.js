@@ -14,10 +14,12 @@ export default async function (data) {
 
   switch (path) {
     case '/new': {
-      console.log('new piece nedded', data);
+      console.log('new piece needed', data);
 
       const { room } = data;
-      const newPlayer = new Player();
+      const socketId = io.id;
+
+      const newPlayer = new Player({ room, socketId });
 
       io.to(room).emit(newPlayer);
       break;

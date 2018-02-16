@@ -1,7 +1,7 @@
 /**
  * Class Player
  *
- * @param constructor {Object} - id, socket
+ * @param constructor {Object} - socketId, name (optional)
  */
 class Player {
   constructor({ webRTCId = null, socketId = null, nickname = null }) {
