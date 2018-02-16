@@ -15,19 +15,10 @@ import {
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
-import * as webSocket from '../helpers/webSocket';
-import * as webRTC from '../helpers/webRTC';
 import { initBag, initGrid, initSpectrum } from '../helpers';
-import { pieces } from '../constants';
-
-const socket = webSocket.getClient();
-const peer = webRTC.getPeer({ key: '7ie9ooeeas0grpb9' });
 
 const initialState = {
-  socket,
-  peer,
   piecesQueue: [],
-  RTCConns: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
   currentPiece: null,

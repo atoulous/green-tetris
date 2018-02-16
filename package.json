@@ -11,6 +11,7 @@
     "server-dist": "DEBUG=tetris:* babel src --out-dir dist",
     "client-dist": "NODE_ENV=production webpack --progress --colors",
     "test": "jest test/server",
+    "tets": "npm run test",
     "coverage": "jest test/server --coverage"
   },
   "dependencies": {
@@ -72,6 +73,7 @@
     "sinon": "^4.1.3",
     "style-loader": "^0.19.1",
     "supertest": "^3.0.0",
+    "util": "^0.10.3",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-dev-server": "^2.9.7",

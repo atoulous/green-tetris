@@ -1,15 +1,15 @@
 import Player from '../../../src/server/classes/Player';
 
 describe('classes/player', () => {
-
   let player;
 
   beforeAll(() => {
     player = new Player({ socketId: 'socketId', webRTCId: 'webRTCId' });
   });
+
   it('should success to create player instance', async () => {
     expect(player).not.toBeUndefined();
-    expect(player).toHaveProperty('nickname', 'defaultName');
+    expect(player).toHaveProperty('nickname', 'Player');
   });
 
   it('should fail to create player instance', async () => {

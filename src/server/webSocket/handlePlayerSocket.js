@@ -17,7 +17,7 @@ export default async function (data) {
       console.log('new piece needed', data);
 
       const { room } = data;
-      const socketId = io.id;
+      const { socketId } = io;
 
       const newPlayer = new Player({ room, socketId });
 
