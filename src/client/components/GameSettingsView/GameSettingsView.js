@@ -9,11 +9,12 @@ import './GameSettingsView.scss';
 
 const GameSettingsView = ({ match, game, dispatch }) => {
   const isSolo = (match.params.id === 'solo');
+  const p = (isSolo) ? null : <GamePlayers game={game} dispatch={dispatch} />;
   return (
     <div className="container">
       <div className="game-settings-view">
-        {!isSolo && <GamePlayers game={game} dispatch={dispatch} />}
         <GameSettings game={game} dispatch={dispatch} />
+        {p}
       </div>
     </div>
   );
