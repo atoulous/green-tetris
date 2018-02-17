@@ -28,14 +28,13 @@ export default async function (data) {
 
       const { room, webRTCId, socketId } = data;
       const currrentGame = getGame(room);
-      if (currrentGame) {
+      if (currrentGame && !currrentGame.hasStarted) {
         const newPlayer = new Player({ socketId, webRTCId });
-        currrentGame.broadcast(
-          getConnection(), '/game',
-          { path: '/join', webRTCId: newPlayer.webRTCId, nickname: newPlayer.nickname }
-        );
+        getConnection().to(socketId).emit('/game', { path: '/joined', game: currrentGame });
         currrentGame.players.push(newPlayer);
-        getConnection().to(socketId).emit('/player', { path: '/list', players: currrentGame.players.map(pl => (pl.formatData(['nickname', 'socketId', 'webRTCId']))) });
+        currrentGame.broadcast(getConnection(), '/game', { path: '/updated', game: currrentGame });
+      } else {
+        console.log('NOTHING SHOULD HAPPEN AS EITHER GAME DOES NOT EXIST OR GAME HAS STARTED');
       }
       break;
     }
