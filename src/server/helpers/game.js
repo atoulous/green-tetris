@@ -13,9 +13,5 @@ export function addGame(game) {
 }
 
 export function getGame(room) {
-  return getGames().find(game => {
-    console.log('cur game - ', game, room);
-    console.log(game.room === room);
-    return (game.room === room);
-  });
+  return getGames().find(game => (game.room === room));
 }

@@ -11,40 +11,6 @@ class Player {
     this.nickname = nickname || 'defaultName';
   }
 
-  /*
-  get socketId() {
-    return this._socketId;
-  }
-
-  set socketId(socketId) {
-    this._socketId = socketId;
-  }
-
-  get webRTCId() {
-    return this._webRTCId;
-  }
-
-  set webRTCId(webRTCId) {
-    this._webRTCId = webRTCId;
-  }
-
-  get nickname() {
-    return this._nickname;
-  }
-
-  set nickname(nickname) {
-    this._nickname = nickname;
-  }
-  */
-
-  formatData(keys) {
-    const formattedData = {};
-
-    keys.forEach((key) => {
-      formattedData[key] = this[key];
-    });
-    return formattedData;
-  }
 }
 
 export default Player;

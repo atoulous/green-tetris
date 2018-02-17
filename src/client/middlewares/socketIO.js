@@ -4,6 +4,24 @@ import { addRTCConn, getPeer } from '../helpers/webRTC';
 export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
+    socket.on('/player', (data) => {
+      const { path } = data;
+      switch (path) {
+        case '/nickname': {
+          const { webRTCId, nickname } = data;
+          dispatch(setNickname({ webRTCId, nickname }));
+          break;
+        }
+        case '/list': {
+          const { players } = data;
+          console.log('setPlayers - ', data);
+          dispatch(setPlayers({ players }));
+          break;
+        }
+        default:
+          break;
+      }
+    });
     socket.on('/game', (data) => {
       const { path } = data;
       switch (path) {
@@ -35,6 +53,10 @@ export default socket => ({ dispatch, getState }) => {
       switch (action.data.call) {
         case '/game': {
           socket.emit('/game', action.data);
+          break;
+        }
+        case '/player': {
+          socket.emit('/player', action.data);
           break;
         }
         default:
