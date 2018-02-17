@@ -1,7 +1,7 @@
 
 export function rtcConnexion(state, action) {
   const conn = action.data;
-  let { RTCConns } = state;
+  const { RTCConns } = state;
   RTCConns.push({ conn });
   return { ...state, RTCConns };
 }

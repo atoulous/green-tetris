@@ -12,7 +12,7 @@ import logger from '../middlewares/logger';
 import reducer from '../reducers';
 
 const socket = webSocket.getClient();
-const peer = webRTC.getPeer({ key: '7ie9ooeeas0grpb9' });
+const peer = webRTC.newPeer({ key: '7ie9ooeeas0grpb9' });
 
 const middlewares = applyMiddleware(
   thunk,

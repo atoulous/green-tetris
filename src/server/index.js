@@ -6,13 +6,8 @@ import routesConfig from './config/routes';
 import logger from './helpers/logger';
 import * as webSocket from './webSocket/socketManager';
 
-import Game from './classes/Game';
-
 export const app = new Express();
 export const server = new Server(app);
-
-export const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
-
 
 /**
  * Start the web app.
@@ -20,11 +15,11 @@ export const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhr
  * @returns {void}
  */
 export async function start() {
-  appConfig(app);
-  routesConfig(app);
-  webSocket.listen(server);
-
   try {
+    appConfig(app);
+    routesConfig(app);
+    webSocket.listen(server);
+
     await new Promise((resolve, reject) => server.listen(app.get('port'), err => (err ? reject(err) : resolve())));
     logger.info('✔ Server running on port', app.get('port'));
   } catch (err) {
@@ -38,9 +33,9 @@ export async function start() {
  * @returns {void}
  */
 export async function stop() {
-  webSocket.close();
-
   try {
+    webSocket.close();
+
     await new Promise((resolve, reject) => server.close(err => (err ? reject(err) : resolve())));
     logger.info('✔ Server stopped');
   } catch (err) {

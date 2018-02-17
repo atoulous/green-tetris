@@ -4,10 +4,14 @@ import { RTCConnectionMessage } from '../actions/connexion';
 import store from '../store';
 
 let peer = null;
-let RTCConns = [];
+const RTCConns = [];
 
-export function getPeer({ key }) {
-  if (!peer) peer = new Peer({ key });
+export function newPeer({ key }) {
+  peer = new Peer({ key });
+  return peer;
+}
+
+export function getPeer() {
   return peer;
 }
 

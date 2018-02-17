@@ -19,6 +19,7 @@ export function listen(server) {
 
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
+    io.socketId = socket.id;
 
     socket.on('/game', data => handleGameSocket(data));
     socket.on('/piece', data => handlePieceSocket(data));

@@ -1,9 +1,9 @@
+import uniqid from 'uniqid';
+
 import Player from '../classes/Player';
 import Game from '../classes/Game';
 import { getConnection } from './socketManager';
-
-const io = getConnection();
-const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf' })];
+import { getGames, addGame, getGame } from '../helpers/game';
 
 /**
  * handle game socket input
@@ -14,14 +14,28 @@ const allGames = [new Game({ room: 'oijf9898a' }), new Game({ room: 'ffhreuf8fhf
 export default async function (data) {
   const { path } = data;
   switch (path) {
+    case '/create': {
+      console.log('new game is created', data);
+      const hash = uniqid();
+      const { webRTCId, socketId } = data;
+
+      addGame(new Game({ room: hash, gameMaster: new Player({ webRTCId, socketId }) }));
+      console.log(' games are -- ', getGames());
+      break;
+    }
     case '/join': {
       console.log('new peer joined the game', data);
 
-      const { room, id, socket } = data;
-      const currrentGame = allGames.find(game => (game.room === room));
+      const { room, webRTCId, socketId } = data;
+      const currrentGame = getGame(room);
       if (currrentGame) {
-        currrentGame.broadcast(io, '/game', { path: '/join', id });
-        currrentGame.players.push(new Player({ socket, id }));
+        const newPlayer = new Player({ socketId, webRTCId });
+        currrentGame.broadcast(
+          getConnection(), '/game',
+          { path: '/join', webRTCId: newPlayer.webRTCId, nickname: newPlayer.nickname }
+        );
+        currrentGame.players.push(newPlayer);
+        getConnection().to(socketId).emit('/player', { path: '/list', players: currrentGame.players.map(pl => (pl.formatData(['nickname', 'socketId', 'webRTCId']))) });
       }
       break;
     }

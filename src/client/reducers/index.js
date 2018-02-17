@@ -13,21 +13,14 @@ import {
   updateScore,
 } from './tetris';
 
+import { setNickname, setOwnNickname, addPlayer, setPlayers } from './player';
+
 import { rtcConnexion, rtcMessage } from './connexion';
 
-import * as webSocket from '../helpers/webSocket';
-import * as webRTC from '../helpers/webRTC';
 import { initBag, initGrid, initSpectrum } from '../helpers';
-import { pieces } from '../constants';
-
-const socket = webSocket.getClient();
-const peer = webRTC.getPeer({ key: '7ie9ooeeas0grpb9' });
 
 const initialState = {
-  socket,
-  peer,
   piecesQueue: [],
-  RTCConns: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
   currentPiece: null,
@@ -35,18 +28,17 @@ const initialState = {
   speed: 1000,
   spectrum: initSpectrum(),
   score: 0,
-  players: [{ name: 'Me', id: 0, score: 0, spectrum: initSpectrum() }, { name: 'You', id: 1, score: 0, spectrum: initSpectrum() }],
   games: [{ id: 1,
     master: 'jordan',
     speed: 1000,
     size: { x: 10, y: 15 },
     currentPlayers: [{
-      id: 1,
-      name: 'Jordan',
+      webRTCId: 1,
+      nickname: 'Jordan',
       isReady: false,
     }, {
-      id: 234234,
-      name: 'Thibault',
+      webRTCId: 234234,
+      nickname: 'Thibault',
       isReady: true,
     }],
     maxPlayers: 5,
@@ -56,16 +48,18 @@ const initialState = {
     speed: 1000,
     size: { x: 10, y: 15 },
     currentPlayers: [{
-      id: 1,
-      name: 'Jordan',
+      webRTCId: 1,
+      nickname: 'Jordan',
       isReady: false,
     }, {
-      id: 234234,
-      name: 'Thibault',
+      webRTCId: 234234,
+      nickname: 'Thibault',
       isReady: true,
     }],
     maxPlayers: 5,
   },
+  nickname: 'defaultName',
+  players: [{ nickname: 'Me', webRTCId: 0, score: 0, spectrum: initSpectrum() }, { nickname: 'You', webRTCId: 1, score: 0, spectrum: initSpectrum() }],
 };
 
 const {
@@ -83,6 +77,11 @@ const {
 
   RTC_CONN,
   RTC_MESSAGE,
+
+  SET_NICKNAME,
+  SET_OWN_NICKNAME,
+  ADD_PLAYER,
+  SET_PLAYERS,
 } = actions;
 
 /*
@@ -117,6 +116,16 @@ export default function reducer(state = initialState, action) {
       return rtcConnexion(state, action);
     case RTC_MESSAGE:
       return rtcMessage(state);
+
+    case SET_NICKNAME:
+      return setNickname(state, action);
+    case SET_OWN_NICKNAME:
+      return setOwnNickname(state, action);
+    case ADD_PLAYER:
+      return addPlayer(state, action);
+    case SET_PLAYERS:
+      return setPlayers(state, action);
+
     default:
       return state;
   }

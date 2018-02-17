@@ -1,5 +1,5 @@
 import path from 'path';
-import { allGames } from '../index';
+import { getGames } from '../helpers/game';
 
 const INDEX = path.resolve(__dirname, '../../client', 'index.html');
 
