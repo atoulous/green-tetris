@@ -4,11 +4,16 @@ import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import './GameSettings.scss';
 
 
 const GameSettings = ({ game, dispatch }) => {
+  const toggleStyle = {
+    marginBottom: 15,
+  };
+
   const handleMaxPlayer = (e) => {
     console.log('MAX-PLAYERS:', e);
     /*
@@ -37,10 +42,24 @@ const GameSettings = ({ game, dispatch }) => {
     */
   };
 
+  const handleStart = () => {
+    console.log('START');
+    /*
+    ** Start Game
+    */
+  };
+
+  const handleCancel = () => {
+    console.log('CANCEL');
+    /*
+    ** Start Game
+    */
+  };
 
   return (
     <div className="game-settings">
       <section>
+        <h1>Game Settings</h1>
         <SelectField
           floatingLabelText="Maximum Players"
           value={game.maxPlayers}
@@ -52,8 +71,6 @@ const GameSettings = ({ game, dispatch }) => {
           <MenuItem value={4} primaryText="4" />
           <MenuItem value={5} primaryText="5" />
         </SelectField>
-      </section>
-      <section>
         <SelectField
           floatingLabelText="Game speed"
           value={game.speed}
@@ -66,11 +83,14 @@ const GameSettings = ({ game, dispatch }) => {
         </SelectField>
       </section>
       <section>
-        <Toggle label="Full Visibility" onToggle={handleVisibility} />
+        <h1>Game Mode</h1>
+        <Toggle label="Full Visibility" onToggle={handleVisibility} labelPosition="right" style={toggleStyle} />
+        <Toggle label="Wait for all players before dealing new piece" onToggle={handleWait} labelPosition="right" style={toggleStyle} />
       </section >
       <section>
-        <Toggle label="Wait for all players before dealing new piece" onToggle={handleWait} />
-      </section >
+        <RaisedButton label="START" primary style={{ marginRight: 20 }} onClick={handleStart} />
+        <RaisedButton label="CANCEL" secondary onClick={handleCancel} />
+      </section>
     </div>
   );
 };

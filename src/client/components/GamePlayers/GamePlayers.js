@@ -10,6 +10,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Chip from 'material-ui/Chip';
 
 
 import './GamePlayers.scss';
@@ -23,6 +24,30 @@ const GamePlayers = ({ game, dispatch }) => {
     */
   };
 
+  const playersTable = [];
+
+  for (let i = 0; i < game.maxPlayers; i++) {
+    if (game.currentPlayers[i]) {
+      playersTable.push(<TableRow key={i}>
+        <TableRowColumn>{game.currentPlayers[i].name}</TableRowColumn>
+        <TableRowColumn>{
+              (game.currentPlayers[i].isReady) ? <Chip backgroundColor="#74d680">Ready</Chip> : <Chip backgroundColor="#ff7878">Waiting</Chip>
+            }
+        </TableRowColumn>
+        <TableRowColumn>
+          <RaisedButton label="Kick" onClick={handleKick(game.currentPlayers[i])} />
+        </TableRowColumn>
+      </TableRow>);
+    } else {
+      playersTable.push(<TableRow key={i}>
+        <TableRowColumn> - </TableRowColumn>
+        <TableRowColumn />
+        <TableRowColumn />
+      </TableRow>);
+    }
+  }
+
+
   return (
     <div className="game-players">
       <Table selectable={false}>
@@ -34,17 +59,7 @@ const GamePlayers = ({ game, dispatch }) => {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {
-            game.currentPlayers.map(player => (
-              <TableRow key={player.id}>
-                <TableRowColumn>{player.name}</TableRowColumn>
-                <TableRowColumn>{player.isReady}</TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton label="Kick" onClick={handleKick(player)} />
-                </TableRowColumn>
-              </TableRow>
-                ))
-        }
+          {playersTable}
         </TableBody>
       </Table>
     </div>
