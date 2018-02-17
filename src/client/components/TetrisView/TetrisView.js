@@ -1,14 +1,19 @@
 import React from 'react';
+
+import RTCTest from '../../containers/RTCtest/RTCTest';
 import Tetris from '../../containers/Tetris/Tetris';
 import Players from '../../containers/Players/Players';
 
 import './TetrisView.scss';
 
-const TetrisView = () => (
-  <div className="tetris-view">
-    <Tetris />
-    <Players />
+const Home = () => (
+  <div className="container">
+    <div className="tetris-view">
+      <Tetris />
+      <Players />
+    </div>
+    <RTCTest />
   </div>
 );
 
-export default TetrisView;
+export default Home;

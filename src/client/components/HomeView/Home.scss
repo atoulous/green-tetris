@@ -1,0 +1,16 @@
+.container-menu {
+    display: flex;
+    justify-content: center;
+}
+
+#home-menu {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    width: 60%;
+    max-width: 400px;      
+}
+
+#home-menu li {
+    padding-bottom: 10px;
+}
