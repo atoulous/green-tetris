@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as webRTC from '../../helpers/webRTC';
-import * as socket from '../../helpers/webSocket';
 
-import { createGame } from '../../actions/socket';
+import { setPlayerNickname } from '../../actions/socket';
+import { setOwnNickname } from '../../actions/player';
 
 const NewGameButton = ({ onButtonClick }) => (
   <div>
     <button onClick={onButtonClick}>
-      create new game
+      set nickname
     </button>
   </div>
 );
@@ -17,7 +17,8 @@ const NewGameButton = ({ onButtonClick }) => (
 
 const mapDispatchToProps = dispatch => ({
   onButtonClick: () => {
-    dispatch(createGame({ webRTCId: webRTC.getPeer().id, socketId: socket.getClient().id }));
+    dispatch(setPlayerNickname({ webRTCId: webRTC.getPeer().id, nickname: 'thibault', room: window.location.hash.slice(1) }));
+    dispatch(setOwnNickname({ nickname: 'thibault', }));
   }
 });
 

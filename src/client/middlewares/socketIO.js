@@ -1,20 +1,38 @@
-import { RTCConnection } from '../actions/connexion';
-import { addRTCConn } from '../helpers/webRTC';
+import { setNickname, addPlayer, setPlayers } from '../actions/player';
+import { addRTCConn, getPeer } from '../helpers/webRTC';
 
 export default socket => ({ dispatch, getState }) => {
   if (socket) {
     socket.on('action', dispatch);
+    socket.on('/player', (data) => {
+      const { path } = data;
+      switch (path) {
+        case '/nickname': {
+          const { webRTCId, nickname } = data;
+          dispatch(setNickname({ webRTCId, nickname }));
+          break;
+        }
+        case '/list': {
+          const { players } = data;
+          console.log('setPlayers - ', data);
+          dispatch(setPlayers({ players }));
+          break;
+        }
+        default:
+          break;
+      }
+    });
     socket.on('/game', (data) => {
       const { path } = data;
-      const state = getState();
       switch (path) {
         case '/join': {
           console.log('peer received --', data);
-          if (data.webRTCId !== state.peer.id) {
-            const conn = state.peer.connect(data.webRTCId);
-            conn.on('open', () => {
-              addRTCConn(conn);
-            });
+          const peer = getPeer();
+          const { webRTCId, nickname } = data;
+          if (webRTCId !== peer.id) {
+            const conn = peer.connect(webRTCId);
+            conn.on('open', () => { addRTCConn(conn); });
+            dispatch(addPlayer({ nickname, webRTCId }));
           }
           break;
         }
@@ -24,11 +42,14 @@ export default socket => ({ dispatch, getState }) => {
     });
   }
   return next => (action) => {
-    console.log('action is -- ', action);
     if (socket && action.type === 'socket') {
       switch (action.data.call) {
         case '/game': {
           socket.emit('/game', action.data);
+          break;
+        }
+        case '/player': {
+          socket.emit('/player', action.data);
           break;
         }
         default:
