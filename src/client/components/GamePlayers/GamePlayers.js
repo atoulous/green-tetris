@@ -29,7 +29,7 @@ const GamePlayers = ({ game, dispatch }) => {
   for (let i = 0; i < game.maxPlayers; i++) {
     if (game.currentPlayers[i]) {
       playersTable.push(<TableRow key={i}>
-        <TableRowColumn>{game.currentPlayers[i].name}</TableRowColumn>
+        <TableRowColumn>{game.currentPlayers[i].nickname}</TableRowColumn>
         <TableRowColumn>{
               (game.currentPlayers[i].isReady) ? <Chip backgroundColor="#74d680">Ready</Chip> : <Chip backgroundColor="#ff7878">Waiting</Chip>
             }
