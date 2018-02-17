@@ -13,7 +13,7 @@ import {
   updateScore,
 } from './tetris';
 
-import { setNickname, setOwnNickname, addPlayer } from './player';
+import { setNickname, setOwnNickname, addPlayer, setPlayers } from './player';
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
@@ -51,6 +51,7 @@ const {
   SET_NICKNAME,
   SET_OWN_NICKNAME,
   ADD_PLAYER,
+  SET_PLAYERS,
 } = actions;
 
 /*
@@ -92,6 +93,8 @@ export default function reducer(state = initialState, action) {
       return setOwnNickname(state, action);
     case ADD_PLAYER:
       return addPlayer(state, action);
+    case SET_PLAYERS:
+      return setPlayers(state, action);
 
     default:
       return state;

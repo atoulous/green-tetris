@@ -34,6 +34,15 @@ class Player {
   set nickname(nickname) {
     this._nickname = nickname;
   }
+
+  formatData(keys) {
+    const formattedData = {};
+
+    keys.forEach((key) => {
+      formattedData[key] = this[key];
+    });
+    return formattedData;
+  }
 }
 
 export default Player;

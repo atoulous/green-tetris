@@ -30,11 +30,12 @@ export default async function (data) {
       const currrentGame = getGame(room);
       if (currrentGame) {
         const newPlayer = new Player({ socketId, webRTCId });
-        currrentGame.players.push(newPlayer);
         currrentGame.broadcast(
           getConnection(), '/game',
           { path: '/join', webRTCId: newPlayer.webRTCId, nickname: newPlayer.nickname }
         );
+        currrentGame.players.push(newPlayer);
+        getConnection().to(socketId).emit('/player', { path: '/list', players: currrentGame.players.map(pl => (pl.formatData(['nickname', 'socketId', 'webRTCId']))) });
       }
       break;
     }

@@ -26,3 +26,7 @@ export function addPlayer(state, action) {
 export function setOwnNickname(state, action) {
   return { ...state, nickname: action.data.nickname };
 }
+
+export function setPlayers(state, action) {
+  return { ...state, players: action.data.players };
+}

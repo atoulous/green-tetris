@@ -1,4 +1,4 @@
-import { setNickname, addPlayer } from '../actions/player';
+import { setNickname, addPlayer, setPlayers } from '../actions/player';
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
 export default socket => ({ dispatch, getState }) => {
@@ -10,6 +10,12 @@ export default socket => ({ dispatch, getState }) => {
         case '/nickname': {
           const { webRTCId, nickname } = data;
           dispatch(setNickname({ webRTCId, nickname }));
+          break;
+        }
+        case '/list': {
+          const { players } = data;
+          console.log('setPlayers - ', data);
+          dispatch(setPlayers({ players }));
           break;
         }
         default:
