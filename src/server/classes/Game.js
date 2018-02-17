@@ -7,13 +7,14 @@ class Game {
   constructor({ room = null, gameMaster = null }) {
     if (!room || !gameMaster) throw new Error('room and gameMaster are required');
 
-    this._room = room;
-    this._players = [];
-    this._hasStarted = false;
-    this._settings = {};
-    this._gameMaster = gameMaster;
+    this.room = room;
+    this.players = [];
+    this.hasStarted = false;
+    this.settings = {};
+    this.gameMaster = gameMaster;
   }
 
+  /*
   get gameMaster() {
     return this._gameMaster;
   }
@@ -53,6 +54,7 @@ class Game {
   set players(players) {
     this._players = players;
   }
+  */
 
   broadcast(io, subject, data) {
     this.players.forEach((player) => {

@@ -12,8 +12,3 @@ export const joinGame = ({ room, webRTCId, socketId }) => ({
   type: 'socket',
   data: { call: '/game', path: '/join', webRTCId, socketId, room },
 });
-
-export const setPlayerNickname = ({ nickname, webRTCId, room }) => ({
-  type: 'socket',
-  data: { call: '/player', path: '/nickname', webRTCId, nickname, room },
-});

@@ -6,11 +6,12 @@
 class Player {
   constructor({ webRTCId = null, socketId = null, nickname = null }) {
     if (!webRTCId || !socketId) throw new Error('webRTCId and socketId are required');
-    this._socketId = socketId;
-    this._webRTCId = webRTCId;
-    this._nickname = nickname || 'defaultName';
+    this.socketId = socketId;
+    this.webRTCId = webRTCId;
+    this.nickname = nickname || 'defaultName';
   }
 
+  /*
   get socketId() {
     return this._socketId;
   }
@@ -34,6 +35,7 @@ class Player {
   set nickname(nickname) {
     this._nickname = nickname;
   }
+  */
 
   formatData(keys) {
     const formattedData = {};
