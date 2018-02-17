@@ -8,7 +8,7 @@ import './Players.scss';
 const Players = ({ players }) => (
   <div className="players">
     <div className="players-title">PLAYERS</div>
-    {players.map(player => <Player key={player.id} player={player} />)}
+    {players.map(player => <Player key={player.webRTCId} player={player} />)}
   </div>
 );
 
