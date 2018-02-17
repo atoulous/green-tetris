@@ -30,3 +30,19 @@ export function setOwnNickname(state, action) {
 export function setPlayers(state, action) {
   return { ...state, players: action.data.players };
 }
+
+
+/*
+** Handle nickname updates
+*/
+export function updateNickname(state, action) {
+  return { ...state, nickname: action.nickname };
+}
+
+export function openNicknameModal(state) {
+  return { ...state, isNicknameModalOpen: true };
+}
+
+export function closeNicknameModal(state) {
+  return { ...state, isNicknameModalOpen: false };
+}
