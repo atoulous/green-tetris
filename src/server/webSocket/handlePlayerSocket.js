@@ -1,8 +1,24 @@
-import { getConnection } from './socketManager';
-import { getGame } from '../helpers/game';
-import Player from '../classes/Player';
+import _ from 'lodash';
 
-const io = getConnection();
+import Player from '../classes/Player';
+import logger from '../helpers/logger';
+
+/*
+** Update Player Settings
+*/
+function update(playerId, settings) {
+  const player = Player.getPlayerById(playerId);
+  player.update(settings);
+  console.log(Player.allPlayers);
+}
+/*
+** Delete Player.
+*/
+function _delete(playerId) {
+  const player = Player.getPlayerById(playerId);
+  // if (!player) throw new Error('Player not found');
+  _.delete(Player.allPlayers, p => p.get('id') === playerId);
+}
 
 /**
  * handle player socket input
@@ -10,27 +26,16 @@ const io = getConnection();
  * @param {Object} data - the data
  * @return {void}
  */
-export default async function (data) {
+export default async function (playerId, data) {
   const { path } = data;
-
+  logger.info(`Socket - /player${path}`);
   switch (path) {
-    case '/new': {
-      console.log('new piece needed', data);
-
-      const { room } = data;
-      const { socketId } = io;
-
-      const newPlayer = new Player({ room, socketId });
-
-      io.to(room).emit(newPlayer);
+    case '/update': {
+      update(playerId, data.settings);
       break;
     }
-    case '/nickname': {
-      const { nickname, webRTCId, room } = data;
-      const game = getGame(room);
-      const player = game.players.find(tmpPlayer => (tmpPlayer.webRTCId === webRTCId));
-      player.nickname = nickname;
-      game.broadcast(getConnection(), '/player', { path: '/nickname', webRTCId, nickname });
+    case '/deconnexion': {
+      _delete(playerId);
       break;
     }
     default:
