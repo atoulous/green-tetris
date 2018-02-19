@@ -43,7 +43,7 @@ describe('server/app', () => {
       await start();
       const { statusCode, text } = await request(app).get('/non/existing/route');
       expect(statusCode).toEqual(HttpStatus.OK);
-      expect(text).toContain('<div id="app">');
+      expect(text).toContain('<div id="tetris">');
     });
   });
 
