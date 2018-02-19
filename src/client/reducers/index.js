@@ -14,14 +14,13 @@ import {
 } from './tetris';
 
 import { updateNickname, openNicknameModal, closeNicknameModal } from './player';
-import { setGame } from './game';
+import { setGame, updateGamesList, updateGame } from './game';
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
 import { initBag, initGrid, initSpectrum } from '../helpers';
 
 const initialState = {
-  game: {},
   piecesQueue: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
@@ -30,36 +29,8 @@ const initialState = {
   speed: 1000,
   spectrum: initSpectrum(),
   score: 0,
-  games: [{ id: 1,
-    master: 'jordan',
-    speed: 1000,
-    size: { x: 10, y: 15 },
-    currentPlayers: [{
-      webRTCId: 1,
-      nickname: 'Jordan',
-      isReady: false,
-    }, {
-      webRTCId: 234234,
-      nickname: 'Thibault',
-      isReady: true,
-    }],
-    maxPlayers: 5,
-  }],
-  game: { id: 1,
-    master: 'jordan',
-    speed: 1000,
-    size: { x: 10, y: 15 },
-    currentPlayers: [{
-      webRTCId: 1,
-      nickname: 'Jordan',
-      isReady: false,
-    }, {
-      webRTCId: 234234,
-      nickname: 'Thibault',
-      isReady: true,
-    }],
-    maxPlayers: 5,
-  },
+  gamesList: [],
+  game: null,
   nickname: 'defaultName',
   isNicknameModalOpen: false,
   players: [{ nickname: 'Me', webRTCId: 0, score: 0, spectrum: initSpectrum() }, { nickname: 'You', webRTCId: 1, score: 0, spectrum: initSpectrum() }],
@@ -80,6 +51,8 @@ const {
   OPEN_NICKNAME_MODAL,
   CLOSE_NICKNAME_MODAL,
   UPDATE_NICKNAME,
+  UPDATE_GAMES_LIST,
+  UPDATE_GAME,
 
   RTC_CONN,
   RTC_MESSAGE,
@@ -120,6 +93,10 @@ export default function reducer(state = initialState, action) {
       return closeNicknameModal(state);
     case UPDATE_NICKNAME:
       return updateNickname(state, action);
+    case UPDATE_GAMES_LIST:
+      return updateGamesList(state, action);
+    case UPDATE_GAME:
+      return updateGame(state, action);
 
     case RTC_CONN:
       return rtcConnexion(state, action);
