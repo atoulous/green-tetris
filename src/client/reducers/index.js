@@ -13,13 +13,15 @@ import {
   updateScore,
 } from './tetris';
 
-import { updateNickname, openNicknameModal, closeNicknameModal, setNickname, setOwnNickname, addPlayer, setPlayers } from './player';
+import { updateNickname, openNicknameModal, closeNicknameModal } from './player';
+import { setGame } from './game';
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
 import { initBag, initGrid, initSpectrum } from '../helpers';
 
 const initialState = {
+  game: {},
   piecesQueue: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
@@ -82,10 +84,7 @@ const {
   RTC_CONN,
   RTC_MESSAGE,
 
-  SET_NICKNAME,
-  SET_OWN_NICKNAME,
-  ADD_PLAYER,
-  SET_PLAYERS,
+  SET_GAME
 } = actions;
 
 /*
@@ -127,14 +126,8 @@ export default function reducer(state = initialState, action) {
     case RTC_MESSAGE:
       return rtcMessage(state);
 
-    case SET_NICKNAME:
-      return setNickname(state, action);
-    case SET_OWN_NICKNAME:
-      return setOwnNickname(state, action);
-    case ADD_PLAYER:
-      return addPlayer(state, action);
-    case SET_PLAYERS:
-      return setPlayers(state, action);
+    case SET_GAME:
+      return setGame(state, action);
 
     default:
       return state;

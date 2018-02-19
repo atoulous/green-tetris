@@ -1,4 +1,4 @@
-import { setNickname, addPlayer, setPlayers } from '../actions/player';
+import { setGame } from '../actions/game';
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
 export default socket => ({ dispatch, getState }) => {
@@ -25,15 +25,22 @@ export default socket => ({ dispatch, getState }) => {
     socket.on('/game', (data) => {
       const { path } = data;
       switch (path) {
-        case '/join': {
-          console.log('peer received --', data);
+        case '/joined': {
+          console.log('game received --', data);
           const peer = getPeer();
-          const { webRTCId, nickname } = data;
-          if (webRTCId !== peer.id) {
-            const conn = peer.connect(webRTCId);
-            conn.on('open', () => { addRTCConn(conn); });
-            dispatch(addPlayer({ nickname, webRTCId }));
-          }
+          const { game } = data;
+          game.players.forEach(({ webRTCId }) => {
+            if (webRTCId !== peer.id) {
+              const conn = peer.connect(webRTCId);
+              conn.on('open', () => { addRTCConn(conn); });
+            }
+          });
+          break;
+        }
+        case '/updated': {
+          console.log('game received --', data);
+          const { game } = data;
+          dispatch(setGame({ game }));
           break;
         }
         default:

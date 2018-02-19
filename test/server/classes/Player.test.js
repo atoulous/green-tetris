@@ -4,7 +4,7 @@ describe('classes/player', () => {
   let player;
 
   beforeAll(() => {
-    player = new Player({ socketId: 'socketId', webRTCId: 'webRTCId' });
+    player = new Player({ socketId: 'socketId', webRTCId: 'webRTCId', nickname: 'Player' });
   });
 
   it('should success to create player instance', async () => {
