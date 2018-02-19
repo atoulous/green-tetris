@@ -39,7 +39,8 @@
     "redux-thunk": "^2.0.1",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
-    "uniqid": "^4.1.1"
+    "uniqid": "^4.1.1",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
