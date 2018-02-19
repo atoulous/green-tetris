@@ -2,12 +2,12 @@ import * as actionsConnexion from './connexion';
 import * as actionsTetris from './tetris';
 import * as actionsSocket from './socket';
 import * as actionsGame from './game';
-import * as actionPlayer from './player';
+import * as actionsPlayer from './player';
 
 export default {
   ...actionsTetris,
   ...actionsConnexion,
   ...actionsSocket,
-  ...actionPlayer,
+  ...actionsPlayer,
   ...actionsGame,
 };
