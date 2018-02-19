@@ -1,4 +1,4 @@
-import { initSpectrum } from '../helpers';
+import { initSpectrum } from '../utils/tetris';
 
 export function setNickname(state, action) {
   const { players } = state;
