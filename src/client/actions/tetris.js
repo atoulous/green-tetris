@@ -19,6 +19,7 @@ export const ADD_ROW = 'ADD_ROW';
 export const UPDATE_SPECTRUM = 'UPDATE_SPECTRUM';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 
+
 // Action objects
 export function refreshGridWithoutCurrent() {
   return { type: REFRESH_GRID_WITHOUT_CURRENT };
@@ -41,7 +42,7 @@ export function setPiece(piece) {
 }
 
 export function deleteRows(rowsToDelete) {
-  return { type: DELETE_ROWS, rowsToDelete};
+  return { type: DELETE_ROWS, rowsToDelete };
 }
 
 export function addRow() {
@@ -53,7 +54,7 @@ export function updateSpectrum(grid) {
 }
 
 export function updateScore(score) {
-    return { type: UPDATE_SCORE, score };
+  return { type: UPDATE_SCORE, score };
 }
 
 // Action thunk functions
@@ -83,7 +84,7 @@ export function dropPiece() {
         dispatch(dropPiece());
       }, interval);
     } else {
-      let rowsToDelete = checkRowsToDelete(grid, currentPiece.x);
+      const rowsToDelete = checkRowsToDelete(grid, currentPiece.x);
       if (rowsToDelete.length) {
         dispatch(updateScore(10));
         dispatch(deleteRows(rowsToDelete));
@@ -163,28 +164,27 @@ export function move(event) {
 
 function movePieceLeft(dispatch, getState) {
   console.log('movePieceLeft');
-  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ y: currentPiece.y - 1 }}));
+  drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ y: currentPiece.y - 1 } }));
 }
 function movePieceRight(dispatch, getState) {
   console.log('movePieceRight');
-  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ y: currentPiece.y + 1 }}));
+  drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ y: currentPiece.y + 1 } }));
 }
 function rotatePiece(dispatch, getState) {
   console.log('rotatePice');
-  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 }}));
+  drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 } }));
 }
 function movePieceDown(dispatch, getState) {
   console.log('movePieceDown');
-  drawWithNextPiece(dispatch, getState, (currentPiece) => ({...currentPiece, ...{ x: currentPiece.x + 1 }}));
+  drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ x: currentPiece.x + 1 } }));
 }
 // Will move piece to the lowest posible position.
 function stickPieceDown(dispatch, getState) {
-  console.log("stickPieceDown");
+  console.log('stickPieceDown');
   const state = getState();
   const { currentPiece, gridWithoutCurrent } = state;
 
   function tryNextPiece(piece, gridWithoutCurrent) {
-
     const nextPiece = {
       ...piece,
       ...{ x: piece.x + 1 }

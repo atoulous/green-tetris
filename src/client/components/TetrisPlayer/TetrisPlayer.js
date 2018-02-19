@@ -4,9 +4,9 @@ import { Card, CardHeader } from 'material-ui/Card';
 
 import Spectrum from '../Spectrum/Spectrum';
 
-import './Player.scss';
+import './TetrisPlayer.scss';
 
-const Player = ({ player }) => (
+const TetrisPlayer = ({ player }) => (
   <Card style={{ marginRight: '10px', marginBottom: '10px' }}>
     <CardHeader
       title={player.name}
@@ -16,7 +16,7 @@ const Player = ({ player }) => (
   </Card>
 );
 
-Player.propTypes = {
+TetrisPlayer.propTypes = {
   player: PropTypes.shape({
     name: PropTypes.string,
     score: PropTypes.number,
@@ -25,4 +25,4 @@ Player.propTypes = {
 
 };
 
-export default Player;
+export default TetrisPlayer;

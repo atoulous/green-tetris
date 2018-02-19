@@ -2,7 +2,7 @@ import React from 'react';
 
 import RTCTest from '../../containers/RTCtest/RTCTest';
 import Tetris from '../../containers/Tetris/Tetris';
-import Players from '../../containers/Players/Players';
+import TetrisPlayersList from '../../components/TetrisPlayersList/TetrisPlayersList';
 
 import './TetrisView.scss';
 
@@ -10,7 +10,7 @@ const Home = () => (
   <div className="container">
     <div className="tetris-view">
       <Tetris />
-      <Players />
+      <TetrisPlayersList />
     </div>
     <RTCTest />
   </div>

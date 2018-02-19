@@ -13,6 +13,7 @@ import {
   updateScore,
 } from './tetris';
 
+import { updateNickname, openNicknameModal, closeNicknameModal } from './player';
 import { setGame } from './game';
 
 import { rtcConnexion, rtcMessage } from './connexion';
@@ -60,6 +61,7 @@ const initialState = {
     maxPlayers: 5,
   },
   nickname: 'defaultName',
+  isNicknameModalOpen: false,
   players: [{ nickname: 'Me', webRTCId: 0, score: 0, spectrum: initSpectrum() }, { nickname: 'You', webRTCId: 1, score: 0, spectrum: initSpectrum() }],
 };
 
@@ -75,6 +77,9 @@ const {
   ADD_ROW,
   UPDATE_SPECTRUM,
   UPDATE_SCORE,
+  OPEN_NICKNAME_MODAL,
+  CLOSE_NICKNAME_MODAL,
+  UPDATE_NICKNAME,
 
   RTC_CONN,
   RTC_MESSAGE,
@@ -109,6 +114,12 @@ export default function reducer(state = initialState, action) {
       return updateSpectrum(state, action.grid);
     case UPDATE_SCORE:
       return updateScore(state, action.score);
+    case OPEN_NICKNAME_MODAL:
+      return openNicknameModal(state);
+    case CLOSE_NICKNAME_MODAL:
+      return closeNicknameModal(state);
+    case UPDATE_NICKNAME:
+      return updateNickname(state, action);
 
     case RTC_CONN:
       return rtcConnexion(state, action);
