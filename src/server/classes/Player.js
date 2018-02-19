@@ -1,16 +1,44 @@
+import _ from 'lodash';
+import Payload from './Payload';
+
 /**
  * Class Player
  *
  * @param constructor {Object} - id, socket
  */
-class Player {
-  constructor({ webRTCId = null, socketId = null, nickname = null }) {
-    if (!webRTCId || !socketId) throw new Error('webRTCId and socketId are required');
-    this.socketId = socketId;
-    this.webRTCId = webRTCId;
-    this.nickname = nickname || 'defaultName';
+
+
+const _allPlayers = [];
+
+class Player extends Payload {
+  constructor(socket) {
+    super({
+      socket,
+      id: socket.id,
+      nickname: 'default',
+      isReady: false,
+      hasLost: false,
+      spectrum: [],
+      gameId: null,
+    });
   }
 
+  static get allPlayers() {
+    return _allPlayers;
+  }
+
+  static getPlayerById(id) {
+    const result = _allPlayers.filter(player => player.get('id') === id);
+    return (result.length > 0) ? result[0] : null;
+  }
+
+  update(settings) {
+    _.merge(this.payload, settings);
+  }
+
+  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId']) {
+    return super.format(props);
+  }
 }
 
 export default Player;
