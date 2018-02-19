@@ -4,8 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 
 import RTCTest from '../../containers/RTCtest/RTCTest';
-import Tetris from '../../containers/Tetris/Tetris';
-import Players from '../../containers/Players/Players';
 
 import './Home.scss';
 
