@@ -35,9 +35,10 @@ class Player extends Payload {
 
   update(settings) {
     _.merge(this.payload, settings);
-    if (this.gameId) {
-      const game = Game.getGameByid(this.gameId);
-      game.broadcast('/update', { game: game.format() });
+    if (this.get('gameId')) {
+      const game = Game.getGameByid(this.get('gameId'));
+      console.log(game);
+      if (game) game.broadcast('/update', { game: game.format() });
     }
   }
 
