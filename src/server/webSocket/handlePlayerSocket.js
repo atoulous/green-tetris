@@ -11,7 +11,6 @@ import logger from '../helpers/logger';
 function update(playerId, settings) {
   const player = Player.getPlayerById(playerId);
   player.update(settings);
-  console.log(Player.allPlayers);
 }
 /*
 ** Delete Player.
@@ -27,6 +26,20 @@ function _delete(playerId) {
   }
   // Remove player from players list.
   _.remove(Player.allPlayers, p => p.get('id') === playerId);
+}
+/*
+** Kick Player.
+*/
+function kick(playerId, playerIdToDelete) {
+  // Check that playerId is allowed to kick player as gameMaster.
+  const player = Player.getPlayerById(playerId);
+  const playerToDelete = Player.getPlayerById(playerIdToDelete);
+  if (!player) throw new Error('Player not found');
+  const game = Game.getGameByid(player.get('gameId'));
+  if (!game) throw new Error('Game not found');
+  if (game.get('masterId') !== playerId) throw new Error('Player not authorized to perform kick');
+  playerToDelete.get('socket').disconnect(true);
+  // this._delete(playerIdToDelete);
 }
 
 /**
@@ -47,7 +60,14 @@ export default async function (playerId, data) {
       _delete(playerId);
       break;
     }
-    default:
-      logger.info('All Players', Player.allPlayers);
+    case '/kick': {
+      kick(playerId, data.playerIdToDelete);
+      break;
+    }
+    default: {
+      console.log('default triggered');
+    }
   }
+  logger.info('All Players', Player.allPlayers);
 }
+

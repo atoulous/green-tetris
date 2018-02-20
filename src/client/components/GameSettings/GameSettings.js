@@ -5,14 +5,14 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Redirect } from 'react-router-dom';
+import * as socket from '../../socket';
 
 
 import './GameSettings.scss';
 
 import actions from '../../actions';
 
-const { socketUpdateGame } = actions;
+const { socketUpdateGame, updateGame } = actions;
 
 
 const GameSettings = ({ game, dispatch }) => {
@@ -48,13 +48,10 @@ const GameSettings = ({ game, dispatch }) => {
   };
 
   const handleCancel = () => {
-    console.log('CANCEL');
-    /*
-    ** Start Game
-    */
+    socket.closeClient();
+    dispatch(updateGame(null));
   };
 
-  if (!game) return <Redirect to="/games" />;
 
   return (
     <div className="game-settings">

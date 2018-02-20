@@ -9,7 +9,6 @@ function update(data) {
   store.dispatch(updateGame(game));
 }
 
-
 export default function (data) {
   const { path } = data;
   console.log(`socket /game${path}`);

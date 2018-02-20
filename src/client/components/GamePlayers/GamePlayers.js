@@ -12,13 +12,16 @@ import {
 } from 'material-ui/Table';
 import Chip from 'material-ui/Chip';
 
+import actions from '../../actions';
 
 import './GamePlayers.scss';
 
+const { socketKickPlayer } = actions;
 
 const GamePlayers = ({ game, dispatch }) => {
   const handleKick = player => () => {
     console.log('KICK THE PLAYER:', player);
+    dispatch(socketKickPlayer(player.id));
     /*
     ** Change state here with dispatch
     */
