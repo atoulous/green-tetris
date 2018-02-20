@@ -17,3 +17,8 @@ export const setPlayerNickname = ({ nickname, webRTCId, room }) => ({
   type: 'socket',
   data: { call: '/player', path: '/nickname', webRTCId, nickname, room },
 });
+
+export const newPiece = ({ room }) => ({
+  type: 'socket',
+  data: { call: '/piece', path: '/new', room },
+});
