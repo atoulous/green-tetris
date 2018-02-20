@@ -62,6 +62,8 @@ typings/
 
 # Visual Code Workspace settings
 src/.vscode/*
+.vscode/settings.json
+
 
 # build
 src/client/build

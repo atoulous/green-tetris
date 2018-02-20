@@ -40,7 +40,6 @@ export function listen(server) {
      */
     socket.on('disconnect', () => {
       const data = { path: '/deconnexion' };
-      handleGameSocket(socket.id, data);
       handlePlayerSocket(socket.id, data);
     });
   });

@@ -13,7 +13,6 @@ import Game from '../classes/Game';
 function create(playerId) {
   const { allGames } = Game;
   allGames.push(new Game(playerId));
-  console.log(allGames.allGames);
 }
 /**
  * Join an existing game.
@@ -26,7 +25,7 @@ function join(playerId, gameId) {
 /**
  * Leave an existing game.
  */
-function leave(playerId, gameId) {
+function leave(playerId) {
   const game = Game.getGameByid(gameId);
   // if (!game) throw new Error('Game not found');
   game.removePlayer(playerId);
@@ -90,4 +89,5 @@ export default async function (playerId, data) {
     default:
       break;
   }
+  logger.info('All Games', Game.allGames);
 }

@@ -22,7 +22,7 @@ import './AllGamesView.scss';
 
 const { socketUpdatePlayer, socketCreateGame, socketJoinGame, getAllGames } = actions;
 
-const AllGamesView = ({ game, gamesList, dispatch }) => {
+const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
   /*
   ** Get all Games from the API.
   */
@@ -35,7 +35,7 @@ const AllGamesView = ({ game, gamesList, dispatch }) => {
   */
   const _handleJoin = game => () => {
     socket.openClient();
-    dispatch(socketUpdatePlayer({ nickname: 'jordan' }));
+    dispatch(socketUpdatePlayer({ nickname }));
     dispatch(socketJoinGame(game.id));
   };
 
@@ -44,11 +44,11 @@ const AllGamesView = ({ game, gamesList, dispatch }) => {
   */
   const _handleCreate = () => {
     socket.openClient();
-    dispatch(socketUpdatePlayer({ nickname: 'jordan' }));
+    dispatch(socketUpdatePlayer({ nickname }));
     dispatch(socketCreateGame());
   };
 
-  if (game) return <Redirect to="/games/game" />;
+  if (game) return <Redirect to={`/games/${game.id}`} />;
 
   return (
     <div className="container">
@@ -94,6 +94,7 @@ AllGamesView.propTypes = {
   gamesList: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   game: PropTypes.object,
+  nickname: PropTypes.string.isRequired,
 };
 
 AllGamesView.defaultProps = {
@@ -104,6 +105,7 @@ AllGamesView.defaultProps = {
 const mapStateToProps = state => ({
   gamesList: state.gamesList,
   game: state.game,
+  nickname: state.nickname,
 });
 
 export default connect(mapStateToProps)(AllGamesView);

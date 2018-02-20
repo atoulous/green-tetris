@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Payload from './Payload';
+import Game from './Game';
 
 /**
  * Class Player
@@ -34,6 +35,10 @@ class Player extends Payload {
 
   update(settings) {
     _.merge(this.payload, settings);
+    if (this.gameId) {
+      const game = Game.getGameByid(this.gameId);
+      game.broadcast('/update', { game: game.format() });
+    }
   }
 
   format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId']) {
