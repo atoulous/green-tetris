@@ -42,11 +42,14 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  broadcast(subject, data) {
+  broadcast(subject, data, idToOmit) {
     data.path = subject;
     this.payload.players.forEach((player) => {
-      const socket = player.get('socket');
-      socket.emit('/game', data);
+      // Don't emit to specific ids.
+      if (!idToOmit.includes(player.get('id'))) {
+        const socket = player.get('socket');
+        socket.emit('/game', data);
+      }
     });
   }
 
