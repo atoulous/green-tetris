@@ -1,8 +1,26 @@
-// Constants
-export const SET_GAME = 'SET_GAME';
-
-// Action objects
-export const setGame = ({ game }) => ({
-  type: SET_GAME,
-  data: { game },
+// Action objects (handled by reducers)
+export const UPDATE_GAMES_LIST = 'UPDATE_GAMES_LIST';
+export const updateGamesList = gamesList => ({
+  type: UPDATE_GAMES_LIST,
+  gamesList,
 });
+
+export const UPDATE_GAME = 'UPDATE_GAME';
+export const updateGame = game => ({
+  type: UPDATE_GAME,
+  game,
+});
+
+
+// Action thunk-function (handled by thunk middleware)
+/*
+** Get all Games.
+*/
+export const getAllGames = () => (dispatch) => {
+  fetch('/api/games')
+    .then(response => response.json())
+    .then((json) => {
+      const games = JSON.parse(json);
+      dispatch(updateGamesList(games));
+    });
+};

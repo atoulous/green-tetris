@@ -5,8 +5,14 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as socket from '../../socket';
+
 
 import './GameSettings.scss';
+
+import actions from '../../actions';
+
+const { socketUpdateGame, updateGame } = actions;
 
 
 const GameSettings = ({ game, dispatch }) => {
@@ -14,32 +20,24 @@ const GameSettings = ({ game, dispatch }) => {
     marginBottom: 15,
   };
 
-  const handleMaxPlayer = (e) => {
-    console.log('MAX-PLAYERS:', e);
-    /*
-    ** Change state here with dispatch
-    */
+  const handleSize = (event, index, value) => {
+    dispatch(socketUpdateGame(game.id, { size: value }));
   };
 
-  const handleSpeed = (e) => {
-    console.log('SPEED:', e);
-    /*
-    ** Change state here with dispatch
-    */
+  const handleMaxPlayer = (event, index, value) => {
+    dispatch(socketUpdateGame(game.id, { maxPlayers: value }));
   };
 
-  const handleVisibility = (e) => {
-    console.log('VISIBILITY:', e);
-    /*
-    ** Change state here with dispatch
-    */
+  const handleSpeed = (event, index, value) => {
+    dispatch(socketUpdateGame(game.id, { speed: value }));
   };
 
-  const handleWait = (e) => {
-    console.log('WAIT:', e);
-    /*
-    ** Change state here with dispatch
-    */
+  const handleVisibility = (event, checked) => {
+    dispatch(socketUpdateGame(game.id, { isFullVisibility: checked }));
+  };
+
+  const handleWait = (event, checked) => {
+    dispatch(socketUpdateGame(game.id, { isPieceSynchro: checked }));
   };
 
   const handleStart = () => {
@@ -50,11 +48,10 @@ const GameSettings = ({ game, dispatch }) => {
   };
 
   const handleCancel = () => {
-    console.log('CANCEL');
-    /*
-    ** Start Game
-    */
+    socket.closeClient();
+    dispatch(updateGame(null));
   };
+
 
   return (
     <div className="game-settings">
@@ -76,16 +73,26 @@ const GameSettings = ({ game, dispatch }) => {
           value={game.speed}
           onChange={handleSpeed}
         >
-          <MenuItem value={1500} primaryText="Slow" />
-          <MenuItem value={1000} primaryText="Normal" />
-          <MenuItem value={800} primaryText="Fast" />
-          <MenuItem value={600} primaryText="Very Fast" />
+          <MenuItem value="Slow" primaryText="Slow" />
+          <MenuItem value="Normal" primaryText="Normal" />
+          <MenuItem value="Fast" primaryText="Fast" />
+          <MenuItem value="Very Fast" primaryText="Very Fast" />
+        </SelectField>
+        <SelectField
+          floatingLabelText="Game size"
+          value={game.size}
+          onChange={handleSize}
+        >
+          <MenuItem value="Small" primaryText="Small" />
+          <MenuItem value="Normal" primaryText="Normal" />
+          <MenuItem value="Big" primaryText="Big" />
+          <MenuItem value="Very Big" primaryText="Very Big" />
         </SelectField>
       </section>
       <section>
         <h1>Game Mode</h1>
-        <Toggle label="Full Visibility" onToggle={handleVisibility} labelPosition="right" style={toggleStyle} />
-        <Toggle label="Wait for all players before dealing new piece" onToggle={handleWait} labelPosition="right" style={toggleStyle} />
+        <Toggle label="Full Visibility" onToggle={handleVisibility} labelPosition="right" style={toggleStyle} toggled={game.isFullVisibility} />
+        <Toggle label="Wait for all players before dealing new piece" onToggle={handleWait} labelPosition="right" style={toggleStyle} toggled={game.isPieceSynchro} />
       </section >
       <section>
         <RaisedButton label="START" primary style={{ marginRight: 20 }} onClick={handleStart} />

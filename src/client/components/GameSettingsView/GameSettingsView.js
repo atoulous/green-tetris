@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import GamePlayers from '../../components/GamePlayers/GamePlayers';
 import GameSettings from '../../components/GameSettings/GameSettings';
@@ -8,6 +9,8 @@ import GameSettings from '../../components/GameSettings/GameSettings';
 import './GameSettingsView.scss';
 
 const GameSettingsView = ({ match, game, dispatch }) => {
+  if (!game) return <Redirect to="/games" />;
+
   const isSolo = (match.params.id === 'solo');
   const p = (isSolo) ? null : <GamePlayers game={game} dispatch={dispatch} />;
   return (
@@ -32,7 +35,7 @@ GameSettingsView.propTypes = {
 };
 
 GameSettingsView.defaultProps = {
-  game: {},
+  game: null,
 };
 
 

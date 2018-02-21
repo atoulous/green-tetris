@@ -26,6 +26,8 @@ class Game extends Payload {
       players: [],
       hasStarted: false,
       hasFinished: false,
+      isFullVisibility: false,
+      isPieceSynchro: false,
       pieceQueue: [],
     });
     this.addPlayer(masterId);
@@ -63,10 +65,8 @@ class Game extends Payload {
   }
 
   removePlayer(playerId) {
-    const player = Player.getPlayerById(playerId);
-    if (!player) throw new Error('Player not found');
     if (!this.getPlayer(playerId)) throw new Error('Player not in game');
-    this.payload.players = _.remove(this.payload.players, p => p.get('id') === playerId);
+    _.remove(this.payload.players, p => p.get('id') === playerId);
     this.broadcast('/update', { game: this.format() });
   }
 
@@ -75,7 +75,7 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'pieceQueue']) {
+  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'pieceQueue', 'isPieceSynchro', 'isFullVisibility']) {
     let players = this.get('players');
     players = players.map(p => p.format());
     return _.merge(super.format(props), { players });
@@ -87,6 +87,7 @@ class Game extends Payload {
 
   update(settings) {
     _.merge(this.payload, settings);
+    this.broadcast('/update', { game: this.format() });
   }
 }
 

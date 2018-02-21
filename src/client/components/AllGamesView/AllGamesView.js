@@ -2,6 +2,7 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import {
   Table,
@@ -13,23 +14,41 @@ import {
 } from 'material-ui/Table';
 
 
+import * as socket from '../../socket';
+import actions from '../../actions';
+
 import './AllGamesView.scss';
 
 
-const AllGamesView = ({ games }) => {
-  const handleJoin = game => () => {
-    console.log('JOIN: ', game);
-    /*
-    ** Here what happen when we click on join.
-    */
+const { socketUpdatePlayer, socketCreateGame, socketJoinGame, getAllGames } = actions;
+
+const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
+  /*
+  ** Get all Games from the API.
+  */
+  const _getAllGames = () => {
+    dispatch(getAllGames());
   };
 
-  const handleCreate = () => {
-    console.log('CREATE: ');
-    /*
-    ** Here what happen when we click on create.
-    */
+  /*
+  ** Create new Player. Create a game.
+  */
+  const _handleJoin = game => () => {
+    socket.openClient();
+    dispatch(socketUpdatePlayer({ nickname }));
+    dispatch(socketJoinGame(game.id));
   };
+
+  /*
+  ** Create new Player. Create a game.
+  */
+  const _handleCreate = () => {
+    socket.openClient();
+    dispatch(socketUpdatePlayer({ nickname }));
+    dispatch(socketCreateGame());
+  };
+
+  if (game) return <Redirect to={`/games/${game.id}`} />;
 
   return (
     <div className="container">
@@ -47,15 +66,15 @@ const AllGamesView = ({ games }) => {
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {
-            games.map(game => (
+            gamesList.map(game => (
               <TableRow key={game.id}>
                 <TableRowColumn>{game.id}</TableRowColumn>
-                <TableRowColumn>{game.master}</TableRowColumn>
+                <TableRowColumn>{game.masterId}</TableRowColumn>
                 <TableRowColumn>{game.speed} ms</TableRowColumn>
-                <TableRowColumn>{`${game.size.x}/${game.size.y}`} </TableRowColumn>
-                <TableRowColumn>{`${game.currentPlayers.length}/${game.maxPlayers}`}</TableRowColumn>
+                <TableRowColumn>{game.size} </TableRowColumn>
+                <TableRowColumn>{`${game.players.length}/${game.maxPlayers}`}</TableRowColumn>
                 <TableRowColumn>
-                  <RaisedButton label="JOIN" onClick={handleJoin(game)} />
+                  <RaisedButton label="JOIN" onClick={_handleJoin(game)} />
                 </TableRowColumn>
               </TableRow>
                 ))
@@ -64,22 +83,29 @@ const AllGamesView = ({ games }) => {
         </Table>
       </div>
       <div className="game-actions">
-        <RaisedButton label="CREATE" onClick={handleCreate} />
+        <RaisedButton label="CREATE" onClick={_handleCreate} />
+        <RaisedButton label="REFRESH" onClick={_getAllGames} />
       </div>
     </div>
   );
 };
 
 AllGamesView.propTypes = {
-  games: PropTypes.array,
+  gamesList: PropTypes.array,
+  dispatch: PropTypes.func.isRequired,
+  game: PropTypes.object,
+  nickname: PropTypes.string.isRequired,
 };
 
 AllGamesView.defaultProps = {
-  games: [],
+  gamesList: [],
+  game: null,
 };
 
 const mapStateToProps = state => ({
-  games: state.games
+  gamesList: state.gamesList,
+  game: state.game,
+  nickname: state.nickname,
 });
 
 export default connect(mapStateToProps)(AllGamesView);

@@ -24,4 +24,10 @@ export function openClient() {
   client.on('/game', data => handleGameSocket(data));
   client.on('/tetris', data => handleTetrisSocket(data));
   client.on('/player', data => handlePlayerSocket(data));
+
+  client.on('disconnect', () => {
+    const data = { path: '/update', game: null };
+    handleGameSocket(data);
+    client = null;
+  });
 }

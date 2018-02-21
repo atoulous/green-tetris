@@ -39,6 +39,14 @@ export const socketUpdateGame = (gameId, settings) => ({
   type: 'socket',
   data: { call: '/game', path: '/update', gameId, settings },
 });
+/*
+** Kick player from existing game. Will return game updated to all players.
+*/
+export const socketKickPlayer = playerIdToDelete => ({
+  type: 'socket',
+  data: { call: '/player', path: '/kick', playerIdToDelete }
+});
+
 
 export const newPiece = ({ room }) => ({
   type: 'socket',

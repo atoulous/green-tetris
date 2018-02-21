@@ -12,13 +12,16 @@ import {
 } from 'material-ui/Table';
 import Chip from 'material-ui/Chip';
 
+import actions from '../../actions';
 
 import './GamePlayers.scss';
 
+const { socketKickPlayer } = actions;
 
 const GamePlayers = ({ game, dispatch }) => {
   const handleKick = player => () => {
     console.log('KICK THE PLAYER:', player);
+    dispatch(socketKickPlayer(player.id));
     /*
     ** Change state here with dispatch
     */
@@ -27,23 +30,23 @@ const GamePlayers = ({ game, dispatch }) => {
   const playersTable = [];
 
   for (let i = 0; i < game.maxPlayers; i++) {
-    if (game.currentPlayers[i]) {
+    if (game.players[i]) {
       playersTable.push(<TableRow key={i}>
-        <TableRowColumn>{game.currentPlayers[i].nickname}</TableRowColumn>
+        <TableRowColumn>{game.players[i].nickname}</TableRowColumn>
         <TableRowColumn>{
-              (game.currentPlayers[i].isReady) ? <Chip backgroundColor="#74d680">Ready</Chip> : <Chip backgroundColor="#ff7878">Waiting</Chip>
+              (game.players[i].isReady) ? <Chip backgroundColor="#74d680">Ready</Chip> : <Chip backgroundColor="#ff7878">Waiting</Chip>
             }
         </TableRowColumn>
         <TableRowColumn>
-          <RaisedButton label="Kick" onClick={handleKick(game.currentPlayers[i])} />
+          <RaisedButton label="Kick" onClick={handleKick(game.players[i])} />
         </TableRowColumn>
-      </TableRow>);
+                        </TableRow>);
     } else {
       playersTable.push(<TableRow key={i}>
         <TableRowColumn> - </TableRowColumn>
         <TableRowColumn />
         <TableRowColumn />
-      </TableRow>);
+                        </TableRow>);
     }
   }
 
