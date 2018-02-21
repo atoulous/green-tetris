@@ -1,69 +1,22 @@
-import { setGame } from '../actions/game';
-import { addRTCConn, getPeer } from '../helpers/webRTC';
+import * as Socket from '../socket';
 
-export default socket => ({ dispatch, getState }) => {
-  if (socket) {
-    socket.on('action', dispatch);
-    socket.on('/player', (data) => {
-      const { path } = data;
-      switch (path) {
-        case '/nickname': {
-          const { webRTCId, nickname } = data;
-          dispatch(setNickname({ webRTCId, nickname }));
-          break;
-        }
-        case '/list': {
-          const { players } = data;
-          console.log('setPlayers - ', data);
-          dispatch(setPlayers({ players }));
-          break;
-        }
-        default:
-          break;
+export default () => ({ dispatch, getState }) => next => (action) => {
+  const socket = Socket.getClient();
+  if (!socket) console.log('Attention aucune socket definie');
+  if (socket && action.type === 'socket') {
+    switch (action.data.call) {
+      case '/game': {
+        socket.emit('/game', action.data);
+        break;
       }
-    });
-    socket.on('/game', (data) => {
-      const { path } = data;
-      switch (path) {
-        case '/joined': {
-          console.log('game received --', data);
-          const peer = getPeer();
-          const { game } = data;
-          game.players.forEach(({ webRTCId }) => {
-            if (webRTCId !== peer.id) {
-              const conn = peer.connect(webRTCId);
-              conn.on('open', () => { addRTCConn(conn); });
-            }
-          });
-          break;
-        }
-        case '/updated': {
-          console.log('game received --', data);
-          const { game } = data;
-          dispatch(setGame({ game }));
-          break;
-        }
-        default:
-          break;
+      case '/player': {
+        socket.emit('/player', action.data);
+        break;
       }
-    });
-  }
-  return next => (action) => {
-    if (socket && action.type === 'socket') {
-      switch (action.data.call) {
-        case '/game': {
-          socket.emit('/game', action.data);
-          break;
-        }
-        case '/player': {
-          socket.emit('/player', action.data);
-          break;
-        }
-        default:
-          break;
-      }
-      socket.emit('action', action);
+      default:
+        break;
     }
-    return next(action);
-  };
+    socket.emit('action', action);
+  }
+  return next(action);
 };

@@ -6,6 +6,8 @@ import handlePieceSocket from './handlePieceSocket';
 import handlePlayerSocket from './handlePlayerSocket';
 import handleGameSocket from './handleGameSocket';
 
+import Player from '../classes/Player';
+
 let io = null;
 
 /**
@@ -19,11 +21,28 @@ export function listen(server) {
 
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
-    io.socketId = socket.id;
 
-    socket.on('/game', data => handleGameSocket(data));
-    socket.on('/piece', data => handlePieceSocket(data));
-    socket.on('/player', data => handlePlayerSocket(data));
+    /*
+    ** Add incoming socket messages handlers
+    */
+    socket.on('/game', data => handleGameSocket(socket.id, data));
+    socket.on('/piece', data => handlePieceSocket(socket.id, data));
+    socket.on('/player', data => handlePlayerSocket(socket.id, data));
+
+    /*
+    ** Create new Player.
+    */
+    const { allPlayers } = Player;
+    allPlayers.push(new Player(socket));
+
+    /**
+     * Handle deconnexion
+     */
+    socket.on('disconnect', () => {
+      const data = { path: '/deconnexion' };
+      handleGameSocket(socket.id, data);
+      handlePlayerSocket(socket.id, data);
+    });
   });
 
   return io;
