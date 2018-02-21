@@ -64,6 +64,8 @@ class Game extends Payload {
     if (this.getPlayer(playerId)) throw new Error('Player already in game');
     this.payload.players.push(player);
     player.update({ gameId: this.get('id') });
+    // Send a join alert for RTC init in front.
+    player.socket.emit('/game', { path: '/join' });
     this.broadcast('/update', { game: this.format() });
   }
 
