@@ -69,9 +69,11 @@ export default async function (playerId, data) {
       if (!data.settings) throw new Error('No settings to update.');
       if (!data.gameId) throw new Error('No GameId to update');
       update(playerId, data.gameId, data.settings);
+      break;
     }
     case '/deconnexion': {
       leave(playerId);
+      break;
     }
     // case '/join': {
     //   const { room, webRTCId, socketId } = data;

@@ -36,7 +36,8 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
   */
   const _handleJoin = game => () => {
     socket.openClient();
-    dispatch(socketUpdatePlayer({ nickname, webRTCId: getPeer().id }));
+    const peer = getPeer();
+    dispatch(socketUpdatePlayer({ nickname, webRTCId: peer.id }));
     dispatch(socketJoinGame(game.id));
   };
 
@@ -45,9 +46,8 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
   */
   const _handleCreate = () => {
     socket.openClient();
-    console.log('oijoijoij');
-    console.log('peer --- ', getPeer());
-    dispatch(socketUpdatePlayer({ nickname, webRTCId: getPeer().id }));
+    const peer = getPeer();
+    dispatch(socketUpdatePlayer({ nickname, webRTCId: peer.id }));
     dispatch(socketCreateGame());
   };
 

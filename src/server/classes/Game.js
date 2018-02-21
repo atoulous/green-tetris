@@ -42,11 +42,14 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  broadcast(subject, data) {
+  broadcast(subject, data, idsToOmit = []) {
     data.path = subject;
     this.payload.players.forEach((player) => {
-      const socket = player.get('socket');
-      socket.emit('/game', data);
+      // Don't emit to specific ids.
+      if (!idsToOmit.includes(player.get('id'))) {
+        const socket = player.get('socket');
+        socket.emit('/game', data);
+      }
     });
   }
 
@@ -59,15 +62,29 @@ class Game extends Payload {
     const player = Player.getPlayerById(playerId);
     if (!player) throw new Error('Player not found');
     if (this.getPlayer(playerId)) throw new Error('Player already in game');
-    this.payload.players.push(player);
     player.update({ gameId: this.get('id') });
+
+    // Send a join alert for RTC init in front.
+    player.get('socket').emit('/game', { path: '/join', game: this.format() });
+
+    this.payload.players.push(player);
     this.broadcast('/update', { game: this.format() });
   }
 
   removePlayer(playerId) {
     if (!this.getPlayer(playerId)) throw new Error('Player not in game');
     _.remove(this.payload.players, p => p.get('id') === playerId);
-    this.broadcast('/update', { game: this.format() });
+    // Game is now empty. Delete it.
+    if (this.payload.players.length === 0) {
+      _.remove(Game.allGames, g => g.get('id') === this.get('id'));
+    } else {
+      // Game not empty and masterPlayer quit. change masterPlayerId.
+      if (this.get('masterId') === playerId) {
+        const players = this.get('players');
+        this.set('masterId', players[0].get('id'));
+      }
+      this.broadcast('/update', { game: this.format() });
+    }
   }
 
   getPlayer(playerId) {
