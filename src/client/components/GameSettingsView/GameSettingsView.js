@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
@@ -7,8 +7,32 @@ import GamePlayers from '../../components/GamePlayers/GamePlayers';
 import GameSettings from '../../components/GameSettings/GameSettings';
 
 import TestRTC from '../../containers/RTCtest/RTCTest';
+import TestAudio from '../../containers/AudioTest/AudioTest';
+
+import { initAudioStream, } from '../../helpers/webRTC';
 
 import './GameSettingsView.scss';
+
+const GetAudio = () => {
+  return (
+    <button onClick={() => {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+          /* use the stream */
+          console.log('stream to add to store -- ', stream);
+          initAudioStream(stream);
+        })
+        .catch((err) => {
+          /* handle the error */
+          console.log('eerrr - - ', err);
+        });
+      }}
+    >
+      mets le son
+    </button>
+
+  );
+};
 
 const GameSettingsView = ({ match, game, dispatch }) => {
   if (!game) return <Redirect to="/games" />;
@@ -22,6 +46,8 @@ const GameSettingsView = ({ match, game, dispatch }) => {
         {p}
       </div>
       <TestRTC />
+      <GetAudio />
+      <TestAudio />
     </div>
   );
 };
