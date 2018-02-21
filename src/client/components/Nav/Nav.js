@@ -13,7 +13,7 @@ import actions from '../../actions';
 
 import './Nav.scss';
 
-const { openNicknameModal, closeNicknameModal, updateNickname } = actions;
+const { openNicknameModal, closeNicknameModal, updateNickname, socketUpdatePlayer } = actions;
 
 const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
   let currentNickname = nickname;
@@ -31,6 +31,7 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
 
   const _updateNickname = () => {
     dispatch(updateNickname(currentNickname));
+    if (game) dispatch(socketUpdatePlayer({ nickname: currentNickname }));
     _closeModal();
   };
 
