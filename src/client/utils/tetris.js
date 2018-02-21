@@ -1,4 +1,4 @@
-import { pieces, heightSize, widthSize } from './constants';
+import { pieces, heightSize, widthSize } from '../constants';
 
 /*
 ** Will apply func on every block of piece.

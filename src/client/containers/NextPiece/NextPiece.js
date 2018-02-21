@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import './NextPiece.scss';
 import Grid from '../../components/Grid/Grid';
-import { initGrid, forEachBlockInPiece } from '../../helpers';
+import { initGrid, forEachBlockInPiece } from '../../utils/tetris';
 
 
 const NextPiece = ({ piecesQueue }) => {

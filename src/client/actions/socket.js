@@ -39,3 +39,8 @@ export const socketUpdateGame = (gameId, settings) => ({
   type: 'socket',
   data: { call: '/game', path: '/update', gameId, settings },
 });
+
+export const newPiece = ({ room }) => ({
+  type: 'socket',
+  data: { call: '/piece', path: '/new', room },
+});
