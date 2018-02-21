@@ -6,6 +6,8 @@ import { Redirect } from 'react-router-dom';
 import GamePlayers from '../../components/GamePlayers/GamePlayers';
 import GameSettings from '../../components/GameSettings/GameSettings';
 
+import TestRTC from '../../containers/RTCtest/RTCTest';
+
 import './GameSettingsView.scss';
 
 const GameSettingsView = ({ match, game, dispatch }) => {
@@ -19,6 +21,7 @@ const GameSettingsView = ({ match, game, dispatch }) => {
         <GameSettings game={game} dispatch={dispatch} />
         {p}
       </div>
+      <TestRTC />
     </div>
   );
 };
