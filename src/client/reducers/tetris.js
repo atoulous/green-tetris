@@ -47,6 +47,9 @@ export function setPiece(state, piece) {
 
 /**
  * Replace `state.currentPiece` with first piece enqueued.
+ *
+ * @param state
+ * @returns {any & {currentPiece: {t: *, dir: number, x: number, y: number}, bag: *}}
  */
 export function setNewPiece(state) {
   // const piece = state.piecesQueue.shift();
