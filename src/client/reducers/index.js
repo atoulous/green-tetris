@@ -18,7 +18,7 @@ import { setGame, updateGamesList, updateGame } from './game';
 
 import { rtcConnexion, rtcMessage } from './connexion';
 
-import { initBag, initGrid, initSpectrum } from '../helpers';
+import { initBag, initGrid, initSpectrum } from '../utils/tetris';
 
 const initialState = {
   piecesQueue: [],

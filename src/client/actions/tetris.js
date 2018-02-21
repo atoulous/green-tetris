@@ -2,7 +2,7 @@ import {
   isPiecePlacable,
   checkRowsToDelete,
   getSpectrum,
-} from '../helpers';
+} from '../utils/tetris';
 import { keys } from '../constants';
 
 
@@ -95,25 +95,24 @@ export function dropPiece() {
   };
 }
 
-
-/*
-** Will set a new piece. Replace current piece. Check if Game is lost or start dropping new piece.
-*/
+/**
+ * Will set a new piece. Replace current piece. Check if Game is lost or start dropping new piece.
+ */
 export function setNewPiece() {
   return (dispatch, getState) => {
     // Set new current piece randomly.
     dispatch({ type: SET_NEW_PIECE });
     // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
-    const state = getState();
-    const { currentPiece, gridWithoutCurrent } = state;
-    const interval = state.speed;
+    const { currentPiece, gridWithoutCurrent, speed: interval } = getState();
     // Not enough space to place piece. Game is lost.
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
       console.log('PERDU');
     } else {
       dispatch(updateSpectrum(gridWithoutCurrent));
       dispatch(drawPiece());
+
+      // todo: move setTimeout from here
       setTimeout(() => {
         dispatch(dropPiece());
       }, interval);
@@ -166,18 +165,22 @@ function movePieceLeft(dispatch, getState) {
   console.log('movePieceLeft');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ y: currentPiece.y - 1 } }));
 }
+
 function movePieceRight(dispatch, getState) {
   console.log('movePieceRight');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ y: currentPiece.y + 1 } }));
 }
+
 function rotatePiece(dispatch, getState) {
   console.log('rotatePice');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 } }));
 }
+
 function movePieceDown(dispatch, getState) {
   console.log('movePieceDown');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ x: currentPiece.x + 1 } }));
 }
+
 // Will move piece to the lowest posible position.
 function stickPieceDown(dispatch, getState) {
   console.log('stickPieceDown');

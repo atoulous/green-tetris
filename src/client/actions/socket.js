@@ -47,3 +47,8 @@ export const socketKickPlayer = playerIdToDelete => ({
   data: { call: '/player', path: '/kick', playerIdToDelete }
 });
 
+
+export const newPiece = ({ room }) => ({
+  type: 'socket',
+  data: { call: '/piece', path: '/new', room },
+});
