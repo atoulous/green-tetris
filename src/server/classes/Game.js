@@ -42,11 +42,11 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  broadcast(subject, data, idToOmit) {
+  broadcast(subject, data, idsToOmit = []) {
     data.path = subject;
     this.payload.players.forEach((player) => {
       // Don't emit to specific ids.
-      if (!idToOmit.includes(player.get('id'))) {
+      if (!idsToOmit.includes(player.get('id'))) {
         const socket = player.get('socket');
         socket.emit('/game', data);
       }
@@ -70,7 +70,17 @@ class Game extends Payload {
   removePlayer(playerId) {
     if (!this.getPlayer(playerId)) throw new Error('Player not in game');
     _.remove(this.payload.players, p => p.get('id') === playerId);
-    this.broadcast('/update', { game: this.format() });
+    // Game is now empty. Delete it.
+    if (this.payload.players.length === 0) {
+      _.remove(Game.allGames, g => g.get('id') === this.get('id'));
+    } else {
+      // Game not empty and masterPlayer quit. change masterPlayerId.
+      if (this.get('masterId') === playerId) {
+        const players = this.get('players');
+        this.set('masterId', players[0].get('id'));
+      }
+      this.broadcast('/update', { game: this.format() });
+    }
   }
 
   getPlayer(playerId) {
