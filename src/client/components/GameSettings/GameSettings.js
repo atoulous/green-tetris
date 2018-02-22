@@ -59,10 +59,6 @@ const GameSettings = ({ game, dispatch, player }) => {
     dispatch(socketUpdatePlayer({ isReady: !isReady }));
   };
 
-  const readyButton = (isReady) ? <RaisedButton label="NOT READY" primary onClick={handleReady} />
-    : <RaisedButton label="READY" secondary onClick={handleReady} />;
-  const startButton = (isGameMaster) ? <RaisedButton label="START" primary style={{ marginRight: 20 }} onClick={handleStart} /> : null;
-
   return (
     <div className="game-settings">
       <section>
@@ -108,9 +104,9 @@ const GameSettings = ({ game, dispatch, player }) => {
         <Toggle label="Wait for all players before dealing new piece" onToggle={handleWait} labelPosition="right" style={toggleStyle} toggled={game.isPieceSynchro} disabled={!isGameMaster} />
       </section >
       <section>
-        {startButton}
+        {isGameMaster && <RaisedButton label="START" style={{ marginRight: 20 }} onClick={handleStart} />}
         <RaisedButton label="CANCEL" secondary style={{ marginRight: 20 }} onClick={handleCancel} />
-        {readyButton}
+        <RaisedButton label={isReady ? 'NOT READY' : 'READY'} onClick={handleReady} primary={isReady} secondary={!isReady} />
       </section>
     </div>
   );
