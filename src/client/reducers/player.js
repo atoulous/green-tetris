@@ -1,42 +1,8 @@
-import { initSpectrum } from '../utils/tetris';
-
-export function setNickname(state, action) {
-  const { players } = state;
-  const { nickname, webRTCId } = action.data;
-  const tmp = players.map((player) => {
-    if (player.webRTCId === webRTCId) {
-      return { ...player, nickname };
-    }
-    return player;
-  });
-
-  return { ...state, players: tmp };
-}
-
-export function addPlayer(state, action) {
-  const { players } = state;
-  const { nickname, webRTCId } = action.data;
-
-  return {
-    ...state,
-    players: [...players, { nickname, webRTCId, spectrum: initSpectrum(), score: 0 }]
-  };
-}
-
-export function setOwnNickname(state, action) {
-  return { ...state, nickname: action.data.nickname };
-}
-
-export function setPlayers(state, action) {
-  return { ...state, players: action.data.players };
-}
-
-
-/*
-** Handle nickname updates
-*/
+/**
+ * Handle nickname updates
+ */
 export function updateNickname(state, action) {
-  return { ...state, nickname: action.nickname };
+  return { ...state, player: { ...state.player, nickname: action.nickname } };
 }
 
 export function openNicknameModal(state) {
@@ -45,4 +11,11 @@ export function openNicknameModal(state) {
 
 export function closeNicknameModal(state) {
   return { ...state, isNicknameModalOpen: false };
+}
+
+/**
+ * Handle player id (=socketId)
+ */
+export function updatePlayerId(state, action) {
+  return { ...state, player: { ...state.player, id: action.id } };
 }
