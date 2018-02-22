@@ -13,7 +13,7 @@ export default class SocketException {
   broadcast() {
     const io = getConnection();
     const data = {
-      error: this.message,
+      error: { message: this.message },
     };
     io.to(this.socketId).emit('/error', data);
   }

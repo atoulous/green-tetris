@@ -17,12 +17,6 @@ export const updateGame = game => ({
 });
 
 /**
- * Handle Error Dialog
- */
-export const UPDATE_ERROR = 'UPDATE_ERROR';
-export const updateError = error => ({ type: UPDATE_ERROR, error });
-
-/**
  * Get all Games (thunk-function)
  */
 export const getAllGames = () => (dispatch) => {

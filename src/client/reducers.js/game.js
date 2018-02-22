@@ -13,9 +13,4 @@ export function updateGamesList(state, action) {
 export function updateGame(state, action) {
   return { ...state, game: action.game };
 }
-/**
- * Update error in redux-tree.
- */
-export function updateError(state, action) {
-  return { ...state, error: action.error };
-}
+

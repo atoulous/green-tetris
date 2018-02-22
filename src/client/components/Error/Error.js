@@ -7,7 +7,9 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 import './Error.scss';
-import { updateError } from '../../actions/game';
+import actions from '../../actions';
+
+const { updateError } = actions;
 
 
 const Error = ({ error, dispatch }) => {
@@ -31,13 +33,13 @@ const Error = ({ error, dispatch }) => {
 
   return (
     <Dialog
-      title={_error.errorName || 'Error'}
+      title={_error.name || 'Error'}
       actions={actionsModal}
       modal={false}
       open={isErrorOpen}
       onRequestClose={_closeModal}
     >
-      {_error.errorContent || 'Error !'}
+      {_error.message || 'Error !'}
     </Dialog>
   );
 };
