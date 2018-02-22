@@ -8,31 +8,10 @@ import GameSettings from '../../components/GameSettings/GameSettings';
 
 import TestRTC from '../../containers/RTCtest/RTCTest';
 import TestAudio from '../../containers/AudioTest/AudioTest';
-
-import { initAudioStream, } from '../../helpers/webRTC';
+import AudioContainer from '../../containers/AudioContainer/AudioContainer';
+import GetAudio from '../GetAudioStream/GetAudioStream';
 
 import './GameSettingsView.scss';
-
-const GetAudio = () => {
-  return (
-    <button onClick={() => {
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then((stream) => {
-          /* use the stream */
-          console.log('stream to add to store -- ', stream);
-          initAudioStream(stream);
-        })
-        .catch((err) => {
-          /* handle the error */
-          console.log('eerrr - - ', err);
-        });
-      }}
-    >
-      mets le son
-    </button>
-
-  );
-};
 
 const GameSettingsView = ({ match, game, dispatch }) => {
   if (!game) return <Redirect to="/games" />;
@@ -48,6 +27,7 @@ const GameSettingsView = ({ match, game, dispatch }) => {
       <TestRTC />
       <GetAudio />
       <TestAudio />
+      <AudioContainer />
     </div>
   );
 };

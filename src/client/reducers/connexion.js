@@ -4,3 +4,7 @@ export function rtcMessage(state) {
   return state;
 }
 
+export function addAudioStream(state, action) {
+  const { audioStreams } = state;
+  return { ...state, audioStreams: [...audioStreams, action.data] };
+}

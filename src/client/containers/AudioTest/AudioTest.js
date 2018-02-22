@@ -7,7 +7,6 @@ const ShareAudio = ({ game }) => {
 
   return (
     <button onClick={() => {
-      console.log(' cur game ===  ', game);
       game.players.forEach(({ webRTCId }) => {
         if (webRTCId !== getPeer().id) callPeer(webRTCId);
       });

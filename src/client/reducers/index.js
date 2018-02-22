@@ -16,7 +16,7 @@ import {
 import { updateNickname, openNicknameModal, closeNicknameModal } from './player';
 import { setGame, updateGamesList, updateGame } from './game';
 
-import { rtcMessage, } from './connexion';
+import { rtcMessage, addAudioStream } from './connexion';
 
 import { initBag, initGrid, initSpectrum } from '../utils/tetris';
 
@@ -33,6 +33,7 @@ const initialState = {
   game: null,
   nickname: 'defaultName',
   isNicknameModalOpen: false,
+  audioStreams: [],
   players: [{ nickname: 'Me', webRTCId: 0, score: 0, spectrum: initSpectrum() }, { nickname: 'You', webRTCId: 1, score: 0, spectrum: initSpectrum() }],
 };
 
@@ -55,6 +56,7 @@ const {
   UPDATE_GAME,
 
   RTC_CONN,
+  ADD_AUDIO_STREAM,
 
   SET_GAME
 } = actions;
@@ -99,6 +101,9 @@ export default function reducer(state = initialState, action) {
 
     case RTC_CONN:
       return rtcMessage(state);
+    case ADD_AUDIO_STREAM:
+      return addAudioStream(state, action);
+
 
     case SET_GAME:
       return setGame(state, action);
