@@ -3,8 +3,8 @@ import _ from 'lodash';
 import logger from '../helpers/logger';
 import Game from '../classes/Game';
 import Player from '../classes/Player';
-import handleSocketError from './handleErrorSocket';
-import { SocketErrorGame, SocketErrorPlayer } from '../classes/SocketError';
+import handleSocketException from './handleSocketException';
+import SocketException from '../classes/SocketException';
 
 // import { getConnection } from './socketManager';
 // import { getGames, addGame, getGame } from '../helpers/game';
@@ -18,28 +18,34 @@ function create(playerId) {
   allGames.push(new Game(playerId));
 }
 /**
- * Join an existing game.
+ * Join an existing game. If fail to find game, disconnect.
  */
 function join(playerId, gameId) {
+  // Check that game exists.
   const game = Game.getGameByid(gameId);
-  if (!game) throw new SocketErrorGame('Game not found');
-  // If game is full, player is disconnected.
+  if (!game) throw new SocketException('Game not found', true);
+
+  // Check that game is not full.
   if (game.get('maxPlayers') === game.get('players').length) {
+    // Check that player exists.
     const player = Player.getPlayerById(playerId);
-    if (!player) throw new SocketErrorGame('Player not found');
+    if (!player) throw new SocketException('Player not found');
+    // Disconnect player.
     player.get('socket').disconnect(true);
   } else {
+    // Add player.
     game.addPlayer(playerId);
   }
 }
 /**
- * Update an existing game.
+ * Update an existing game. If fail to find game, disconnect.
  */
 function update(playerId, gameId, settings) {
+  // Check that game exists.
   const game = Game.getGameByid(gameId);
-  if (!game) throw new SocketErrorGame('Game not found');
-  if (!game.isMaster(playerId)) throw new SocketErrorGame('Player not allowed to update settings');
-  game.update(settings);
+  if (!game) throw new SocketException('Game not found', true);
+  // Check that player is allowed to update settings.
+  if (game.isMaster(playerId)) game.update(settings);
 }
 
 /**
@@ -55,18 +61,14 @@ export default async function (playerId, data) {
     switch (path) {
       case '/create': {
         // const { webRTCId, socketId } = data;
-        throw new SocketErrorGame('Merde');
         create(playerId);
         break;
       }
       case '/join': {
-        if (!data.gameId) throw new SocketErrorGame('No GameId to join.');
         join(playerId, data.gameId);
         break;
       }
       case '/update': {
-        if (!data.settings) throw new SocketErrorGame('No settings to update.');
-        if (!data.gameId) throw new SocketErrorGame('No GameId to update');
         update(playerId, data.gameId, data.settings);
         break;
       }
@@ -75,12 +77,9 @@ export default async function (playerId, data) {
     }
     logger.info('All Games', Game.allGames);
   } catch (e) {
-    console.log(SocketErrorGame);
-    e.broadcast();
-    if (e instanceof SocketErrorGame) {
-      console.log('spodfispdofi');
+    if (e instanceof SocketException) {
       e.socketId = playerId;
-      handleSocketError(new SocketErrorGame(e.message, playerId));
+      handleSocketException(e);
     } else throw e;
   }
 }

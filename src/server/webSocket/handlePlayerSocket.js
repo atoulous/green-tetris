@@ -3,8 +3,8 @@ import _ from 'lodash';
 import Game from '../classes/Game';
 import Player from '../classes/Player';
 import logger from '../helpers/logger';
-import { SocketErrorPlayer } from '../classes/SocketError';
-import handleErrorSocket from './handleErrorSocket';
+import SocketException from '../classes/SocketException';
+import handleSocketException from './handleSocketException';
 
 
 /*
@@ -12,20 +12,27 @@ import handleErrorSocket from './handleErrorSocket';
 */
 function update(playerId, settings) {
   const player = Player.getPlayerById(playerId);
+
+  // Check that player exist.
+  if (!player) throw new SocketException('Player not found');
+
   player.update(settings);
 }
 /*
 ** Delete Player.
 */
-function _delete(playerId) {
+function disconnect(playerId) {
   const player = Player.getPlayerById(playerId);
-  if (!player) throw new SocketErrorPlayer('Player not found');
+
+  // Check that player exist.
+  if (!player) throw new SocketException('Player not found');
+
   // If player is in game. Remove player from game.
   if (player.get('gameId')) {
     const game = Game.getGameByid(player.get('gameId'));
-    if (!game) throw new SocketErrorPlayer('Game not found');
-    game.removePlayer(playerId);
+    if (game) game.removePlayer(playerId);
   }
+
   // Remove player from players list.
   _.remove(Player.allPlayers, p => p.get('id') === playerId);
 }
@@ -33,14 +40,16 @@ function _delete(playerId) {
 ** Kick Player.
 */
 function kick(playerId, playerIdToDelete) {
-  // Check that playerId is allowed to kick player as gameMaster.
   const player = Player.getPlayerById(playerId);
   const playerToDelete = Player.getPlayerById(playerIdToDelete);
-  if (!player) throw new SocketErrorPlayer('Player not found');
+
+  // Check that player and playerToDelete exist.
+  if (!player) throw new SocketException('Player not found');
+  if (!playerToDelete) throw new SocketException('Player to delete not found');
+
+  // Check that playerId is allowed to kick player as gameMaster.
   const game = Game.getGameByid(player.get('gameId'));
-  if (!game) throw new SocketErrorPlayer('Game not found');
-  if (game.get('masterId') !== playerId) throw new SocketErrorPlayer('Player not authorized to perform kick');
-  playerToDelete.get('socket').disconnect(true);
+  if (game && game.get('masterId') !== playerId) { playerToDelete.get('socket').disconnect(true); }
 }
 
 /**
@@ -59,7 +68,7 @@ export default async function (playerId, data) {
         break;
       }
       case '/deconnexion': {
-        _delete(playerId);
+        disconnect(playerId);
         break;
       }
       case '/kick': {
@@ -72,9 +81,9 @@ export default async function (playerId, data) {
     }
     logger.info('All Players', Player.allPlayers);
   } catch (e) {
-    if (e instanceof SocketErrorPlayer) {
+    if (e instanceof SocketException) {
       e.socketId = playerId;
-      handleErrorSocket(e);
+      handleSocketException(e);
     } else throw e;
   }
 }

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { getUUID } from '../helpers/utils';
 import Payload from './Payload';
 import Player from './Player';
+import SocketException from './SocketException';
 
 
 const _allGames = [];
@@ -65,19 +66,33 @@ class Game extends Payload {
   }
 
   addPlayer(playerId) {
+    // Check that player exists.
     const player = Player.getPlayerById(playerId);
-    if (!player) throw new Error('Player not found');
-    if (this.getPlayer(playerId)) throw new Error('Player already in game');
+    if (!player) throw new SocketException('Player not found');
+
+    // Check that player is not already in game.
+    if (this.getPlayer(playerId)) throw new SocketException('Player already in game');
+
+    // Update player.
     player.update({ gameId: this.get('id') });
+
     // Send a join alert for RTC init in front.
     player.get('socket').emit('/game', { path: '/join', game: this.format() });
+
+    // Update game.
     this.payload.players.push(player);
+
+    // Update all players in game.
     this.broadcast('/update', { game: this.format() });
   }
 
   removePlayer(playerId) {
-    if (!this.getPlayer(playerId)) throw new Error('Player not in game');
+    // Check that player is in game.
+    if (!this.getPlayer(playerId)) { throw new SocketException('Player not in game', true); }
+
+    // Remove player from game player list.
     _.remove(this.payload.players, p => p.get('id') === playerId);
+
     // Game is now empty. Delete it.
     if (this.payload.players.length === 0) {
       _.remove(Game.allGames, g => g.get('id') === this.get('id'));
@@ -87,6 +102,7 @@ class Game extends Payload {
         const players = this.get('players');
         this.set('masterId', players[0].get('id'));
       }
+      // Update all players in game.
       this.broadcast('/update', { game: this.format() });
     }
   }
@@ -107,6 +123,9 @@ class Game extends Payload {
   }
 
   update(settings) {
+    // Settings must be an object.
+    settings = settings || {};
+
     // If maxPlayer is set, we might have to kick players.
     const players = this.get('players');
     const playersNumber = players.length;
@@ -116,11 +135,12 @@ class Game extends Payload {
       let j = settings.maxPlayers;
       for (j; j < playersNumber; j++) {
         const p = players[i];
-        // this.removePlayer(p.get('id'));
         p.get('socket').disconnect(true);
       }
     }
+    // Merge settings.
     _.merge(this.payload, settings);
+    // Update all players in game.
     this.broadcast('/update', { game: this.format() });
   }
 }
