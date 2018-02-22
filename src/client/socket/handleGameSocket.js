@@ -1,6 +1,8 @@
 import store from '../store';
 import actions from '../actions';
 
+import { addRTCConn, getPeer } from '../helpers/webRTC';
+
 const { updateGame } = actions;
 
 
@@ -15,6 +17,15 @@ export default function (data) {
   switch (path) {
     case '/update': {
       update(data);
+      break;
+    }
+    case '/join': {
+      data.game.players.forEach((player) => {
+        const conn = getPeer().connect(player.webRTCId);
+        conn.on('open', () => {
+          addRTCConn(conn);
+        });
+      });
       break;
     }
     default: {

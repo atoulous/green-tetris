@@ -16,6 +16,7 @@ class Player extends Payload {
     super({
       socket,
       id: socket.id,
+      webRTCId: 'default',
       nickname: 'default',
       isReady: false,
       hasLost: false,
@@ -42,7 +43,7 @@ class Player extends Payload {
     }
   }
 
-  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId']) {
+  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId', 'webRTCId']) {
     return super.format(props);
   }
 }

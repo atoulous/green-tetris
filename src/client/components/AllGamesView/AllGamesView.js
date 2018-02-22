@@ -16,6 +16,7 @@ import {
 
 import * as socket from '../../socket';
 import actions from '../../actions';
+import { getPeer } from '../../helpers/webRTC';
 
 import './AllGamesView.scss';
 
@@ -35,7 +36,8 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
   */
   const _handleJoin = game => () => {
     socket.openClient();
-    dispatch(socketUpdatePlayer({ nickname }));
+    const peer = getPeer();
+    dispatch(socketUpdatePlayer({ nickname, webRTCId: peer.id }));
     dispatch(socketJoinGame(game.id));
   };
 
@@ -44,7 +46,8 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
   */
   const _handleCreate = () => {
     socket.openClient();
-    dispatch(socketUpdatePlayer({ nickname }));
+    const peer = getPeer();
+    dispatch(socketUpdatePlayer({ nickname, webRTCId: peer.id }));
     dispatch(socketCreateGame());
   };
 

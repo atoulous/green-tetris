@@ -1,22 +1,19 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import * as webRTC from '../helpers/webRTC';
+import { getPeer } from '../helpers/webRTC';
 
 import storeState from '../middlewares/storeState';
-import peerRTC from '../middlewares/peerRTC';
 import socketIO from '../middlewares/socketIO';
-import RTCConn from '../middlewares/RTCConn';
 import logger from '../middlewares/logger';
 import reducer from '../reducers';
 
-// const peer = webRTC.newPeer({ key: '7ie9ooeeas0grpb9' });
+// func here is to init peer
+getPeer();
 
 const middlewares = applyMiddleware(
   thunk,
-  socketIO(),
-  // peerRTC(peer),
-  // RTCConn,
+  socketIO,
   storeState,
   logger
 );
