@@ -63,10 +63,8 @@ class Game extends Payload {
     if (!player) throw new Error('Player not found');
     if (this.getPlayer(playerId)) throw new Error('Player already in game');
     player.update({ gameId: this.get('id') });
-
     // Send a join alert for RTC init in front.
     player.get('socket').emit('/game', { path: '/join', game: this.format() });
-
     this.payload.players.push(player);
     this.broadcast('/update', { game: this.format() });
   }
@@ -103,6 +101,19 @@ class Game extends Payload {
   }
 
   update(settings) {
+    // If maxPlayer is set, we might have to kick players.
+    const players = this.get('players');
+    const playersNumber = players.length;
+    if (settings.maxPlayers && settings.maxPlayers < playersNumber) {
+      if (settings.maxPlayers === 0) settings.maxPlayers = 1;
+      const i = settings.maxPlayers;
+      let j = settings.maxPlayers;
+      for (j; j < playersNumber; j++) {
+        const p = players[i];
+        // this.removePlayer(p.get('id'));
+        p.get('socket').disconnect(true);
+      }
+    }
     _.merge(this.payload, settings);
     this.broadcast('/update', { game: this.format() });
   }
