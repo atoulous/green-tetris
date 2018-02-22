@@ -18,14 +18,14 @@ import './GamePlayers.scss';
 
 const { socketKickPlayer } = actions;
 
-const GamePlayers = ({ game, dispatch }) => {
+const GamePlayers = ({ game, dispatch, player }) => {
+  const isGameMaster = player.id === game.masterId;
+
+
   const handleKick = player => () => {
-    console.log('KICK THE PLAYER:', player);
     dispatch(socketKickPlayer(player.id));
-    /*
-    ** Change state here with dispatch
-    */
   };
+
 
   const playersTable = [];
 
@@ -38,7 +38,7 @@ const GamePlayers = ({ game, dispatch }) => {
             }
         </TableRowColumn>
         <TableRowColumn>
-          <RaisedButton label="Kick" onClick={handleKick(game.players[i])} />
+          { isGameMaster && <RaisedButton label="Kick" onClick={handleKick(game.players[i])} /> }
         </TableRowColumn>
                         </TableRow>);
     } else {
@@ -72,6 +72,7 @@ const GamePlayers = ({ game, dispatch }) => {
 GamePlayers.propTypes = {
   game: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  player: PropTypes.object.isRequired,
 };
 
 export default GamePlayers;

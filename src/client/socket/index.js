@@ -21,6 +21,11 @@ export function closeClient() {
 export function openClient() {
   client = io.connect('/');
 
+  client.on('connect', () => {
+    const data = { path: '/updateId', id: client.id };
+    handlePlayerSocket(data);
+  });
+
   client.on('/game', data => handleGameSocket(data));
   client.on('/tetris', data => handleTetrisSocket(data));
   client.on('/player', data => handlePlayerSocket(data));

@@ -54,8 +54,14 @@ class Game extends Payload {
   }
 
   start() {
-    this.set('hasStarted', true);
-    this.broadcast('/update', { game: this.format() });
+    // Check that all players are ready
+    const players = this.get('players');
+    if (players.every(p => p.get('isReady') === true)) {
+      this.set('hasStarted', true);
+      this.broadcast('/update', { game: this.format() });
+    } else {
+      throw new Error('All players are not ready');
+    }
   }
 
   addPlayer(playerId) {
@@ -66,7 +72,6 @@ class Game extends Payload {
 
     // Send a join alert for RTC init in front.
     player.get('socket').emit('/game', { path: '/join', game: this.format() });
-
     this.payload.players.push(player);
     this.broadcast('/update', { game: this.format() });
   }
@@ -103,6 +108,19 @@ class Game extends Payload {
   }
 
   update(settings) {
+    // If maxPlayer is set, we might have to kick players.
+    const players = this.get('players');
+    const playersNumber = players.length;
+    if (settings.maxPlayers && settings.maxPlayers < playersNumber) {
+      if (settings.maxPlayers === 0) settings.maxPlayers = 1;
+      const i = settings.maxPlayers;
+      let j = settings.maxPlayers;
+      for (j; j < playersNumber; j++) {
+        const p = players[i];
+        // this.removePlayer(p.get('id'));
+        p.get('socket').disconnect(true);
+      }
+    }
     _.merge(this.payload, settings);
     this.broadcast('/update', { game: this.format() });
   }

@@ -28,7 +28,6 @@ export function getPeer() {
     peer.on('connection', (conn) => {
       addRTCConn(conn);
     });
-
     peer.on('call', (call) => {
       // Answer the call, providing our mediaStream
       call.answer(audioInputStream);

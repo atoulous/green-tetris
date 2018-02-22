@@ -13,16 +13,17 @@ import GetAudio from '../GetAudioStream/GetAudioStream';
 
 import './GameSettingsView.scss';
 
-const GameSettingsView = ({ match, game, dispatch }) => {
+const GameSettingsView = ({ match, game, dispatch, playerId }) => {
   if (!game) return <Redirect to="/games" />;
 
   const isSolo = (match.params.id === 'solo');
-  const p = (isSolo) ? null : <GamePlayers game={game} dispatch={dispatch} />;
+  const player = game.players.find(p => p.id === playerId) || {};
+
   return (
     <div className="container">
       <div className="game-settings-view">
-        <GameSettings game={game} dispatch={dispatch} />
-        {p}
+        <GameSettings game={game} dispatch={dispatch} player={player} />
+        {!isSolo && <GamePlayers game={game} dispatch={dispatch} player={player} />}
       </div>
       <TestRTC />
       <GetAudio />
@@ -40,7 +41,7 @@ GameSettingsView.propTypes = {
       id: PropTypes.string,
     })
   }).isRequired,
-
+  playerId: PropTypes.string.isRequired,
 };
 
 GameSettingsView.defaultProps = {
@@ -50,6 +51,7 @@ GameSettingsView.defaultProps = {
 
 const mapStateToProps = state => ({
   game: state.game,
+  playerId: state.player.id,
 });
 
 export default connect(mapStateToProps)(GameSettingsView);

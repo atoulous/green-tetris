@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import logger from '../helpers/logger';
 import Game from '../classes/Game';
+import Player from '../classes/Player';
 
 // import { getConnection } from './socketManager';
 // import { getGames, addGame, getGame } from '../helpers/game';
@@ -20,7 +21,14 @@ function create(playerId) {
 function join(playerId, gameId) {
   const game = Game.getGameByid(gameId);
   // if (!game) throw new Error('Game not found');
-  game.addPlayer(playerId);
+  // If game is full, player is disconnected.
+  if (game.get('maxPlayers') === game.get('players').length) {
+    const player = Player.getPlayerById(playerId);
+    // if (!player) throw new Error('Player not found');
+    player.get('socket').disconnect(true);
+  } else {
+    game.addPlayer(playerId);
+  }
 }
 /**
  * Leave an existing game.
