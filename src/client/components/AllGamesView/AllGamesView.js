@@ -108,7 +108,7 @@ AllGamesView.defaultProps = {
 const mapStateToProps = state => ({
   gamesList: state.gamesList,
   game: state.game,
-  nickname: state.nickname,
+  nickname: state.player.nickname,
 });
 
 export default connect(mapStateToProps)(AllGamesView);

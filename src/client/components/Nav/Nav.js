@@ -80,7 +80,7 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
 };
 
 const mapStateToProps = state => ({
-  nickname: state.nickname,
+  nickname: state.player.nickname,
   isNicknameModalOpen: state.isNicknameModalOpen,
   game: state.game,
 });
@@ -95,6 +95,5 @@ Nav.propTypes = {
 Nav.defaultValue = {
   game: null,
 };
-
 
 export default connect(mapStateToProps)(Nav);
