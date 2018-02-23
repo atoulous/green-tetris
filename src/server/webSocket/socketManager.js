@@ -21,7 +21,6 @@ export function listen(server) {
 
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
-
     /*
     ** Add incoming socket messages handlers
     */

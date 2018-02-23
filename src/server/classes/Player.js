@@ -37,7 +37,7 @@ class Player extends Payload {
   update(settings) {
     _.merge(this.payload, settings);
     if (this.get('gameId')) {
-      console.log(this.get('gameId'));
+      // throw new SocketErrorPlayer('Ceci est un test pouet');
       const game = Game.getGameByid(this.get('gameId'));
       if (game) game.broadcast('/update', { game: game.format() });
     }

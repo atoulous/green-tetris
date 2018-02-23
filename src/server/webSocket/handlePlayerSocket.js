@@ -3,6 +3,8 @@ import _ from 'lodash';
 import Game from '../classes/Game';
 import Player from '../classes/Player';
 import logger from '../helpers/logger';
+import SocketException from '../classes/SocketException';
+import handleSocketException from './handleSocketException';
 
 
 /*
@@ -10,20 +12,27 @@ import logger from '../helpers/logger';
 */
 function update(playerId, settings) {
   const player = Player.getPlayerById(playerId);
+
+  // Check that player exist.
+  if (!player) throw new SocketException('Player not found');
+
   player.update(settings);
 }
 /*
 ** Delete Player.
 */
-function _delete(playerId) {
+function disconnect(playerId) {
   const player = Player.getPlayerById(playerId);
-  if (!player) throw new Error('Player not found');
+
+  // Check that player exist.
+  if (!player) throw new SocketException('Player not found');
+
   // If player is in game. Remove player from game.
   if (player.get('gameId')) {
     const game = Game.getGameByid(player.get('gameId'));
-    if (!game) throw new Error('Game not found');
-    game.removePlayer(playerId);
+    if (game) game.removePlayer(playerId);
   }
+
   // Remove player from players list.
   _.remove(Player.allPlayers, p => p.get('id') === playerId);
 }
@@ -31,15 +40,16 @@ function _delete(playerId) {
 ** Kick Player.
 */
 function kick(playerId, playerIdToDelete) {
-  // Check that playerId is allowed to kick player as gameMaster.
   const player = Player.getPlayerById(playerId);
   const playerToDelete = Player.getPlayerById(playerIdToDelete);
-  if (!player) throw new Error('Player not found');
+
+  // Check that player and playerToDelete exist.
+  if (!player) throw new SocketException('Player not found');
+  if (!playerToDelete) throw new SocketException('Player to delete not found');
+
+  // Check that playerId is allowed to kick player as gameMaster.
   const game = Game.getGameByid(player.get('gameId'));
-  if (!game) throw new Error('Game not found');
-  if (game.get('masterId') !== playerId) throw new Error('Player not authorized to perform kick');
-  playerToDelete.get('socket').disconnect(true);
-  // this._delete(playerIdToDelete);
+  if (game && game.get('masterId') !== playerId) { playerToDelete.get('socket').disconnect(true); }
 }
 
 /**
@@ -49,25 +59,32 @@ function kick(playerId, playerIdToDelete) {
  * @return {void}
  */
 export default async function (playerId, data) {
-  const { path } = data;
-  logger.info(`Socket - /player${path}`);
-  switch (path) {
-    case '/update': {
-      update(playerId, data.settings);
-      break;
+  try {
+    const { path } = data;
+    logger.info(`Socket - /player${path}`);
+    switch (path) {
+      case '/update': {
+        update(playerId, data.settings);
+        break;
+      }
+      case '/deconnexion': {
+        disconnect(playerId);
+        break;
+      }
+      case '/kick': {
+        kick(playerId, data.playerIdToDelete);
+        break;
+      }
+      default: {
+        console.log('default triggered');
+      }
     }
-    case '/deconnexion': {
-      _delete(playerId);
-      break;
-    }
-    case '/kick': {
-      kick(playerId, data.playerIdToDelete);
-      break;
-    }
-    default: {
-      console.log('default triggered');
-    }
+    logger.info('All Players', Player.allPlayers);
+  } catch (e) {
+    if (e instanceof SocketException) {
+      e.socketId = playerId;
+      handleSocketException(e);
+    } else throw e;
   }
-  logger.info('All Players', Player.allPlayers);
 }
 
