@@ -3,7 +3,7 @@ import {
   checkRowsToDelete,
   getSpectrum,
 } from '../utils/tetris';
-import { keys } from '../constants';
+import { keys } from '../helpers/constants';
 import { newPiece } from './socket';
 
 // Constants

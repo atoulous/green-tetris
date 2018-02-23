@@ -17,7 +17,7 @@ export function drawPiece(state) {
   tetrisHelper.forEachBlockInPiece(currentPiece, (x, y) => {
     const cell = gridCopy[x][y];
     cell.fill = true;
-    cell.color = currentPiece.t.color;
+    cell.color = currentPiece.shape.color;
   });
 
   return { ...state, grid: gridCopy };
@@ -53,7 +53,8 @@ export function setPiece(state, piece) {
  * @returns {{piecesQueue}}
  */
 export function addPieceToQueue(state, newPiece) {
-  const piecesQueue = state.game.piecesQueue.push(newPiece);
+  const { piecesQueue } = state.game;
+  piecesQueue.push(newPiece);
   const game = { ...state.game, piecesQueue };
 
   return { ...state, game };
@@ -67,7 +68,8 @@ export function addPieceToQueue(state, newPiece) {
  */
 export function setNewPiece(state) {
   if (state.game && state.game.piecesQueue.length) {
-    const piece = state.game.piecesQueue.shift();
+    const { piecesQueue } = state.game;
+    const piece = piecesQueue.shift();
 
     return { ...state, currentPiece: piece };
   }
