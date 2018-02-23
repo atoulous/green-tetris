@@ -4,6 +4,7 @@ import { getUUID } from '../helpers/utils';
 import Payload from './Payload';
 import Player from './Player';
 import SocketException from './SocketException';
+import Piece from './Piece';
 
 const _allGames = [];
 
@@ -32,7 +33,7 @@ class Game extends Payload {
       hasFinished: false,
       isFullVisibility: false,
       isPieceSynchro: false,
-      piecesQueue: [],
+      piecesQueue: [new Piece()],
       isSolo,
     });
     this.addPlayer(masterId);
@@ -116,10 +117,14 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'piecesQueue', 'isPieceSynchro', 'isFullVisibility', 'isSolo']) {
+  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'isPieceSynchro', 'isFullVisibility', 'isSolo']) {
+    // Format Pieces.
+    let piecesQueue = this.get('piecesQueue');
+    piecesQueue = piecesQueue.map(p => p.format());
+    // Format Players.
     let players = this.get('players');
     players = players.map(p => p.format());
-    return _.merge(super.format(props), { players });
+    return _.merge(super.format(props), { players, piecesQueue });
   }
 
   isMaster(playerId) {
