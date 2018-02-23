@@ -1,6 +1,11 @@
 import map from 'lodash/map';
 
 /**
+ * Pieces bag singleton
+ */
+let bag = [];
+
+/**
  * All possible pieces
  */
 export const pieces = {
@@ -18,9 +23,25 @@ export const pieces = {
  *
  * @returns {Array}
  */
-export function initBag() {
-  const bag = [];
-  map(pieces, (piece, index) => bag.push({ ...pieces[index] }, { ...pieces[index] }));
+function initBag() {
+  map(pieces, piece => bag.push(piece, piece));
 
   return bag;
+}
+
+/**
+ *
+ * @returns {number}
+ */
+export function getRandomPiece() {
+  if (!bag.length) {
+    bag = initBag();
+  }
+
+  const index = Math.floor(Math.random() * bag.length);
+  const piece = bag[index];
+
+  bag = bag.splice(index, 1);
+
+  return piece;
 }

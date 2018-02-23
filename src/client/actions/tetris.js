@@ -4,7 +4,7 @@ import {
   getSpectrum,
 } from '../utils/tetris';
 import { keys } from '../constants';
-
+import { newPiece } from './socket';
 
 // Constants
 export const DRAW_PIECE = 'DRAW_PIECE';
@@ -12,13 +12,13 @@ export const ERASE_PIECE = 'ERASE_PIECE';
 export const SET_PIECE = 'SET_PIECE';
 export const TOGGLE_PLAY = 'TOGGLE_PLAY';
 export const SET_NEW_PIECE = 'SET_NEW_PIECE';
+export const ADD_PIECE_TO_QUEUE = 'ADD_PIECE_TO_QUEUE';
 export const REFRESH_GRID_WITHOUT_CURRENT = 'REFRESH_GRID_WITHOUT_CURRENT';
 export const INCREASE_SPEED = 'INCREASE_SPEED';
 export const DELETE_ROWS = 'DELETE_ROWS';
 export const ADD_ROW = 'ADD_ROW';
 export const UPDATE_SPECTRUM = 'UPDATE_SPECTRUM';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
-
 
 // Action objects
 export function refreshGridWithoutCurrent() {
@@ -104,7 +104,13 @@ export function setNewPiece() {
     dispatch({ type: SET_NEW_PIECE });
     // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
-    const { currentPiece, gridWithoutCurrent, speed: interval } = getState();
+
+    const { currentPiece, gridWithoutCurrent, speed: interval, game } = getState();
+
+    if (game.piecesQueue.length <= 1) {
+      dispatch(newPiece());
+    }
+
     // Not enough space to place piece. Game is lost.
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
       console.log('PERDU');
@@ -117,6 +123,18 @@ export function setNewPiece() {
         dispatch(dropPiece());
       }, interval);
     }
+  };
+}
+
+/**
+ * Add piece received by web socket to end of queue
+ *
+ * @param newPiece
+ * @returns {function(*)}
+ */
+export function addPieceToQueue(newPiece) {
+  return (dispatch) => {
+    dispatch({ type: ADD_PIECE_TO_QUEUE, newPiece });
   };
 }
 

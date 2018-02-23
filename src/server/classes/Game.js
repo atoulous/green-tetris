@@ -29,7 +29,7 @@ class Game extends Payload {
       hasFinished: false,
       isFullVisibility: false,
       isPieceSynchro: false,
-      pieceQueue: [],
+      piecesQueue: [],
     });
     this.addPlayer(masterId);
   }
@@ -112,7 +112,7 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'pieceQueue', 'isPieceSynchro', 'isFullVisibility']) {
+  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'piecesQueue', 'isPieceSynchro', 'isFullVisibility']) {
     let players = this.get('players');
     players = players.map(p => p.format());
     return _.merge(super.format(props), { players });
