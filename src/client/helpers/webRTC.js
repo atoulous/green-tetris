@@ -30,10 +30,11 @@ export function getPeer() {
     });
     peer.on('call', (call) => {
       // Answer the call, providing our mediaStream
+      console.log('call is -- ', call);
       call.answer(audioInputStream);
       call.on('stream', (stream) => {
         // should dispatch to update client audioReceiver to add stream to audio element
-        store.dispatch(addAudioStream(stream));
+        store.dispatch(addAudioStream({ from: call.peer, stream }));
       });
     });
   }
@@ -53,7 +54,7 @@ export function callPeer(peerId) {
     const call = getPeer().call(peerId, audioInputStream);
     call.on('stream', (stream) => {
       // should dispatch to update client audioReceiver to add stream to audio element
-      store.dispatch(addAudioStream(stream));
+      store.dispatch(addAudioStream({ from: peerId, stream }));
     });
   }
 }

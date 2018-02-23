@@ -7,9 +7,7 @@ import GamePlayers from '../../components/GamePlayers/GamePlayers';
 import GameSettings from '../../components/GameSettings/GameSettings';
 
 import TestRTC from '../../containers/RTCtest/RTCTest';
-import TestAudio from '../../containers/AudioTest/AudioTest';
 import AudioContainer from '../../containers/AudioContainer/AudioContainer';
-import GetAudio from '../GetAudioStream/GetAudioStream';
 
 import './GameSettingsView.scss';
 
