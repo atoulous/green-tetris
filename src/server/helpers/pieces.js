@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import map from 'lodash/map';
 
 /**
  * All possible pieces
@@ -24,5 +24,3 @@ export function initBag() {
 
   return bag;
 }
-
-console.log(initBag());

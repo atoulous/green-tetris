@@ -1,6 +1,8 @@
 import get from 'lodash/get';
 
-import pieces from '../helpers/pieces';
+import { initBag } from '../helpers/pieces';
+
+const bag = initBag();
 
 /**
  * Class Piece
@@ -9,7 +11,7 @@ import pieces from '../helpers/pieces';
  */
 class Piece {
   constructor(init) {
-    this.form = get(init, 'form', pieces[Math.floor(Math.random() * pieces.length)]);
+    this.form = get(init, 'form', bag[Math.floor(Math.random() * bag.length)]);
     this.direction = get(init, 'direction', 0);
     this.x = get(init, 'x', 0);
     this.y = get(init, 'y', 0);
