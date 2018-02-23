@@ -3,12 +3,23 @@ import actions from '../actions';
 
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame } = actions;
+const { updateGame, updateError } = actions;
 
 
-function update(data) {
+/**
+ * Dispatch action that will update game in redux-tree.
+ */
+function _update(data) {
   const { game } = data;
   store.dispatch(updateGame(game));
+}
+
+/**
+ * Dispatch action that will update error in redux-tree.
+ */
+function _error(data) {
+  const { error } = data;
+  store.dispatch(updateError(error));
 }
 
 export default function (data) {
@@ -16,7 +27,7 @@ export default function (data) {
   console.log(`socket /game${path}`);
   switch (path) {
     case '/update': {
-      update(data);
+      _update(data);
       break;
     }
     case '/join': {
@@ -26,6 +37,10 @@ export default function (data) {
           addRTCConn(conn);
         });
       });
+      break;
+    }
+    case '/error': {
+      _error(data);
       break;
     }
     default: {

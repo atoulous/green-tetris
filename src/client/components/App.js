@@ -6,6 +6,7 @@ import AllGamesView from './AllGamesView/AllGamesView';
 import GameSettingsView from './GameSettingsView/GameSettingsView';
 import Nav from './Nav/Nav';
 import TetrisView from './TetrisView/TetrisView';
+import Error from './Error/Error';
 
 const NotFound = () => (
   <div>
@@ -16,6 +17,7 @@ const NotFound = () => (
 const App = () => (
   <div>
     <Nav />
+    <Error />
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />

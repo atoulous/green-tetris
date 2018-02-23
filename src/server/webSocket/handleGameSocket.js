@@ -3,6 +3,8 @@ import _ from 'lodash';
 import logger from '../helpers/logger';
 import Game from '../classes/Game';
 import Player from '../classes/Player';
+import handleSocketException from './handleSocketException';
+import SocketException from '../classes/SocketException';
 
 // import { getConnection } from './socketManager';
 // import { getGames, addGame, getGame } from '../helpers/game';
@@ -16,36 +18,34 @@ function create(playerId) {
   allGames.push(new Game(playerId));
 }
 /**
- * Join an existing game.
+ * Join an existing game. If fail to find game, disconnect.
  */
 function join(playerId, gameId) {
+  // Check that game exists.
   const game = Game.getGameByid(gameId);
-  // if (!game) throw new Error('Game not found');
-  // If game is full, player is disconnected.
+  if (!game) throw new SocketException('Game not found', true);
+
+  // Check that game is not full.
   if (game.get('maxPlayers') === game.get('players').length) {
+    // Check that player exists.
     const player = Player.getPlayerById(playerId);
-    // if (!player) throw new Error('Player not found');
+    if (!player) throw new SocketException('Player not found');
+    // Disconnect player.
     player.get('socket').disconnect(true);
   } else {
+    // Add player.
     game.addPlayer(playerId);
   }
 }
 /**
- * Leave an existing game.
- */
-function leave(playerId) {
-  const game = Game.getGameByid(gameId);
-  // if (!game) throw new Error('Game not found');
-  game.removePlayer(playerId);
-}
-/**
- * Update an existing game.
+ * Update an existing game. If fail to find game, disconnect.
  */
 function update(playerId, gameId, settings) {
+  // Check that game exists.
   const game = Game.getGameByid(gameId);
-  // if (!game) throw new Error('Game not found');
-  // if (!game.isMaster(playerId)) throw new Error('Player not allowed to update settings');
-  game.update(settings);
+  if (!game) throw new SocketException('Game not found', true);
+  // Check that player is allowed to update settings.
+  if (game.isMaster(playerId)) game.update(settings);
 }
 
 /**
@@ -55,49 +55,46 @@ function update(playerId, gameId, settings) {
  * @return {void}
  */
 export default async function (playerId, data) {
-  const { path } = data;
-  logger.info(`Socket - /game${path}`);
-  switch (path) {
-    case '/create': {
-      // const { webRTCId, socketId } = data;
-      create(playerId);
-      break;
+  try {
+    const { path } = data;
+    logger.info(`Socket - /game${path}`);
+    switch (path) {
+      case '/create': {
+        // const { webRTCId, socketId } = data;
+        create(playerId);
+        break;
+      }
+      case '/join': {
+        join(playerId, data.gameId);
+        break;
+      }
+      case '/update': {
+        update(playerId, data.gameId, data.settings);
+        break;
+      }
+      default:
+        break;
     }
-    case '/join': {
-      if (!data.gameId) throw new Error('No GameId to join.');
-      join(playerId, data.gameId);
-      break;
-    }
-    case '/leave': {
-      if (!data.gameId) throw new Error('No GameId to leave.');
-      leave(playerId, data.gameId);
-      break;
-    }
-    case '/update': {
-      if (!data.settings) throw new Error('No settings to update.');
-      if (!data.gameId) throw new Error('No GameId to update');
-      update(playerId, data.gameId, data.settings);
-      break;
-    }
-    case '/deconnexion': {
-      leave(playerId);
-      break;
-    }
-    // case '/join': {
-    //   const { room, webRTCId, socketId } = data;
-    //   const currrentGame = getGame(room);
-    //   if (currrentGame && !currrentGame.hasStarted) {
-    //     const newPlayer = new Player({ socketId, webRTCId });
-    //     getConnection().to(socketId).emit('/game', { path: '/joined', game: currrentGame });
-    //     currrentGame.players.push(newPlayer);
-    //     currrentGame.broadcast(getConnection(), '/game', { path: '/updated', game: currrentGame });
-    //   } else {
-    //     console.log('NOTHING SHOULD HAPPEN AS EITHER GAME DOES NOT EXIST OR GAME HAS STARTED');
-    //   }
-    //   break;
-    // }
-    default:
-      break;
+    logger.info('All Games', Game.allGames);
+  } catch (e) {
+    if (e instanceof SocketException) {
+      e.socketId = playerId;
+      handleSocketException(e);
+    } else throw e;
   }
-  logger.info('All Games', Game.allGames);
 }
+
+
+// case '/join': {
+//   const { room, webRTCId, socketId } = data;
+//   const currrentGame = getGame(room);
+//   if (currrentGame && !currrentGame.hasStarted) {
+//     const newPlayer = new Player({ socketId, webRTCId });
+//     getConnection().to(socketId).emit('/game', { path: '/joined', game: currrentGame });
+//     currrentGame.players.push(newPlayer);
+//     currrentGame.broadcast(getConnection(), '/game', { path: '/updated', game: currrentGame });
+//   } else {
+//     console.log('NOTHING SHOULD HAPPEN AS EITHER GAME DOES NOT EXIST OR GAME HAS STARTED');
+//   }
+//   break;
+// }
