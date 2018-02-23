@@ -5,19 +5,22 @@ import Payload from './Payload';
 import Player from './Player';
 import SocketException from './SocketException';
 
-
 const _allGames = [];
-
 
 /**
  * Class Game
- *
  * @param constructor {String} - masterId
+ *
  */
 class Game extends Payload {
-  constructor(masterId) {
+  constructor(masterId, settings) {
+    // Check that master player exists.
     const master = Player.getPlayerById(masterId);
-    if (!master) throw new Error('Master not found');
+    if (!master) throw new SocketException('Master not found');
+    // Handle settings for game creation.
+    let { isSolo } = settings;
+    isSolo = isSolo || false;
+
     super({
       id: getUUID(),
       masterId: master.get('id'),
@@ -30,6 +33,7 @@ class Game extends Payload {
       isFullVisibility: false,
       isPieceSynchro: false,
       piecesQueue: [],
+      isSolo,
     });
     this.addPlayer(masterId);
   }

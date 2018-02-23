@@ -14,7 +14,7 @@ import './GameSettingsView.scss';
 const GameSettingsView = ({ match, game, dispatch, playerId }) => {
   if (!game) return <Redirect to="/games" />;
 
-  const isSolo = (match.params.id === 'solo');
+  const { isSolo } = game;
   const player = game.players.find(p => p.id === playerId) || {};
 
   return (
