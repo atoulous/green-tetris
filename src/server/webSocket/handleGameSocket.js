@@ -13,9 +13,10 @@ import SocketException from '../classes/SocketException';
 /**
  * Create a new game with player as gameMaster.
  */
-function create(playerId) {
+function create(playerId, settings) {
+  settings = settings || {};
   const { allGames } = Game;
-  allGames.push(new Game(playerId));
+  allGames.push(new Game(playerId, settings));
 }
 /**
  * Join an existing game. If fail to find game, disconnect.
@@ -61,7 +62,7 @@ export default async function (playerId, data) {
     switch (path) {
       case '/create': {
         // const { webRTCId, socketId } = data;
-        create(playerId);
+        create(playerId, data.settings);
         break;
       }
       case '/join': {

@@ -14,7 +14,7 @@ import './GameSettingsView.scss';
 const GameSettingsView = ({ match, game, dispatch, playerId }) => {
   if (!game) return <Redirect to="/games" />;
 
-  const isSolo = (match.params.id === 'solo');
+  const { isSolo } = game;
   const player = game.players.find(p => p.id === playerId) || {};
 
   return (
@@ -24,8 +24,6 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
         {!isSolo && <GamePlayers game={game} dispatch={dispatch} player={player} />}
       </div>
       <TestRTC />
-      <GetAudio />
-      <TestAudio />
       <AudioContainer />
     </div>
   );

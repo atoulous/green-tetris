@@ -18,11 +18,12 @@ export const socketUpdatePlayer = settings => ({
 /**
  * Create game and set player as master. Will return a game updated to all player (only master)
  *
- * @returns {{type: string, data: {call: string, path: string}}}
+ * @param settings
+ * @returns {{type: string, data: {call: string, path: string, settings: {}}}}
  */
-export const socketCreateGame = () => ({
+export const socketCreateGame = (settings = {}) => ({
   type: 'socket',
-  data: { call: '/game', path: '/create' },
+  data: { call: '/game', path: '/create', settings },
 });
 
 /**
