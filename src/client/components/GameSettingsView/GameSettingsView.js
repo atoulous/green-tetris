@@ -24,8 +24,6 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
         {!isSolo && <GamePlayers game={game} dispatch={dispatch} player={player} />}
       </div>
       <TestRTC />
-      <GetAudio />
-      <TestAudio />
       <AudioContainer />
     </div>
   );

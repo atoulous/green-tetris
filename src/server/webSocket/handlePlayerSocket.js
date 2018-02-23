@@ -49,7 +49,7 @@ function kick(playerId, playerIdToDelete) {
 
   // Check that playerId is allowed to kick player as gameMaster.
   const game = Game.getGameByid(player.get('gameId'));
-  if (game && game.get('masterId') !== playerId) { playerToDelete.get('socket').disconnect(true); }
+  if (game && game.get('masterId') === playerId) { playerToDelete.get('socket').disconnect(true); }
 }
 
 /**
