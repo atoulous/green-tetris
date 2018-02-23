@@ -116,7 +116,7 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'piecesQueue', 'isPieceSynchro', 'isFullVisibility']) {
+  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'piecesQueue', 'isPieceSynchro', 'isFullVisibility', 'isSolo']) {
     let players = this.get('players');
     players = players.map(p => p.format());
     return _.merge(super.format(props), { players });
