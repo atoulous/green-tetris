@@ -44,8 +44,7 @@ class Game extends Payload {
   }
 
   static getGameByid(id) {
-    const result = _allGames.filter(game => game.get('id') === id);
-    return (result.length > 0) ? result[0] : null;
+    return _allGames.find(game => game.get('id') === id);
   }
 
   broadcast(subject, data, idsToOmit = []) {
