@@ -22,8 +22,8 @@ function join(playerId, gameId) {
   const game = Game.getGameByid(gameId);
   if (!game) throw new SocketException('Game not found', true);
 
-  // Check that game is not full.
-  if (game.get('maxPlayers') === game.get('players').length) {
+  // Check that game is not full and game has not started
+  if (game.get('maxPlayers') === game.get('players').length || game.get('hasStarted')) {
     // Check that player exists.
     const player = Player.getPlayerById(playerId);
     if (!player) throw new SocketException('Player not found');

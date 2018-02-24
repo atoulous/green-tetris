@@ -13,6 +13,7 @@ import {
   updateSpectrum,
   updateScore,
   addPieceToQueue,
+  setGrid,
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
 import { rtcMessage, addAudioStream, toggleMuted } from './connexion';
@@ -60,6 +61,7 @@ const {
   UPDATE_GAME,
   UPDATE_PLAYER_ID,
   UPDATE_ERROR,
+  SET_GRID,
 
   RTC_MESSAGE,
   ADD_AUDIO_STREAM,
@@ -83,6 +85,8 @@ export default function reducer(state = initialState, action) {
       return setPiece(state, action.piece);
     case SET_NEW_PIECE:
       return setNewPiece(state);
+    case SET_GRID:
+      return setGrid(state);
     case REFRESH_GRID_WITHOUT_CURRENT:
       return refreshGridWithoutCurrent(state);
     case INCREASE_SPEED:

@@ -2,8 +2,7 @@ import store from '../store';
 import actions from '../actions';
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame, addPieceToQueue, addRow, setNewPiece, endGame, } = actions;
-
+const { updateGame, addPieceToQueue, addRow, setNewPiece, setGrid, endGame } = actions;
 
 /**
  * Dispatch action that will update game in redux-tree.
@@ -31,6 +30,7 @@ function _receivePiece(data) {
 
 function _start(data) {
   const { game } = data;
+  store.dispatch(setGrid());
   store.dispatch(updateGame(game));
   store.dispatch(setNewPiece());
 }
