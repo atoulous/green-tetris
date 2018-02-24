@@ -76,7 +76,7 @@ export const socketKickPlayer = playerIdToDelete => ({
  * @param room
  * @returns {{type: string, data: {call: string, path: string, room: *}}}
  */
-export const newPiece = ({ room }) => ({
+export const newPiece = ({ gameId }) => ({
   type: 'socket',
-  data: { call: '/piece', path: '/new', room },
+  data: { call: '/piece', path: '/new', gameId },
 });

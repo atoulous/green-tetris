@@ -1,10 +1,7 @@
 import Piece from '../classes/Piece';
 
 import logger from '../helpers/logger';
-import { getConnection } from './socketManager';
-import { getGames } from '../helpers/game';
-
-const io = getConnection();
+import Game from '../classes/Game';
 
 /**
  * handle piece socket input
@@ -12,20 +9,22 @@ const io = getConnection();
  * @param {Object} data - the data: expect path and room
  * @return {void}
  */
-export default async function (data) {
+export default async (playerId, data) => {
   try {
     if (!data || !data.path) throw new Error('missing params');
 
     switch (data.path) {
       case '/new': {
-        console.log('new piece needed', data);
+        console.log('new piece needed', data, ' games ---  ', Game.allGames);
 
-        if (!data.room) throw new Error('missing room param');
+        if (!data.gameId) throw new Error('missing gameId param');
 
-        const currentGame = getGames().find(game => (game.room === data.room));
+        const currentGame = Game.allGames.find(game => (game.get('id') === data.gameId));
+        console.log('cur gmae -- ', currentGame);
         if (currentGame) {
           const newPiece = new Piece();
-          currentGame.broadcast(io, '/piece', { path: '/new', newPiece });
+          console.log('will broadcast -- ');
+          currentGame.broadcast('/newPiece', { newPiece });
         }
         break;
       }

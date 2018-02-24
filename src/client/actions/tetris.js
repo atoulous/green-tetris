@@ -108,7 +108,7 @@ export function setNewPiece() {
     const { currentPiece, gridWithoutCurrent, speed: interval, game } = getState();
 
     if (game.piecesQueue.length <= 1) {
-      dispatch(newPiece());
+      dispatch(newPiece({ gameId: game.id }));
     }
 
     // Not enough space to place piece. Game is lost.
