@@ -10,4 +10,3 @@ const Spectrum = ({ spectrum }) => (
 );
 
 export default Spectrum;
-

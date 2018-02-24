@@ -6,15 +6,16 @@ import TetrisPlayer from '../../components/TetrisPlayer/TetrisPlayer';
 import './TetrisPlayersList.scss';
 
 
-const TetrisPlayersList = ({ players }) => (
+const TetrisPlayersList = ({ players, self }) => (
   <div className="tetris-players-list">
     <div className="tetris-players-list-title">PLAYERS</div>
-    {players.map(player => <TetrisPlayer key={player.webRTCId} player={player} />)}
+    {players.map(player => <TetrisPlayer key={player.webRTCId} player={player} self={self} />)}
   </div>
 );
 
 const mapStateToProps = state => ({
-  players: state.game.players
+  players: state.game.players,
+  self: state.player
 });
 
 TetrisPlayersList.propTypes = {

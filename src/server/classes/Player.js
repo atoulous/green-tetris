@@ -22,6 +22,7 @@ class Player extends Payload {
       hasLost: false,
       spectrum: [],
       gameId: null,
+      score: 0,
     });
   }
 
@@ -43,7 +44,7 @@ class Player extends Payload {
     }
   }
 
-  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId', 'webRTCId']) {
+  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId', 'webRTCId', 'score']) {
     return super.format(props);
   }
 }

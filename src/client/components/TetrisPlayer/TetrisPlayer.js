@@ -6,15 +6,19 @@ import Spectrum from '../Spectrum/Spectrum';
 
 import './TetrisPlayer.scss';
 
-const TetrisPlayer = ({ player }) => (
-  <Card style={{ marginRight: '10px', marginBottom: '10px' }}>
-    <CardHeader
-      title={player.name}
-      subtitle={`score: ${player.score}`}
-    />
-    <Spectrum spectrum={player.spectrum} />
-  </Card>
-);
+const TetrisPlayer = ({ player, self }) => {
+  if (player.id === self.id) return null;
+
+  return (
+    <Card style={{marginRight: '10px', marginBottom: '10px'}}>
+      <CardHeader
+        title={player.nickname}
+        subtitle={`score: ${player.score}`}
+      />
+      <Spectrum spectrum={player.spectrum} />
+    </Card>
+  );
+};
 
 TetrisPlayer.propTypes = {
   player: PropTypes.shape({
@@ -22,7 +26,6 @@ TetrisPlayer.propTypes = {
     score: PropTypes.number,
     spectrum: PropTypes.array,
   }).isRequired,
-
 };
 
 export default TetrisPlayer;
