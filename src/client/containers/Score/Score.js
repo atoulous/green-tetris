@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './Score.scss';
 
@@ -10,8 +10,8 @@ const Score = ({ score }) => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  score: state.score,
-});
+Score.propTypes = {
+  score: PropTypes.number.isRequired
+};
 
-export default connect(mapStateToProps)(Score);
+export default Score;

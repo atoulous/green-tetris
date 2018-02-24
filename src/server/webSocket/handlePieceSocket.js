@@ -33,4 +33,4 @@ export default async (playerId, data) => {
   } catch (err) {
     logger.error('handlePieceSocket', err);
   }
-}
+};

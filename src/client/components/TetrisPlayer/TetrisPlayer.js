@@ -6,8 +6,8 @@ import Spectrum from '../Spectrum/Spectrum';
 
 import './TetrisPlayer.scss';
 
-const TetrisPlayer = ({ player, self }) => {
-  if (player.id === self.id) return null;
+const TetrisPlayer = ({ player, selfId }) => {
+  if (player.id === selfId) return null;
 
   return (
     <Card style={{marginRight: '10px', marginBottom: '10px'}}>
@@ -26,6 +26,7 @@ TetrisPlayer.propTypes = {
     score: PropTypes.number,
     spectrum: PropTypes.array,
   }).isRequired,
+  selfId: PropTypes.number.isRequired,
 };
 
 export default TetrisPlayer;
