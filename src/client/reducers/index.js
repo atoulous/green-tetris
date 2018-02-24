@@ -29,13 +29,12 @@ const initialState = {
   bag: initBag(),
   speed: 1000,
   spectrum: initSpectrum(),
-  score: 0,
   gamesList: [],
   game: null,
   muted: false,
   player: {
     id: null,
-    nickname: 'Player'
+    nickname: 'Player',
   },
   isNicknameModalOpen: false,
   audioStreams: [],

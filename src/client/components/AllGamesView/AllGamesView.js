@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -17,13 +17,28 @@ import {
 import * as socket from '../../socket';
 import actions from '../../actions';
 import { getPeer } from '../../helpers/webRTC';
+import store from '../../store';
 
 import './AllGamesView.scss';
 
 
 const { socketUpdatePlayer, socketCreateGame, socketJoinGame, getAllGames } = actions;
 
+class AllGamesViewWrapper extends Component {
+
+  componentWillMount() {
+    store.dispatch(getAllGames());
+  }
+
+  render() {
+    return (
+      <AllGamesViewConnected />
+    );
+  }
+}
+
 const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
+
   /*
   ** Get all Games from the API.
   */
@@ -111,4 +126,6 @@ const mapStateToProps = state => ({
   nickname: state.player.nickname,
 });
 
-export default connect(mapStateToProps)(AllGamesView);
+const AllGamesViewConnected = connect(mapStateToProps)(AllGamesView);
+
+export default AllGamesViewWrapper;

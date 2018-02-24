@@ -6,23 +6,21 @@ import TetrisPlayer from '../../components/TetrisPlayer/TetrisPlayer';
 import './TetrisPlayersList.scss';
 
 
-const TetrisPlayersList = ({ players }) => (
+const TetrisPlayersList = ({ game: { players }, playerId }) => (
   <div className="tetris-players-list">
     <div className="tetris-players-list-title">PLAYERS</div>
-    {players.map(player => <TetrisPlayer key={player.webRTCId} player={player} />)}
+    {players.map(player => <TetrisPlayer key={player.webRTCId} player={player} selfId={playerId} />)}
   </div>
 );
 
-const mapStateToProps = state => ({
-  players: state.game.players
-});
-
 TetrisPlayersList.propTypes = {
-  players: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    score: PropTypes.number,
-    spectrum: PropTypes.array,
-  })).isRequired,
+  game: PropTypes.object,
+  playerId: PropTypes.number,
 };
 
-export default connect(mapStateToProps)(TetrisPlayersList);
+TetrisPlayersList.defaultProps = {
+  game: null,
+  playerId: null,
+};
+
+export default TetrisPlayersList;
