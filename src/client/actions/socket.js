@@ -49,6 +49,17 @@ export const socketLeaveGame = gameId => ({
 });
 
 /**
+ * Start game if all player are ready
+ *
+ * @param gameId
+ * @returns {{type: string, data: {call: string, path: string, gameId: *}}}
+ */
+export const socketStartGame = gameId => ({
+  type: 'socket',
+  data: { call: '/game', path: '/start', gameId },
+});
+
+/**
  * Update existing game. Will return a game updated to all players
  *
  * @param gameId
