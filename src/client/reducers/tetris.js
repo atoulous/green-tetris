@@ -53,12 +53,10 @@ export function setPiece(state, piece) {
  * @param newPiece
  * @returns {{piecesQueue}}
  */
-export function addPieceToQueue(state, newPiece) {
-  const { piecesQueue } = state.game;
-  piecesQueue.push(newPiece);
-  const game = { ...state.game, piecesQueue };
-
-  return { ...state, game };
+export function addPieceToQueue(state, action) {
+  return {
+    ...state,
+    game: { ...state.game, piecesQueue: [...state.game.piecesQueue, action.data] } };
 }
 
 /**

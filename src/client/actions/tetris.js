@@ -57,6 +57,16 @@ export function updateScore(score) {
   return { type: UPDATE_SCORE, score };
 }
 
+/**
+ * Add piece received by web socket to end of queue
+ *
+ * @param newPiece
+ * @returns {function(*)}
+ */
+export function addPieceToQueue(newPiece) {
+  return { type: ADD_PIECE_TO_QUEUE, data: newPiece };
+}
+
 // Action thunk functions
 
 /*
@@ -123,18 +133,6 @@ export function setNewPiece() {
         dispatch(dropPiece());
       }, interval);
     }
-  };
-}
-
-/**
- * Add piece received by web socket to end of queue
- *
- * @param newPiece
- * @returns {function(*)}
- */
-export function addPieceToQueue(newPiece) {
-  return (dispatch) => {
-    dispatch({ type: ADD_PIECE_TO_QUEUE, newPiece });
   };
 }
 
