@@ -52,7 +52,7 @@ class Piece extends Payload {
   static getRandomPiece() {
     // If bag empty, set new bag.
     if (!bag.length) {
-      Object.keys(Piece.pieces).forEach(piece => Piece.bag.push(piece, piece));
+      Object.keys(Piece.pieces).forEach(key => Piece.bag.push(Piece.pieces[key], Piece.pieces[key]));
     }
     // Choose a random index among bag.
     const index = Math.floor(Math.random() * Piece.bag.length);
