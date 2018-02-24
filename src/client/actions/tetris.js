@@ -153,6 +153,8 @@ export function togglePlay() {
 */
 export function move(event) {
   return (dispatch, getState) => {
+    const state = getState();
+    if (state.onPause) return;
     switch (event.keyCode) {
       case keys.LEFT:
         movePieceLeft(dispatch, getState);
