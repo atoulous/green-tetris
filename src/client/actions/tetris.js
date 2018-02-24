@@ -57,6 +57,16 @@ export function updateScore(score) {
   return { type: UPDATE_SCORE, score };
 }
 
+/**
+ * Add piece received by web socket to end of queue
+ *
+ * @param newPiece
+ * @returns {function(*)}
+ */
+export function addPieceToQueue(newPiece) {
+  return { type: ADD_PIECE_TO_QUEUE, data: newPiece };
+}
+
 // Action thunk functions
 
 /*
@@ -108,7 +118,7 @@ export function setNewPiece() {
     const { currentPiece, gridWithoutCurrent, speed: interval, game } = getState();
 
     if (game.piecesQueue.length <= 1) {
-      dispatch(newPiece());
+      dispatch(newPiece({ gameId: game.id }));
     }
 
     // Not enough space to place piece. Game is lost.
@@ -123,18 +133,6 @@ export function setNewPiece() {
         dispatch(dropPiece());
       }, interval);
     }
-  };
-}
-
-/**
- * Add piece received by web socket to end of queue
- *
- * @param newPiece
- * @returns {function(*)}
- */
-export function addPieceToQueue(newPiece) {
-  return (dispatch) => {
-    dispatch({ type: ADD_PIECE_TO_QUEUE, newPiece });
   };
 }
 

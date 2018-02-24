@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -16,6 +17,9 @@ const { socketUpdateGame, updateGame, socketUpdatePlayer } = actions;
 
 
 const GameSettings = ({ game, dispatch, player }) => {
+
+  if (game.hasStarted) return <Redirect to="/play" />;
+
   const toggleStyle = {
     marginBottom: 15,
   };
@@ -48,6 +52,7 @@ const GameSettings = ({ game, dispatch, player }) => {
     /*
     ** Start Game
     */
+    dispatch(socketUpdateGame(game.id, { hasStarted: true }));
   };
 
   const handleCancel = () => {

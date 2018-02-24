@@ -3,7 +3,7 @@ import actions from '../actions';
 
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame, updateError } = actions;
+const { updateGame, updateError, addPieceToQueue } = actions;
 
 
 /**
@@ -28,6 +28,12 @@ export default function (data) {
   switch (path) {
     case '/update': {
       _update(data);
+      break;
+    }
+    case '/newPiece': {
+      if (!data.newPiece) throw new Error('client/piecesListener: missing newPiece');
+      console.log('should addPieceToQueue', data.newPiece);
+      store.dispatch(addPieceToQueue(data.newPiece));
       break;
     }
     case '/join': {

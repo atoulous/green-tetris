@@ -1,6 +1,10 @@
-export function rtcMessage(state) {
-  console.log('successfully triggered action message --');
-  return state;
+export function rtcMessage(state, action) {
+
+  const data = JSON.parse(action.data);
+  const peerIndex = state.game.players.findIndex(p => (p.webRTCId === data.peer));
+  const players = [...state.game.players];
+  players[peerIndex].spectrum = data.spectrum;
+  return { ...state, game: { ...state.game, players } };
 }
 
 export function addAudioStream(state, action) {
