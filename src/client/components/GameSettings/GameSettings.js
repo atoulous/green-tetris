@@ -39,14 +39,6 @@ const GameSettings = ({ game, dispatch, player }) => {
     dispatch(socketUpdateGame(game.id, { speed: value }));
   };
 
-  const handleVisibility = (event, checked) => {
-    dispatch(socketUpdateGame(game.id, { isFullVisibility: checked }));
-  };
-
-  const handleWait = (event, checked) => {
-    dispatch(socketUpdateGame(game.id, { isPieceSynchro: checked }));
-  };
-
   const handleStart = () => {
     console.log('START');
     /*
@@ -103,11 +95,6 @@ const GameSettings = ({ game, dispatch, player }) => {
           <MenuItem value="Very Big" primaryText="Very Big" />
         </SelectField>
       </section>
-      <section>
-        <h1>Game Mode</h1>
-        <Toggle label="Full Visibility" onToggle={handleVisibility} labelPosition="right" style={toggleStyle} toggled={game.isFullVisibility} disabled={!isGameMaster} />
-        <Toggle label="Wait for all players before dealing new piece" onToggle={handleWait} labelPosition="right" style={toggleStyle} toggled={game.isPieceSynchro} disabled={!isGameMaster} />
-      </section >
       <section>
         {isGameMaster && <RaisedButton label="START" style={{ marginRight: 20 }} onClick={handleStart} />}
         <RaisedButton label="CANCEL" secondary style={{ marginRight: 20 }} onClick={handleCancel} />
