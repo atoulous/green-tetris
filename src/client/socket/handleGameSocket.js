@@ -2,7 +2,7 @@ import store from '../store';
 import actions from '../actions';
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame, addPieceToQueue, addRow, setNewPiece } = actions;
+const { updateGame, addPieceToQueue, addRow, setNewPiece, setGrid } = actions;
 
 
 /**
@@ -31,6 +31,7 @@ function _receivePiece(data) {
 
 function _start(data) {
   const { game } = data;
+  store.dispatch(setGrid());
   store.dispatch(updateGame(game));
   store.dispatch(setNewPiece());
 }

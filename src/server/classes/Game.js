@@ -25,8 +25,8 @@ class Game extends Payload {
     super({
       id: getUUID(),
       masterId: master.get('id'),
-      speed: 'normal',
-      size: 'normal',
+      speed: { label: 'Normal', value: 1000 },
+      size: { label: 'Normal', value: 20 },
       maxPlayers: 5,
       players: [],
       hasStarted: false,

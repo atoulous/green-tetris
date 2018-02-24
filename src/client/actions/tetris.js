@@ -57,6 +57,11 @@ export function updateScore(score) {
   return { type: UPDATE_SCORE, score };
 }
 
+export const SET_GRID = 'SET_GRID';
+export function setGrid() {
+  return { type: SET_GRID };
+}
+
 /**
  * Add piece received by web socket to end of queue
  *
@@ -83,7 +88,7 @@ export function dropPiece() {
 
     const { currentPiece, gridWithoutCurrent, grid } = state;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
-    const interval = state.speed;
+    const interval = state.game.speed.value || 1000;
 
     // Enough space to place piece.
     if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
@@ -117,7 +122,8 @@ export function setNewPiece() {
     // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
 
-    const { currentPiece, gridWithoutCurrent, speed: interval, game } = getState();
+    const { currentPiece, gridWithoutCurrent, game } = getState();
+    const interval = game.speed.value;
 
     if (game.piecesQueue.length <= 1) {
       dispatch(newPiece({ gameId: game.id }));

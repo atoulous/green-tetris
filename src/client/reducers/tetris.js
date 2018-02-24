@@ -105,11 +105,12 @@ export function increaseSpeed(state) {
  */
 export function deleteRows(state, rowsToDelete) {
   const { grid } = state;
+  const rowWidth = (state.game.size.value * 2) / 3;
   let newGrid = grid;
 
   rowsToDelete.forEach((row) => {
     newGrid = tetrisHelper.sliceBagFromIndex(newGrid, row);
-    newGrid.unshift(tetrisHelper.initRow());
+    newGrid.unshift(tetrisHelper.initRow(false, rowWidth));
   });
   return { ...state, grid: newGrid };
 }
@@ -121,13 +122,14 @@ export function deleteRows(state, rowsToDelete) {
  */
 export function addRow(state) {
   let { grid, gridWithoutCurrent } = state;
+  const rowWidth = (state.game.size.value * 2) / 3;
 
   function _addRowToGrid(currentGrid) {
     const newGrid = tetrisHelper.copyGrid(currentGrid);
     let added = false;
     tetrisHelper.reverseForeach(currentGrid, (row, index) => {
       if (!added && !tetrisHelper.isRowFull(row)) {
-        newGrid[index] = tetrisHelper.initRow(true);
+        newGrid[index] = tetrisHelper.initRow(true, rowWidth);
         added = true;
       }
     });
@@ -146,7 +148,7 @@ export function addRow(state) {
 export function updateSpectrum(state, grid) {
   const spectrum = tetrisHelper.getSpectrum(grid);
   sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
-  return { ...state, spectrum: tetrisHelper.getSpectrum(grid)};
+  return { ...state, spectrum: tetrisHelper.getSpectrum(grid) };
 }
 
 /**
@@ -155,3 +157,16 @@ export function updateSpectrum(state, grid) {
 export function updateScore(state, score) {
   return { ...state, score: state.score + score };
 }
+
+/**
+ * Set grid related to size
+ */
+export function setGrid(state) {
+  const { size } = state.game;
+  const height = size.value || 20;
+  return { ...state,
+    grid: tetrisHelper.initGrid(height, ((height * 2) / 3)),
+    gridWithoutCurrent: tetrisHelper.initGrid(height, ((height * 2) / 3)),
+  };
+}
+
