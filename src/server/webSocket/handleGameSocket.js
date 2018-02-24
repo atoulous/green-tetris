@@ -1,13 +1,8 @@
-import _ from 'lodash';
-
 import logger from '../helpers/logger';
 import Game from '../classes/Game';
 import Player from '../classes/Player';
 import handleSocketException from './handleSocketException';
 import SocketException from '../classes/SocketException';
-
-// import { getConnection } from './socketManager';
-// import { getGames, addGame, getGame } from '../helpers/game';
 
 
 /**
@@ -56,6 +51,8 @@ function line(playerId) {
   // Check that game exists.
   const game = Game.getGameByid(player.get('gameId'));
   if (!game) throw new SocketException('Game not found', true);
+  // Update score of player
+  player.update({ score: player.get('score') + 10 });
   // Broadcast event addRow to all player but self.
   game.broadcast('/addRow', {}, [playerId]);
 }
@@ -72,7 +69,6 @@ export default async function (playerId, data) {
     logger.info(`Socket - /game${path}`);
     switch (path) {
       case '/create': {
-        // const { webRTCId, socketId } = data;
         create(playerId, data.settings);
         break;
       }
@@ -99,18 +95,3 @@ export default async function (playerId, data) {
     } else throw e;
   }
 }
-
-
-// case '/join': {
-//   const { room, webRTCId, socketId } = data;
-//   const currrentGame = getGame(room);
-//   if (currrentGame && !currrentGame.hasStarted) {
-//     const newPlayer = new Player({ socketId, webRTCId });
-//     getConnection().to(socketId).emit('/game', { path: '/joined', game: currrentGame });
-//     currrentGame.players.push(newPlayer);
-//     currrentGame.broadcast(getConnection(), '/game', { path: '/updated', game: currrentGame });
-//   } else {
-//     console.log('NOTHING SHOULD HAPPEN AS EITHER GAME DOES NOT EXIST OR GAME HAS STARTED');
-//   }
-//   break;
-// }
