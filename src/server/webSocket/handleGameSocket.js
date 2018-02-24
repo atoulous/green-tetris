@@ -49,9 +49,12 @@ function update(playerId, gameId, settings) {
   if (game.isMaster(playerId)) game.update(settings);
 }
 
-function line(playerId, gameId) {
+function line(playerId) {
+  // Check that player exists.
+  const player = Player.getPlayerById(playerId);
+  if (!player) throw new SocketException('Player not found', true);
   // Check that game exists.
-  const game = Game.getGameByid(gameId);
+  const game = Game.getGameByid(player.get('gameId'));
   if (!game) throw new SocketException('Game not found', true);
   // Broadcast event addRow to all player but self.
   game.broadcast('/addRow', {}, [playerId]);

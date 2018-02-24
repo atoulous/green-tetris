@@ -4,7 +4,7 @@ import {
   getSpectrum,
 } from '../utils/tetris';
 import { keys } from '../helpers/constants';
-import { newPiece } from './socket';
+import { newPiece, socketLineCompleted } from './socket';
 
 // Constants
 export const DRAW_PIECE = 'DRAW_PIECE';
@@ -96,7 +96,9 @@ export function dropPiece() {
     } else {
       const rowsToDelete = checkRowsToDelete(grid, currentPiece.x);
       if (rowsToDelete.length) {
-        dispatch(updateScore(10));
+        rowsToDelete.forEach(() => {
+          dispatch(socketLineCompleted());
+        });
         dispatch(deleteRows(rowsToDelete));
       }
       // We set a new piece.
@@ -189,7 +191,7 @@ function movePieceRight(dispatch, getState) {
 
 function rotatePiece(dispatch, getState) {
   console.log('rotatePice');
-  drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ dir: currentPiece.dir === 3 ? 0 : currentPiece.dir + 1 } }));
+  drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ direction: currentPiece.direction === 3 ? 0 : currentPiece.direction + 1 } }));
 }
 
 function movePieceDown(dispatch, getState) {
@@ -240,4 +242,3 @@ function drawWithNextPiece(dispatch, getState, getNextPiece) {
     dispatch(drawPiece());
   }
 }
-

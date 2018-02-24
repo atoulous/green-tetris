@@ -80,3 +80,12 @@ export const newPiece = ({ gameId }) => ({
   type: 'socket',
   data: { call: '/piece', path: '/new', gameId },
 });
+
+/**
+ * Inform backend that player has completed a line.
+ */
+export const socketLineCompleted = () => ({
+  type: 'socket',
+  data: { call: '/game', path: '/line' },
+});
+
