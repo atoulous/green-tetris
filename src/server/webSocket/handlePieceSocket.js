@@ -24,7 +24,7 @@ export default async (playerId, data) => {
         if (currentGame) {
           const newPiece = new Piece();
           console.log('will broadcast -- ');
-          currentGame.broadcast('/newPiece', { newPiece });
+          currentGame.broadcast('/newPiece', { newPiece: newPiece.format() });
         }
         break;
       }
