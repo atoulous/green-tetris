@@ -6,9 +6,9 @@ import Grid from '../../components/Grid/Grid';
 
 import './Game.scss';
 
-const Game = ({ grid, currentPiece, isPlaying, move }) => (
+const Game = ({ grid, currentPiece, move }) => (
   <div className="game">
-    <Grid grid={grid} currentPiece={currentPiece} isPlaying={isPlaying} move={move} />
+    <Grid grid={grid} currentPiece={currentPiece} move={move} />
   </div>
 );
 

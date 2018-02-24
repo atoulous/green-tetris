@@ -4,6 +4,11 @@ export const JOIN_GAME = 'JOIN_GAME';
 
 // Action objects
 
+export const socketEndGame = gameId => ({
+  type: 'socket',
+  data: { call: '/game', path: '/end', gameId },
+});
+
 /**
  * Update back-end player payload (ex: nickname)
  *
@@ -46,6 +51,17 @@ export const socketJoinGame = gameId => ({
 export const socketLeaveGame = gameId => ({
   type: 'socket',
   data: { call: '/game', path: '/leave', gameId },
+});
+
+/**
+ * Start game if all player are ready
+ *
+ * @param gameId
+ * @returns {{type: string, data: {call: string, path: string, gameId: *}}}
+ */
+export const socketStartGame = gameId => ({
+  type: 'socket',
+  data: { call: '/game', path: '/start', gameId },
 });
 
 /**

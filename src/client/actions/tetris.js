@@ -4,8 +4,7 @@ import {
   getSpectrum,
 } from '../utils/tetris';
 import { keys } from '../helpers/constants';
-import { newPiece, socketLineCompleted } from './socket';
-import { updateGame } from './game';
+import { newPiece, socketLineCompleted, socketUpdateGame, socketEndGame } from './socket';
 
 // Constants
 export const DRAW_PIECE = 'DRAW_PIECE';
@@ -80,7 +79,7 @@ export function dropPiece() {
     const state = getState();
 
     // State is resume. Stop dropping.
-    if (!state.isPlaying) return;
+    if (state.onPause) return;
 
     const { currentPiece, gridWithoutCurrent, grid } = state;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
@@ -126,13 +125,8 @@ export function setNewPiece() {
 
     // Not enough space to place piece. Game is lost.
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
-      const selfId = getState().player.id;
-      const players = [...getState().game.players];
-      const playerToUpdateIndex = players.findIndex(player => (player.id === selfId));
 
-      players[playerToUpdateIndex].hasWon = players.every(player => (player.id !== selfId && player.hasWon === false));
-      console.log(players[playerToUpdateIndex].hasWon ? 'GAGNE' : 'PERDU');
-      dispatch(updateGame({ ...getState().game, players }));
+      dispatch(socketEndGame(getState().game.id));
     } else {
       dispatch(updateSpectrum(gridWithoutCurrent));
       dispatch(drawPiece());
@@ -149,15 +143,9 @@ export function setNewPiece() {
 ** Action when on/off Button is pressed.
 */
 export function togglePlay() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: TOGGLE_PLAY });
-    const state = getState();
-    // Start the Game for the first time.
-    if (state.currentPiece === null) {
-      dispatch(setNewPiece());
-    } else {
-      dispatch(dropPiece());
-    }
+    dispatch(dropPiece());
   };
 }
 
@@ -166,6 +154,8 @@ export function togglePlay() {
 */
 export function move(event) {
   return (dispatch, getState) => {
+    const state = getState();
+    if (state.onPause) return;
     switch (event.keyCode) {
       case keys.LEFT:
         movePieceLeft(dispatch, getState);

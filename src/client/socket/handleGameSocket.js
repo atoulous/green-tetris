@@ -1,9 +1,8 @@
 import store from '../store';
 import actions from '../actions';
-
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame, addPieceToQueue, addRow } = actions;
+const { updateGame, addPieceToQueue, addRow, setNewPiece, endGame, } = actions;
 
 
 /**
@@ -30,6 +29,16 @@ function _receivePiece(data) {
   store.dispatch(addPieceToQueue(data.newPiece));
 }
 
+function _start(data) {
+  const { game } = data;
+  store.dispatch(updateGame(game));
+  store.dispatch(setNewPiece());
+}
+
+function _end(hasWon) {
+  store.dispatch(endGame(hasWon));
+}
+
 export default function (data) {
   const { path } = data;
   console.log(`socket /game${path}`);
@@ -44,6 +53,14 @@ export default function (data) {
     }
     case '/addRow': {
       _addRow();
+      break;
+    }
+    case '/start': {
+      _start(data);
+      break;
+    }
+    case '/end': {
+      _end(data.hasWon);
       break;
     }
     case '/join': {

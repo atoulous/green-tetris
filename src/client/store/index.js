@@ -12,6 +12,7 @@ import reducer from '../reducers';
 getPeer();
 
 const middlewares = applyMiddleware(
+  // startGame,
   thunk,
   socketIO,
   storeState,

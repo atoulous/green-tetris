@@ -27,3 +27,10 @@ export const getAllGames = () => (dispatch) => {
       dispatch(updateGamesList(games));
     });
 };
+
+export const END_GAME = 'END_GAME';
+export const endGame = hasWon => ({
+  type: END_GAME,
+  data: hasWon,
+});
+
