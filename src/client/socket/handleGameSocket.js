@@ -3,7 +3,7 @@ import actions from '../actions';
 
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame, updateError, addPieceToQueue } = actions;
+const { updateGame, addPieceToQueue, addRow } = actions;
 
 
 /**
@@ -15,11 +15,19 @@ function _update(data) {
 }
 
 /**
- * Dispatch action that will update error in redux-tree.
+ * Dispatch action that will row to grid.
  */
-function _error(data) {
-  const { error } = data;
-  store.dispatch(updateError(error));
+function _addRow() {
+  store.dispatch(addRow());
+}
+
+/**
+ * Dispatch action that will add piece to PieceQueue.
+ */
+function _receivePiece(data) {
+  const { newPiece } = data;
+  if (!newPiece) throw new Error('client/piecesListener: missing newPiece');
+  store.dispatch(addPieceToQueue(data.newPiece));
 }
 
 export default function (data) {
@@ -31,9 +39,11 @@ export default function (data) {
       break;
     }
     case '/newPiece': {
-      if (!data.newPiece) throw new Error('client/piecesListener: missing newPiece');
-      console.log('should addPieceToQueue', data.newPiece);
-      store.dispatch(addPieceToQueue(data.newPiece));
+      _receivePiece(data);
+      break;
+    }
+    case '/addRow': {
+      _addRow();
       break;
     }
     case '/join': {

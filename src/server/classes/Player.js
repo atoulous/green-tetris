@@ -21,6 +21,7 @@ class Player extends Payload {
       isReady: false,
       hasLost: false,
       spectrum: [],
+      score: 0,
       gameId: null,
     });
   }
@@ -37,13 +38,12 @@ class Player extends Payload {
   update(settings) {
     _.merge(this.payload, settings);
     if (this.get('gameId')) {
-      // throw new SocketErrorPlayer('Ceci est un test pouet');
       const game = Game.getGameByid(this.get('gameId'));
       if (game) game.broadcast('/update', { game: game.format() });
     }
   }
 
-  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId', 'webRTCId']) {
+  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId', 'webRTCId', 'score']) {
     return super.format(props);
   }
 }

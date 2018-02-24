@@ -48,6 +48,7 @@ class Game extends Payload {
   }
 
   broadcast(subject, data, idsToOmit = []) {
+    data = data || {};
     data.path = subject;
     this.payload.players.forEach((player) => {
       // Don't emit to specific ids.
