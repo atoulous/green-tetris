@@ -10,7 +10,6 @@ import './Tetris.scss';
 
 const Tetris = ({ game, playerId }) => {
   const self = game.players.find(p => p.id === playerId) || {};
-  console.log('self', self);
   const selfScore = self.score;
 
   return (
