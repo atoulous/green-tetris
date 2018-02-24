@@ -26,7 +26,7 @@ TetrisPlayer.propTypes = {
     score: PropTypes.number,
     spectrum: PropTypes.array,
   }).isRequired,
-  selfId: PropTypes.number.isRequired,
+  selfId: PropTypes.string.isRequired,
 };
 
 export default TetrisPlayer;

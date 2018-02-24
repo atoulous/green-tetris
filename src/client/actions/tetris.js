@@ -79,7 +79,7 @@ export function dropPiece() {
     const state = getState();
 
     // State is resume. Stop dropping.
-    if (!state.isPlaying) return;
+    if (state.onPause) return;
 
     const { currentPiece, gridWithoutCurrent, grid } = state;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
@@ -142,15 +142,9 @@ export function setNewPiece() {
 ** Action when on/off Button is pressed.
 */
 export function togglePlay() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: TOGGLE_PLAY });
-    const state = getState();
-    // Start the Game for the first time.
-    if (state.currentPiece === null) {
-      dispatch(setNewPiece());
-    } else {
-      dispatch(dropPiece());
-    }
+    dispatch(dropPiece());
   };
 }
 

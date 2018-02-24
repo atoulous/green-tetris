@@ -15,7 +15,7 @@ const TetrisPlayersList = ({ game: { players }, playerId }) => (
 
 TetrisPlayersList.propTypes = {
   game: PropTypes.object,
-  playerId: PropTypes.number,
+  playerId: PropTypes.string,
 };
 
 TetrisPlayersList.defaultProps = {

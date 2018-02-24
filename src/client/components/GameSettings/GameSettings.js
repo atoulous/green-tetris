@@ -40,10 +40,6 @@ const GameSettings = ({ game, dispatch, player }) => {
   };
 
   const handleStart = () => {
-    console.log('START');
-    /*
-    ** Start Game
-    */
     dispatch(socketUpdateGame(game.id, { hasStarted: true }));
   };
 
