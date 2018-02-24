@@ -5,7 +5,7 @@ import { sendDataToPeers, getPeer } from '../helpers/webRTC';
  * On/off
  */
 export function togglePlay(state) {
-  return { ...state, isPlaying: !state.isPlaying };
+  return { ...state, onPause: !state.onPause };
 }
 
 /**

@@ -32,6 +32,7 @@ const initialState = {
   gamesList: [],
   game: null,
   muted: false,
+  onPause: false,
   player: {
     id: null,
     nickname: 'Player',

@@ -57,6 +57,14 @@ function line(playerId) {
   game.broadcast('/addRow', {}, [playerId]);
 }
 
+function start(playerId, gameId) {
+  // Check that game exists.
+  const game = Game.getGameByid(gameId);
+  if (!game) throw new SocketException('Game not found', true);
+  // Check that player is allowed to start game.
+  if (game.isMaster(playerId)) game.start();
+}
+
 /**
  * handle game socket input
  *
@@ -82,6 +90,10 @@ export default async function (playerId, data) {
       }
       case '/line': {
         line(playerId);
+        break;
+      }
+      case '/start': {
+        start(playerId, data.gameId);
         break;
       }
       default:

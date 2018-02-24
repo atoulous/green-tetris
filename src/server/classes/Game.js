@@ -62,9 +62,9 @@ class Game extends Payload {
     const players = this.get('players');
     if (players.every(p => p.get('isReady') === true)) {
       this.set('hasStarted', true);
-      this.broadcast('/update', { game: this.format() });
+      this.broadcast('/start', { game: this.format() });
     } else {
-      throw new Error('All players are not ready');
+      throw new SocketException('All players are not ready');
     }
   }
 

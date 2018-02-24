@@ -13,11 +13,10 @@ import './GameSettings.scss';
 
 import actions from '../../actions';
 
-const { socketUpdateGame, updateGame, socketUpdatePlayer } = actions;
+const { socketUpdateGame, updateGame, socketUpdatePlayer, socketStartGame } = actions;
 
 
 const GameSettings = ({ game, dispatch, player }) => {
-
   if (game.hasStarted) return <Redirect to="/play" />;
 
   const toggleStyle = {
@@ -40,11 +39,7 @@ const GameSettings = ({ game, dispatch, player }) => {
   };
 
   const handleStart = () => {
-    console.log('START');
-    /*
-    ** Start Game
-    */
-    dispatch(socketUpdateGame(game.id, { hasStarted: true }));
+    dispatch(socketStartGame(game.id));
   };
 
   const handleCancel = () => {
