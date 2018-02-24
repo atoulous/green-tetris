@@ -3,6 +3,14 @@ import Piece from '../classes/Piece';
 import logger from '../helpers/logger';
 import Game from '../classes/Game';
 
+const newPiece = (gameId) => {
+  const currentGame = Game.allGames.find(game => (game.get('id') === gameId));
+  if (currentGame) {
+    const randomPiece = new Piece();
+    currentGame.broadcast('/newPiece', { newPiece: randomPiece.format() });
+  }
+};
+
 /**
  * handle piece socket input
  *
@@ -15,17 +23,8 @@ export default async (playerId, data) => {
 
     switch (data.path) {
       case '/new': {
-        console.log('new piece needed', data, ' games ---  ', Game.allGames);
-
         if (!data.gameId) throw new Error('missing gameId param');
-
-        const currentGame = Game.allGames.find(game => (game.get('id') === data.gameId));
-        console.log('cur gmae -- ', currentGame);
-        if (currentGame) {
-          const newPiece = new Piece();
-          console.log('will broadcast -- ');
-          currentGame.broadcast('/newPiece', { newPiece: newPiece.format() });
-        }
+        newPiece(data.gameId);
         break;
       }
       default:
@@ -34,4 +33,4 @@ export default async (playerId, data) => {
   } catch (err) {
     logger.error('handlePieceSocket', err);
   }
-}
+};
