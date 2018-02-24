@@ -11,12 +11,7 @@ const NextPiece = ({ piecesQueue }) => {
   const grid = initGrid(4, 4);
 
   if (piecesQueue.length > 0) {
-    const nextPiece = {
-      t: piecesQueue[0],
-      dir: 0,
-      x: 0,
-      y: 0,
-    };
+    const nextPiece = piecesQueue[0];
     forEachBlockInPiece(nextPiece, (x, y) => {
       const cell = grid[x][y];
       cell.fill = true;
@@ -41,7 +36,7 @@ NextPiece.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  piecesQueue: state.piecesQueue,
+  piecesQueue: state.game.piecesQueue,
 });
 
 export default connect(mapStateToProps)(NextPiece);
