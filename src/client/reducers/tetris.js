@@ -1,4 +1,5 @@
 import * as tetrisHelper from '../utils/tetris';
+import { sendDataToPeers, getPeer } from '../helpers/webRTC';
 
 /**
  * On/off
@@ -125,6 +126,13 @@ export function addRow(state) {
  * Update Spectrum from Grid.
  */
 export function updateSpectrum(state, grid) {
+  const spectrum = tetrisHelper.getSpectrum(grid);
+  const peer = getPeer();
+
+  console.log('peer ', peer);
+  console.log('spec ', spectrum);
+
+  sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
   return { ...state, spectrum: tetrisHelper.getSpectrum(grid)};
 }
 

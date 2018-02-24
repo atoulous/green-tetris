@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom';
 import GamePlayers from '../../components/GamePlayers/GamePlayers';
 import GameSettings from '../../components/GameSettings/GameSettings';
 
-import TestRTC from '../../containers/RTCtest/RTCTest';
 import AudioContainer from '../../containers/AudioContainer/AudioContainer';
 
 import './GameSettingsView.scss';
@@ -23,9 +22,6 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
         <GameSettings game={game} dispatch={dispatch} player={player} />
         {!isSolo && <GamePlayers game={game} dispatch={dispatch} player={player} />}
       </div>
-      <TestRTC />
-      <GetAudio />
-      <TestAudio />
       <AudioContainer />
     </div>
   );

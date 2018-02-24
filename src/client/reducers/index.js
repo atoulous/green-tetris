@@ -61,7 +61,7 @@ const {
   UPDATE_PLAYER_ID,
   UPDATE_ERROR,
 
-  RTC_CONN,
+  RTC_MESSAGE,
   ADD_AUDIO_STREAM,
   TOGGLE_MUTED,
 
@@ -110,8 +110,8 @@ export default function reducer(state = initialState, action) {
     case UPDATE_ERROR:
       return updateError(state, action);
 
-    case RTC_CONN:
-      return rtcMessage(state);
+    case RTC_MESSAGE:
+      return rtcMessage(state, action);
     case ADD_AUDIO_STREAM:
       return addAudioStream(state, action);
     case TOGGLE_MUTED:
