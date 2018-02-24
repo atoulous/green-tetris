@@ -49,6 +49,14 @@ function update(playerId, gameId, settings) {
   if (game.isMaster(playerId)) game.update(settings);
 }
 
+function line(playerId, gameId) {
+  // Check that game exists.
+  const game = Game.getGameByid(gameId);
+  if (!game) throw new SocketException('Game not found', true);
+  // Broadcast event addRow to all player but self.
+  game.broadcast('/addRow', {}, [playerId]);
+}
+
 /**
  * handle game socket input
  *
@@ -71,6 +79,10 @@ export default async function (playerId, data) {
       }
       case '/update': {
         update(playerId, data.gameId, data.settings);
+        break;
+      }
+      case '/line': {
+        line(playerId);
         break;
       }
       default:
