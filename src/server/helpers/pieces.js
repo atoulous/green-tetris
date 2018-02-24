@@ -1,8 +1,14 @@
+import map from 'lodash/map';
+
+/**
+ * Pieces bag singleton
+ */
+let bag = [];
+
 /**
  * All possible pieces
- *
  */
-export default {
+export const pieces = {
   i: { blocks: [0x0f00, 0x2222, 0x00f0, 0x4444], color: 'cyan' },
   j: { blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20], color: 'blue' },
   l: { blocks: [0x4460, 0x0e80, 0xc440, 0x2e00], color: 'orange' },
@@ -11,3 +17,31 @@ export default {
   t: { blocks: [0x0e40, 0x4c40, 0x4e00, 0x4640], color: 'purple' },
   z: { blocks: [0x0c60, 0x4c80, 0xc600, 0x2640], color: 'red' }
 };
+
+/**
+ * Init new bag of pieces for randomization.
+ *
+ * @returns {Array}
+ */
+function initBag() {
+  map(pieces, piece => bag.push(piece, piece));
+
+  return bag;
+}
+
+/**
+ *
+ * @returns {number}
+ */
+export function getRandomPiece() {
+  if (!bag.length) {
+    bag = initBag();
+  }
+
+  const index = Math.floor(Math.random() * bag.length);
+  const piece = bag[index];
+
+  bag = bag.splice(index, 1);
+
+  return piece;
+}

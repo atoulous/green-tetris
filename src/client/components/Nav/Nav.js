@@ -35,12 +35,10 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
     _closeModal();
   };
 
-  const m = (
-
-    <DropDownMenu value="" onChange={_openModal}>
+  const Menu = (
+    <DropDownMenu value="Menu" onChange={_openModal}>
       <MenuItem primaryText="Change Nickname" />
     </DropDownMenu>
-
   );
 
   const actionsModal = [
@@ -61,7 +59,7 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
       <AppBar
         title={`Green Tetris - ${nickname}`}
         showMenuIconButton={false}
-        iconElementRight={m}
+        iconElementRight={Menu}
       />
       <Dialog
         title="Choose a nickname"
@@ -76,7 +74,8 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
           onChange={_handleModalChange}
         />
       </Dialog>
-    </div>);
+    </div>
+  );
 };
 
 const mapStateToProps = state => ({

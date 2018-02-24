@@ -20,7 +20,7 @@ const NextPiece = ({ piecesQueue }) => {
     forEachBlockInPiece(nextPiece, (x, y) => {
       const cell = grid[x][y];
       cell.fill = true;
-      cell.color = nextPiece.t.color;
+      cell.color = nextPiece.shape.color;
     });
   }
 

@@ -1,4 +1,3 @@
-
 export function rtcMessage(state, action) {
 
   const data = JSON.parse(action.data);

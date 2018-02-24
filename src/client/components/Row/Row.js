@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from '../Cell/Cell';
-import { heightSize } from '../../constants';
+import { heightSize } from '../../helpers/constants';
 
 import './Row.scss';
 

@@ -1,14 +1,14 @@
-import { pieces, heightSize, widthSize } from '../constants';
+import { pieces, heightSize, widthSize } from '../helpers/constants';
 
 /*
 ** Will apply func on every block of piece.
 */
 export function forEachBlockInPiece({
-  x, y, t, dir
+  x, y, shape, direction
 }, func) {
   let row = 0;
   let column = 0;
-  const piece = t.blocks[dir];
+  const piece = shape.blocks[direction];
   for (let bin = 0x8000; bin > 0; bin >>= 1) {
     if (bin & piece) {
       func(x + column, y + row);

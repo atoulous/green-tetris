@@ -14,9 +14,9 @@ import {
   updateScore,
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
-
 import { rtcMessage, addAudioStream, toggleMuted } from './connexion';
-import { setGame, updateGamesList, updateGame, updateError } from './game';
+import { setGame, updateGamesList, updateGame } from './game';
+import { updateError } from './error';
 
 import { initBag, initGrid, initSpectrum } from '../utils/tetris';
 

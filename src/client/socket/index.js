@@ -4,7 +4,7 @@ import handleGameSocket from './handleGameSocket';
 import handleTetrisSocket from './handleTetrisSocket';
 import handlePlayerSocket from './handlePlayerSocket';
 import handleErrorSocket from './handleErrorSocket';
-
+import handlePieceSocket from './handlePieceSocket';
 
 let client = null;
 
@@ -31,7 +31,7 @@ export function openClient() {
   client.on('/tetris', data => handleTetrisSocket(data));
   client.on('/player', data => handlePlayerSocket(data));
   client.on('/error', data => handleErrorSocket(data));
-
+  client.on('/piece', data => handlePieceSocket(data));
 
   client.on('disconnect', () => {
     const data = { path: '/update', game: null };

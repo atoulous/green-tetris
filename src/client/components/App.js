@@ -4,9 +4,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './HomeView/Home';
 import AllGamesView from './AllGamesView/AllGamesView';
 import GameSettingsView from './GameSettingsView/GameSettingsView';
-import Nav from './Nav/Nav';
 import TetrisView from './TetrisView/TetrisView';
 import Error from './Error/Error';
+
+import Layout from './Layout/Layout';
 
 const NotFound = () => (
   <div>
@@ -15,10 +16,9 @@ const NotFound = () => (
 );
 
 const App = () => (
-  <div>
-    <Nav />
-    <Error />
-    <BrowserRouter>
+  <BrowserRouter>
+    <Layout>
+      <Error />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/games" component={AllGamesView} />
@@ -26,8 +26,8 @@ const App = () => (
         <Route exact path="/games/:id" component={GameSettingsView} />
         <Route component={NotFound} />
       </Switch>
-    </BrowserRouter>
-  </div>
+    </Layout>
+  </BrowserRouter>
 );
 
 export default App;

@@ -39,10 +39,6 @@ export default function (data) {
       });
       break;
     }
-    case '/error': {
-      _error(data);
-      break;
-    }
     default: {
       console.log('default triggered');
     }

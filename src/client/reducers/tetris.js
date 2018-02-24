@@ -18,7 +18,7 @@ export function drawPiece(state) {
   tetrisHelper.forEachBlockInPiece(currentPiece, (x, y) => {
     const cell = gridCopy[x][y];
     cell.fill = true;
-    cell.color = currentPiece.t.color;
+    cell.color = currentPiece.shape.color;
   });
 
   return { ...state, grid: gridCopy };
@@ -47,15 +47,35 @@ export function setPiece(state, piece) {
 }
 
 /**
- * Replace `state.currentPiece` with first piece enqueued.
+ * Add piece received by web socket to end of queue
+ *
+ * @param state
+ * @param newPiece
+ * @returns {{piecesQueue}}
+ */
+export function addPieceToQueue(state, newPiece) {
+  const { piecesQueue } = state.game;
+  piecesQueue.push(newPiece);
+  const game = { ...state.game, piecesQueue };
+
+  return { ...state, game };
+}
+
+/**
+ * Replace `state.currentPiece` with first piece enqueued
+ *
+ * @param state
+ * @returns {*}
  */
 export function setNewPiece(state) {
-  // const piece = state.piecesQueue.shift();
+  if (state.game && state.game.piecesQueue.length) {
+    const { piecesQueue } = state.game;
+    const piece = piecesQueue.shift();
 
-  // console.log('piece==', piece);
+    return { ...state, currentPiece: piece };
+  }
 
-  // return { ...state, currentPiece: piece };
-
+  // else if no piece in queue, legacy
   const currentBag = state.bag.length ? state.bag : tetrisHelper.initBag();
   const indexPiece = tetrisHelper.getRandomPieceFromBag(currentBag);
   const piece = {
@@ -127,18 +147,13 @@ export function addRow(state) {
  */
 export function updateSpectrum(state, grid) {
   const spectrum = tetrisHelper.getSpectrum(grid);
-  const peer = getPeer();
-
-  console.log('peer ', peer);
-  console.log('spec ', spectrum);
-
   sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
-  return { ...state, spectrum: tetrisHelper.getSpectrum(grid)};
+  return { ...state, spectrum };
 }
 
 /**
  * Add value to Player score.
  */
 export function updateScore(state, score) {
-  return { ...state, score: state.score + score};
+  return { ...state, score: state.score + score };
 }

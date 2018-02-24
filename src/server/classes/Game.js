@@ -4,20 +4,24 @@ import { getUUID } from '../helpers/utils';
 import Payload from './Payload';
 import Player from './Player';
 import SocketException from './SocketException';
-
+import Piece from './Piece';
 
 const _allGames = [];
 
-
 /**
  * Class Game
- *
  * @param constructor {String} - masterId
+ *
  */
 class Game extends Payload {
-  constructor(masterId) {
+  constructor(masterId, settings) {
+    // Check that master player exists.
     const master = Player.getPlayerById(masterId);
-    if (!master) throw new Error('Master not found');
+    if (!master) throw new SocketException('Master not found');
+    // Handle settings for game creation.
+    let { isSolo } = settings;
+    isSolo = isSolo || false;
+
     super({
       id: getUUID(),
       masterId: master.get('id'),
@@ -29,7 +33,8 @@ class Game extends Payload {
       hasFinished: false,
       isFullVisibility: false,
       isPieceSynchro: false,
-      pieceQueue: [],
+      piecesQueue: [new Piece()],
+      isSolo,
     });
     this.addPlayer(masterId);
   }
@@ -112,10 +117,14 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'pieceQueue', 'isPieceSynchro', 'isFullVisibility']) {
+  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'isPieceSynchro', 'isFullVisibility', 'isSolo']) {
+    // Format Pieces.
+    let piecesQueue = this.get('piecesQueue');
+    piecesQueue = piecesQueue.map(p => p.format());
+    // Format Players.
     let players = this.get('players');
     players = players.map(p => p.format());
-    return _.merge(super.format(props), { players });
+    return _.merge(super.format(props), { players, piecesQueue });
   }
 
   isMaster(playerId) {

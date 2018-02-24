@@ -1,6 +1,7 @@
-import { getClient } from '../helpers/webSocket';
+import { getClient } from '../socket/index';
 import logger from '../../server/helpers/logger';
-import store from '../store';
+import store from '../store/index';
+import { addPieceToQueue } from '../actions/index';
 
 let client = null;
 let started = false;
@@ -15,19 +16,19 @@ export function start() {
   client = getClient();
 
   client.on('/piece', (data) => {
-    if (!data || !data.path) throw new Error('handlePieceSocket/piece: missing params');
+    if (!data || !data.path) throw new Error('client/handlePieceSocket/piece: missing params');
 
     switch (data.path) {
       case '/new':
-        console.log('should addNewPieceToQueue', data.newPiece);
-        // store.dispatch(addNewPieceToQueue(data.newPiece));
+        if (data.newPiece) {
+          console.log('should addPieceToQueue', data.newPiece);
+          store.dispatch(addPieceToQueue(data.newPiece));
+        }
         break;
       default:
-        logger.info('handlePieceSocket/piece: default case');
+        logger.info('client/handlePieceSocket/piece: default case');
     }
   });
-
-  // Set token auth ?
 }
 
 /**
@@ -40,4 +41,6 @@ export function stop() {
   }
   started = false;
 }
+
+export default start();
 
