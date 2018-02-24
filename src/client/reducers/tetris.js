@@ -1,4 +1,5 @@
 import * as tetrisHelper from '../utils/tetris';
+import { sendDataToPeers, getPeer } from '../helpers/webRTC';
 
 /**
  * On/off
@@ -52,12 +53,10 @@ export function setPiece(state, piece) {
  * @param newPiece
  * @returns {{piecesQueue}}
  */
-export function addPieceToQueue(state, newPiece) {
-  const { piecesQueue } = state.game;
-  piecesQueue.push(newPiece);
-  const game = { ...state.game, piecesQueue };
-
-  return { ...state, game };
+export function addPieceToQueue(state, action) {
+  return {
+    ...state,
+    game: { ...state.game, piecesQueue: [...state.game.piecesQueue, action.data] } };
 }
 
 /**
@@ -145,7 +144,9 @@ export function addRow(state) {
  * Update Spectrum from Grid.
  */
 export function updateSpectrum(state, grid) {
-  return { ...state, spectrum: tetrisHelper.getSpectrum(grid) };
+  const spectrum = tetrisHelper.getSpectrum(grid);
+  sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
+  return { ...state, spectrum: tetrisHelper.getSpectrum(grid)};
 }
 
 /**

@@ -12,6 +12,7 @@ import {
   addRow,
   updateSpectrum,
   updateScore,
+  addPieceToQueue,
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
 import { rtcMessage, addAudioStream, toggleMuted } from './connexion';
@@ -61,9 +62,11 @@ const {
   UPDATE_PLAYER_ID,
   UPDATE_ERROR,
 
-  RTC_CONN,
+  RTC_MESSAGE,
   ADD_AUDIO_STREAM,
   TOGGLE_MUTED,
+
+  ADD_PIECE_TO_QUEUE,
 
   SET_GAME
 } = actions;
@@ -110,12 +113,16 @@ export default function reducer(state = initialState, action) {
     case UPDATE_ERROR:
       return updateError(state, action);
 
-    case RTC_CONN:
-      return rtcMessage(state);
+    case RTC_MESSAGE:
+      return rtcMessage(state, action);
     case ADD_AUDIO_STREAM:
       return addAudioStream(state, action);
     case TOGGLE_MUTED:
       return toggleMuted(state, action);
+
+
+    case ADD_PIECE_TO_QUEUE:
+      return addPieceToQueue(state, action);
 
 
     case SET_GAME:

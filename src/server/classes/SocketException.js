@@ -7,7 +7,7 @@ export default class SocketException {
   constructor(message, shallDisconnect = false) {
     this.message = message;
     this.shallDisconnect = shallDisconnect;
-    this.socektId = null;
+    this.socketId = null;
   }
 
   broadcast() {

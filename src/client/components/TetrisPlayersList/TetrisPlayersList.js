@@ -14,9 +14,8 @@ const TetrisPlayersList = ({ players }) => (
 );
 
 const mapStateToProps = state => ({
-  players: state.players
+  players: state.game.players
 });
-
 
 TetrisPlayersList.propTypes = {
   players: PropTypes.arrayOf(PropTypes.shape({

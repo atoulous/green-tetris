@@ -15,6 +15,10 @@ export default () => next => (action) => {
         socket.emit('/player', action.data);
         break;
       }
+      case '/piece': {
+        socket.emit('/piece', action.data);
+        break;
+      }
       default:
         break;
     }
