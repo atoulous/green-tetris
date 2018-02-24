@@ -3,6 +3,7 @@ import Game from '../classes/Game';
 import Player from '../classes/Player';
 import handleSocketException from './handleSocketException';
 import SocketException from '../classes/SocketException';
+import { getConnection } from './socketManager';
 
 
 /**
@@ -65,6 +66,24 @@ function start(playerId, gameId) {
   if (game.isMaster(playerId)) game.start();
 }
 
+function end(playerId, gameId) {
+  const currentGame = Game.getGameByid(gameId);
+  const players = currentGame.get('players');
+  const curPlayerIndex = players.findIndex(player => (player.get('id') === playerId));
+  const playersLeft = players.filter(player => (player.get('id') !== playerId && player.get('hasWon') === null));
+
+  console.log(playerId, 'has lost -- players - ', players, ' left - ', playersLeft);
+
+  if (playersLeft.length > 1) {
+    players[curPlayerIndex].hasWon = false;
+    getConnection().to(playerId).emit('/game', { path: '/end', hasWon: false });
+  } else {
+    players[curPlayerIndex].hasWon = true;
+    getConnection().to(playerId).emit('/game', { path: '/end', hasWon: false });
+    getConnection().to(playersLeft[0].get('id')).emit('/game', { path: '/end', hasWon: true });
+  }
+}
+
 /**
  * handle game socket input
  *
@@ -94,6 +113,10 @@ export default async function (playerId, data) {
       }
       case '/start': {
         start(playerId, data.gameId);
+        break;
+      }
+      case '/end': {
+        end(playerId, data.gameId);
         break;
       }
       default:

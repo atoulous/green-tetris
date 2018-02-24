@@ -14,3 +14,6 @@ export function updateGame(state, action) {
   return { ...state, game: action.game };
 }
 
+export function endGame(state, action) {
+  return { ...state, hasWon: action.data, onPause: true };
+}

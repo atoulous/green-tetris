@@ -2,8 +2,7 @@ import store from '../store';
 import actions from '../actions';
 import { addRTCConn, getPeer } from '../helpers/webRTC';
 
-const { updateGame, addPieceToQueue, addRow, setNewPiece, setGrid } = actions;
-
+const { updateGame, addPieceToQueue, addRow, setNewPiece, setGrid, endGame } = actions;
 
 /**
  * Dispatch action that will update game in redux-tree.
@@ -36,6 +35,10 @@ function _start(data) {
   store.dispatch(setNewPiece());
 }
 
+function _end(hasWon) {
+  store.dispatch(endGame(hasWon));
+}
+
 export default function (data) {
   const { path } = data;
   console.log(`socket /game${path}`);
@@ -54,6 +57,10 @@ export default function (data) {
     }
     case '/start': {
       _start(data);
+      break;
+    }
+    case '/end': {
+      _end(data.hasWon);
       break;
     }
     case '/join': {

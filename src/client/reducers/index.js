@@ -17,18 +17,17 @@ import {
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
 import { rtcMessage, addAudioStream, toggleMuted } from './connexion';
-import { setGame, updateGamesList, updateGame } from './game';
+import { updateGamesList, updateGame, endGame, } from './game';
 import { updateError } from './error';
 
 import { initBag, initGrid, initSpectrum } from '../utils/tetris';
 
 const initialState = {
+  hasWon: null,
   piecesQueue: [],
   gridWithoutCurrent: initGrid(),
   grid: initGrid(),
   currentPiece: null,
-  bag: initBag(),
-  speed: 1000,
   spectrum: initSpectrum(),
   gamesList: [],
   game: null,
@@ -70,7 +69,7 @@ const {
 
   ADD_PIECE_TO_QUEUE,
 
-  SET_GAME
+  END_GAME,
 } = actions;
 
 /*
@@ -129,8 +128,8 @@ export default function reducer(state = initialState, action) {
       return addPieceToQueue(state, action);
 
 
-    case SET_GAME:
-      return setGame(state, action);
+    case END_GAME:
+      return endGame(state, action);
 
     default:
       return state;
