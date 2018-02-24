@@ -23,8 +23,8 @@ const GameSettings = ({ game, dispatch, player }) => {
   const speedItems = [
     { label: 'Slow', value: 1500 },
     { label: 'Normal', value: 1000 },
-    { label: 'Fast', value: 800 },
-    { label: 'Very Fast', value: 500 },
+    { label: 'Fast', value: 700 },
+    { label: 'Very Fast', value: 300 },
   ];
 
   const sizeItems = [

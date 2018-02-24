@@ -105,11 +105,12 @@ export function increaseSpeed(state) {
  */
 export function deleteRows(state, rowsToDelete) {
   const { grid } = state;
+  const rowWidth = (state.game.size.value * 2) / 3;
   let newGrid = grid;
 
   rowsToDelete.forEach((row) => {
     newGrid = tetrisHelper.sliceBagFromIndex(newGrid, row);
-    newGrid.unshift(tetrisHelper.initRow());
+    newGrid.unshift(tetrisHelper.initRow(false, rowWidth));
   });
   return { ...state, grid: newGrid };
 }
@@ -121,13 +122,14 @@ export function deleteRows(state, rowsToDelete) {
  */
 export function addRow(state) {
   let { grid, gridWithoutCurrent } = state;
+  const rowWidth = (state.game.size.value * 2) / 3;
 
   function _addRowToGrid(currentGrid) {
     const newGrid = tetrisHelper.copyGrid(currentGrid);
     let added = false;
     tetrisHelper.reverseForeach(currentGrid, (row, index) => {
       if (!added && !tetrisHelper.isRowFull(row)) {
-        newGrid[index] = tetrisHelper.initRow(true);
+        newGrid[index] = tetrisHelper.initRow(true, rowWidth);
         added = true;
       }
     });

@@ -122,7 +122,8 @@ export function setNewPiece() {
     // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
 
-    const { currentPiece, gridWithoutCurrent, speed: interval, game } = getState();
+    const { currentPiece, gridWithoutCurrent, game } = getState();
+    const interval = game.speed.value;
 
     if (game.piecesQueue.length <= 1) {
       dispatch(newPiece({ gameId: game.id }));

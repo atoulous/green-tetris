@@ -25,7 +25,6 @@ import './AllGamesView.scss';
 const { socketUpdatePlayer, socketCreateGame, socketJoinGame, getAllGames } = actions;
 
 class AllGamesViewWrapper extends Component {
-
   componentWillMount() {
     store.dispatch(getAllGames());
   }
@@ -38,7 +37,6 @@ class AllGamesViewWrapper extends Component {
 }
 
 const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
-
   /*
   ** Get all Games from the API.
   */
@@ -88,8 +86,8 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
               <TableRow key={game.id}>
                 <TableRowColumn>{game.id}</TableRowColumn>
                 <TableRowColumn>{game.masterId}</TableRowColumn>
-                <TableRowColumn>{game.speed} ms</TableRowColumn>
-                <TableRowColumn>{game.size} </TableRowColumn>
+                <TableRowColumn>{game.speed.label}</TableRowColumn>
+                <TableRowColumn>{game.size.label} </TableRowColumn>
                 <TableRowColumn>{`${game.players.length}/${game.maxPlayers}`}</TableRowColumn>
                 <TableRowColumn>
                   <RaisedButton label="JOIN" onClick={_handleJoin(game)} />
