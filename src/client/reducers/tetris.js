@@ -146,7 +146,7 @@ export function addRow(state) {
 export function updateSpectrum(state, grid) {
   const spectrum = tetrisHelper.getSpectrum(grid);
   sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
-  return { ...state, spectrum: tetrisHelper.getSpectrum(grid)};
+  return { ...state, spectrum: tetrisHelper.getSpectrum(grid) };
 }
 
 /**
@@ -155,3 +155,16 @@ export function updateSpectrum(state, grid) {
 export function updateScore(state, score) {
   return { ...state, score: state.score + score };
 }
+
+/**
+ * Set grid related to size
+ */
+export function setGrid(state) {
+  const { size } = state.game;
+  const height = size.value || 20;
+  return { ...state,
+    grid: tetrisHelper.initGrid(height, ((height * 2) / 3)),
+    gridWithoutCurrent: tetrisHelper.initGrid(height, ((height * 2) / 3)),
+  };
+}
+

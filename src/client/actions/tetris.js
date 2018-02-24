@@ -57,6 +57,11 @@ export function updateScore(score) {
   return { type: UPDATE_SCORE, score };
 }
 
+export const SET_GRID = 'SET_GRID';
+export function setGrid() {
+  return { type: SET_GRID };
+}
+
 /**
  * Add piece received by web socket to end of queue
  *
@@ -83,7 +88,7 @@ export function dropPiece() {
 
     const { currentPiece, gridWithoutCurrent, grid } = state;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
-    const interval = state.speed;
+    const interval = state.game.speed.value || 1000;
 
     // Enough space to place piece.
     if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {

@@ -19,6 +19,22 @@ const { socketUpdateGame, updateGame, socketUpdatePlayer, socketStartGame } = ac
 const GameSettings = ({ game, dispatch, player }) => {
   if (game.hasStarted) return <Redirect to="/play" />;
 
+
+  const speedItems = [
+    { label: 'Slow', value: 1500 },
+    { label: 'Normal', value: 1000 },
+    { label: 'Fast', value: 800 },
+    { label: 'Very Fast', value: 500 },
+  ];
+
+  const sizeItems = [
+    { label: 'Small', value: 15 },
+    { label: 'Normal', value: 21 },
+    { label: 'Big', value: 24 },
+    { label: 'Very Big', value: 27 },
+  ];
+
+
   const toggleStyle = {
     marginBottom: 15,
   };
@@ -27,7 +43,7 @@ const GameSettings = ({ game, dispatch, player }) => {
   const isGameMaster = player.id === game.masterId;
 
   const handleSize = (event, index, value) => {
-    dispatch(socketUpdateGame(game.id, { size: value }));
+    dispatch(socketUpdateGame(game.id, { size: sizeItems.find(s => s.label === value) }));
   };
 
   const handleMaxPlayer = (event, index, value) => {
@@ -35,7 +51,7 @@ const GameSettings = ({ game, dispatch, player }) => {
   };
 
   const handleSpeed = (event, index, value) => {
-    dispatch(socketUpdateGame(game.id, { speed: value }));
+    dispatch(socketUpdateGame(game.id, { speed: speedItems.find(s => s.label === value) }));
   };
 
   const handleStart = () => {
@@ -69,25 +85,19 @@ const GameSettings = ({ game, dispatch, player }) => {
         </SelectField>
         <SelectField
           floatingLabelText="Game speed"
-          value={game.speed}
+          value={game.speed.label}
           onChange={handleSpeed}
           disabled={!isGameMaster}
         >
-          <MenuItem value="Slow" primaryText="Slow" />
-          <MenuItem value="Normal" primaryText="Normal" />
-          <MenuItem value="Fast" primaryText="Fast" />
-          <MenuItem value="Very Fast" primaryText="Very Fast" />
+          {speedItems.map((item, index) => (<MenuItem key={index} value={item.label} primaryText={item.label} />))}
         </SelectField>
         <SelectField
           floatingLabelText="Game size"
-          value={game.size}
+          value={game.size.label}
           onChange={handleSize}
           disabled={!isGameMaster}
         >
-          <MenuItem value="Small" primaryText="Small" />
-          <MenuItem value="Normal" primaryText="Normal" />
-          <MenuItem value="Big" primaryText="Big" />
-          <MenuItem value="Very Big" primaryText="Very Big" />
+          {sizeItems.map((item, index) => (<MenuItem key={index} value={item.label} primaryText={item.label} />))}
         </SelectField>
       </section>
       <section>
