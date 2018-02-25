@@ -4,7 +4,7 @@ import {
   getSpectrum,
 } from '../utils/tetris';
 import { keys } from '../helpers/constants';
-import { newPiece, socketLineCompleted, socketUpdateGame, socketEndGame } from './socket';
+import { newPiece, socketLineCompleted, socketUpdateGame, socketEndGame, socketUpdatePlayer } from './socket';
 
 // Constants
 export const DRAW_PIECE = 'DRAW_PIECE';
@@ -131,8 +131,7 @@ export function setNewPiece() {
 
     // Not enough space to place piece. Game is lost.
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
-
-      dispatch(socketEndGame(getState().game.id));
+      dispatch(socketUpdatePlayer({ hasLost: true }), {});
     } else {
       dispatch(updateSpectrum(gridWithoutCurrent));
       dispatch(drawPiece());

@@ -150,6 +150,14 @@ class Game extends Payload {
     // Update all players in game.
     this.broadcast('/update', { game: this.format() });
   }
+
+
+  hasFinished() {
+    const players = this.get('players');
+    const loosers = players.filter(p => p.get('hasLost') === true);
+    return ((players.length !== 1 && loosers.length >= players.length - 1)
+      || (players.length === 1 && loosers.length === players.length));
+  }
 }
 
 export default Game;
