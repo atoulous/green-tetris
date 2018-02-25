@@ -17,12 +17,13 @@ import {
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
 import { rtcMessage, addAudioStream, toggleMuted, initAudioStream, hasCalled } from './connexion';
-import { updateGamesList, updateGame, endGame, restartGame } from './game';
+import { updateGamesList, updateGame, endGame, restartGame, location } from './game';
 import { updateError } from './error';
 
 import { initBag, initGrid, initSpectrum } from '../utils/tetris';
 
 const initialState = {
+  location: null,
   hasAudio: false,
   hasCalled: false,
   hasWon: null,
@@ -75,6 +76,7 @@ const {
 
   END_GAME,
   RESTART_GAME,
+  LOCATION,
 } = actions;
 
 /*
@@ -139,6 +141,8 @@ export default function reducer(state = initialState, action) {
       return endGame(state, action);
     case RESTART_GAME:
       return restartGame(state);
+    case LOCATION:
+      return location(state, action);
 
     default:
       return state;

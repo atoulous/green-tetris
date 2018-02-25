@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 
 import * as socket from '../../socket';
 import actions from '../../actions';
+import store from '../../store';
 
 import './Home.scss';
 
-const { socketCreateGame } = actions;
+const { socketCreateGame, changeLocation } = actions;
 
-
-const Home = ({ dispatch, game }) => {
+const HomeRender = ({ dispatch, game }) => {
   /*
   ** Create new Player. Create a game.
   */
@@ -45,8 +45,22 @@ const mapStateToProps = state => ({
   game: state.game,
 });
 
-Home.propTypes = {
+HomeRender.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Home);
+const HomeConnected = connect(mapStateToProps)(HomeRender);
+
+class HomeWrapper extends Component {
+  componentWillMount() {
+    store.dispatch(changeLocation(null));
+  }
+
+  render() {
+    return (
+      <HomeConnected />
+    );
+  }
+}
+
+export default HomeWrapper;

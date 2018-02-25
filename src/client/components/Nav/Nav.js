@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -13,9 +14,9 @@ import actions from '../../actions';
 
 import './Nav.scss';
 
-const { openNicknameModal, closeNicknameModal, updateNickname, socketUpdatePlayer } = actions;
+const { openNicknameModal, closeNicknameModal, updateNickname, socketUpdatePlayer, updateGame, changeLocation } = actions;
 
-const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
+const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
   let currentNickname = nickname;
   const _openModal = () => {
     dispatch(openNicknameModal());
@@ -57,7 +58,23 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch }) => {
   return (
     <div>
       <AppBar
-        title={`Green Tetris - ${nickname}`}
+        title={
+          <div>
+            <FlatButton
+              label='HOME'
+              onClick={() => {
+                if (window.location.pathname !== '/') {
+                    dispatch(changeLocation('/'));
+                    dispatch(updateGame(null));
+                }
+              }
+              }
+            />
+            <span>
+            {`Green Tetris - ${nickname}`}
+          </span>
+          </div>
+        }
         showMenuIconButton={false}
         iconElementRight={Menu}
       />
@@ -91,7 +108,7 @@ Nav.propTypes = {
   game: PropTypes.object,
 };
 
-Nav.defaultValue = {
+Nav.defaultProps = {
   game: null,
 };
 
