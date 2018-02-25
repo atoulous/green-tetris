@@ -30,7 +30,6 @@ class Game extends Payload {
       maxPlayers: 5,
       players: [],
       hasStarted: false,
-      hasFinished: false,
       piecesQueue: [new Piece()],
       isSolo,
     });
@@ -115,7 +114,7 @@ class Game extends Payload {
     return (result.length > 0) ? result[0] : null;
   }
 
-  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'hasFinished', 'isSolo']) {
+  format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'isSolo']) {
     // Format Pieces.
     let piecesQueue = this.get('piecesQueue');
     piecesQueue = piecesQueue.map(p => p.format());

@@ -24,3 +24,7 @@ export function initAudioStream(state) {
 export function hasCalled(state) {
   return { ...state, hasCalled: true };
 }
+
+export function killAudio(state) {
+  return { ...state, audioStreams: [], hasCalled: false };
+}

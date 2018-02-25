@@ -24,14 +24,16 @@ export function location(state, action) {
 }
 
 export function restartGame(state) {
-  console.log('cur state -- ', state);
   return {
     ...state,
     game: {
       ...state.game,
       hasStarted: false,
-      players: state.game.players.map(player => ({ ...player, spectrum: initSpectrum(), isReady: false }))
+      players: state.game.players.map(
+        player => ({ ...player, spectrum: initSpectrum(), isReady: false }))
     },
+    audioStreams: [],
+    hasCalled: false,
     hasWon: null,
     piecesQueue: [],
     currentPiece: null,

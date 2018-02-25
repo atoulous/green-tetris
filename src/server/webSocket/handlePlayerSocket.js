@@ -6,6 +6,7 @@ import logger from '../helpers/logger';
 import SocketException from '../classes/SocketException';
 import handleSocketException from './handleSocketException';
 
+import { getConnection } from './socketManager';
 
 /*
 ** Update Player Settings
@@ -31,6 +32,9 @@ function disconnect(playerId) {
   if (player.get('gameId')) {
     const game = Game.getGameByid(player.get('gameId'));
     if (game) game.removePlayer(playerId);
+    if (game.get('players').length <= 1) {
+      getConnection().to(game.get('players')[0].get('id')).emit('/game', { path: '/end', hasWon: true });
+    }
   }
 
   // Remove player from players list.
