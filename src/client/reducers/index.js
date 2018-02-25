@@ -17,7 +17,7 @@ import {
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
 import { rtcMessage, addAudioStream, toggleMuted } from './connexion';
-import { updateGamesList, updateGame, endGame, } from './game';
+import { updateGamesList, updateGame, endGame, restartGame } from './game';
 import { updateError } from './error';
 
 import { initBag, initGrid, initSpectrum } from '../utils/tetris';
@@ -70,6 +70,7 @@ const {
   ADD_PIECE_TO_QUEUE,
 
   END_GAME,
+  RESTART_GAME,
 } = actions;
 
 /*
@@ -130,6 +131,8 @@ export default function reducer(state = initialState, action) {
 
     case END_GAME:
       return endGame(state, action);
+    case RESTART_GAME:
+      return restartGame(state);
 
     default:
       return state;

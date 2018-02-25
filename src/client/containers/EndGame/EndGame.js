@@ -1,22 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
-import { socketUpdateGame } from '../../actions/socket';
 
-const GameEnd = ({ isMaster, hasWon, resetGame, gameId, dispatch }) => {
+import { socketRestartGame } from '../../actions/socket';
 
-  const restartGame = () => {
-    dispatch(socketUpdateGame(gameId, {
-      hasStarted: false,
-    }));
-  };
+const GameEnd = ({ isMaster, hasWon, gameId, dispatch }) => {
+
+  const actionsModal = [
+    <FlatButton
+      label="RESTART GAME"
+      onClick={() => { dispatch(socketRestartGame(gameId)); }}
+      primary
+    />,
+  ];
 
   return (
-    <div>
+    <Dialog
+      title={'Fin de partie'}
+      actions={isMaster ? actionsModal : []}
+      modal={false}
+      open
+    >
       {hasWon ? 'bravo t es un champion ! ' : 'tes mauvais jack'}
-      {isMaster && <RaisedButton label="PLAY AGAIN" onClick={restartGame} />}
-    </div>
+    </Dialog>
   );
 };
 

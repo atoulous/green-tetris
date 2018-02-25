@@ -84,6 +84,11 @@ function end(playerId, gameId) {
   }
 }
 
+function restart(gameId) {
+  const currentGame = Game.getGameByid(gameId);
+  currentGame.broadcast('/restart');
+};
+
 /**
  * handle game socket input
  *
@@ -117,6 +122,10 @@ export default async function (playerId, data) {
       }
       case '/end': {
         end(playerId, data.gameId);
+        break;
+      }
+      case '/restart': {
+        restart(data.gameId);
         break;
       }
       default:
