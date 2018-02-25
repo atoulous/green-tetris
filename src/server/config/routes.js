@@ -14,7 +14,7 @@ export default (app) => {
   ** Get all games.
   */
   app.get('/api/games', (req, res) => {
-    let games = Game.allGames.filter(game => (!game.get('isSolo')));
+    let games = Game.allGames.filter(game => (!game.get('isSolo') && !game.get('hasStarted')));
     games = games.map(game => game.format());
     res.json(JSON.stringify(games));
   });

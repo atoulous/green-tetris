@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader } from 'material-ui/Card';
 
-import Spectrum from '../../containers/SpectrumContainer/SpectrumContainer';
+import Spectrum from '../../components/Spectrum/Spectrum';
 
 import './TetrisPlayer.scss';
 
