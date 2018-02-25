@@ -22,7 +22,7 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
         <AudioContainer />
       </div>
       <div className="game-settings-view">
-        <GameSettings game={game} dispatch={dispatch} player={player} />
+        <GameSettings game={game} dispatch={dispatch} player={player} isSolo={isSolo} />
         {!isSolo && <GamePlayers game={game} dispatch={dispatch} player={player} />}
       </div>
     </div>

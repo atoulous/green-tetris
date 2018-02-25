@@ -75,10 +75,10 @@ function end(playerId, gameId) {
   console.log(playerId, 'has lost -- players - ', players, ' left - ', playersLeft);
 
   if (playersLeft.length > 1) {
-    players[curPlayerIndex].hasWon = false;
+    players[curPlayerIndex].set('hasWon', false);
     getConnection().to(playerId).emit('/game', { path: '/end', hasWon: false });
   } else {
-    players[curPlayerIndex].hasWon = true;
+    players[curPlayerIndex].set('hasWon', true);
     getConnection().to(playerId).emit('/game', { path: '/end', hasWon: false });
     getConnection().to(playersLeft[0].get('id')).emit('/game', { path: '/end', hasWon: true });
   }

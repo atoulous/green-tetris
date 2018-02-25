@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -11,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import actions from '../../actions';
+import * as socket from '../../socket';
 
 import './Nav.scss';
 
@@ -55,6 +55,8 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
     />
   ];
 
+  const regexIsGameUrl = new RegExp(/^\/games\/[0-9a-z-]{36}$/);
+
   return (
     <div>
       <AppBar
@@ -64,6 +66,9 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
               label='HOME'
               onClick={() => {
                 if (window.location.pathname !== '/') {
+                    if (regexIsGameUrl.test(window.location.pathname)) {
+                      socket.closeClient();
+                    }
                     dispatch(changeLocation('/'));
                     dispatch(updateGame(null));
                 }

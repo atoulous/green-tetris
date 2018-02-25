@@ -16,7 +16,7 @@ import actions from '../../actions';
 const { socketUpdateGame, updateGame, socketUpdatePlayer, socketStartGame } = actions;
 
 
-const GameSettings = ({ game, dispatch, player }) => {
+const GameSettings = ({ game, dispatch, player, isSolo }) => {
   if (game.hasStarted) return <Redirect to="/play" />;
 
 
@@ -71,6 +71,7 @@ const GameSettings = ({ game, dispatch, player }) => {
     <div className="game-settings">
       <section>
         <h1>Game Settings</h1>
+        {!isSolo &&
         <SelectField
           floatingLabelText="Maximum Players"
           value={game.maxPlayers}
@@ -83,13 +84,17 @@ const GameSettings = ({ game, dispatch, player }) => {
           <MenuItem value={4} primaryText="4" />
           <MenuItem value={5} primaryText="5" />
         </SelectField>
+        }
         <SelectField
           floatingLabelText="Game speed"
           value={game.speed.label}
           onChange={handleSpeed}
           disabled={!isGameMaster}
         >
-          {speedItems.map((item, index) => (<MenuItem key={index} value={item.label} primaryText={item.label} />))}
+          {
+            speedItems.map((item, index) =>
+              (<MenuItem key={index} value={item.label} primaryText={item.label} />))
+          }
         </SelectField>
         <SelectField
           floatingLabelText="Game size"
@@ -97,7 +102,10 @@ const GameSettings = ({ game, dispatch, player }) => {
           onChange={handleSize}
           disabled={!isGameMaster}
         >
-          {sizeItems.map((item, index) => (<MenuItem key={index} value={item.label} primaryText={item.label} />))}
+          {
+            sizeItems.map((item, index) =>
+              (<MenuItem key={index} value={item.label} primaryText={item.label} />))
+          }
         </SelectField>
       </section>
       <section>
@@ -113,6 +121,7 @@ GameSettings.propTypes = {
   game: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   player: PropTypes.object.isRequired,
+  isSolo: PropTypes.bool,
 };
 
 export default GameSettings;
