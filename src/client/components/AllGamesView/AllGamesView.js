@@ -36,7 +36,10 @@ class AllGamesViewWrapper extends Component {
   }
 }
 
-const AllGamesView = ({ nickname, game, gamesList, dispatch }) => {
+const AllGamesView = ({ nickname, game, gamesList, dispatch, location }) => {
+  if (location) {
+    return <Redirect to={location} />;
+  }
   /*
   ** Get all Games from the API.
   */
@@ -111,17 +114,20 @@ AllGamesView.propTypes = {
   dispatch: PropTypes.func.isRequired,
   game: PropTypes.object,
   nickname: PropTypes.string.isRequired,
+  location: PropTypes.string,
 };
 
 AllGamesView.defaultProps = {
   gamesList: [],
   game: null,
+  location: null,
 };
 
 const mapStateToProps = state => ({
   gamesList: state.gamesList,
   game: state.game,
   nickname: state.player.nickname,
+  location: state.location,
 });
 
 const AllGamesViewConnected = connect(mapStateToProps)(AllGamesView);

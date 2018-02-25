@@ -19,6 +19,10 @@ export function endGame(state, action) {
   return { ...state, hasWon: action.data, onPause: true };
 }
 
+export function location(state, action) {
+  return { ...state, location: action.data, };
+}
+
 export function restartGame(state) {
   console.log('cur state -- ', state);
   return {
