@@ -19,7 +19,7 @@ class Player extends Payload {
       webRTCId: 'default',
       nickname: 'default',
       isReady: false,
-      hasLost: false,
+      hasWon: null,
       spectrum: [],
       score: 0,
       gameId: null,
@@ -40,11 +40,10 @@ class Player extends Payload {
     if (this.get('gameId')) {
       const game = Game.getGameByid(this.get('gameId'));
       if (game) game.broadcast('/update', { game: game.format() });
-      if (game && game.hasFinished()) game.update({ hasFinished: true });
     }
   }
 
-  format(props = ['id', 'nickname', 'isReady', 'hasLost', 'spectrum', 'gameId', 'webRTCId', 'score']) {
+  format(props = ['id', 'nickname', 'isReady', 'hasWon', 'spectrum', 'gameId', 'webRTCId', 'score']) {
     return super.format(props);
   }
 }
