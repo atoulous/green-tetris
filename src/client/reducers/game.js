@@ -30,7 +30,7 @@ export function restartGame(state) {
     game: {
       ...state.game,
       hasStarted: false,
-      players: state.game.players.map(player => ({ ...player, spectrum: initSpectrum() }))
+      players: state.game.players.map(player => ({ ...player, spectrum: initSpectrum(), isReady: false }))
     },
     hasWon: null,
     piecesQueue: [],

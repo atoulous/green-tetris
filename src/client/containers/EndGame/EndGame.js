@@ -7,7 +7,6 @@ import FlatButton from 'material-ui/FlatButton';
 import { socketRestartGame } from '../../actions/socket';
 
 const GameEnd = ({ isMaster, hasWon, gameId, dispatch }) => {
-
   const actionsModal = [
     <FlatButton
       label="RESTART GAME"
@@ -18,7 +17,7 @@ const GameEnd = ({ isMaster, hasWon, gameId, dispatch }) => {
 
   return (
     <Dialog
-      title={'Fin de partie'}
+      title="Fin de partie"
       actions={isMaster ? actionsModal : []}
       modal={false}
       open
