@@ -13,7 +13,12 @@ import './GameSettings.scss';
 
 import actions from '../../actions';
 
-const { socketUpdateGame, updateGame, socketUpdatePlayer, socketStartGame } = actions;
+const {
+  socketUpdateGame,
+  updateGame,
+  socketUpdatePlayer,
+  socketStartGame,
+  killAudio } = actions;
 
 
 const GameSettings = ({ game, dispatch, player, isSolo }) => {
@@ -61,6 +66,7 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
   const handleCancel = () => {
     socket.closeClient();
     dispatch(updateGame(null));
+    dispatch(killAudio());
   };
 
   const handleReady = () => {

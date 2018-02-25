@@ -14,7 +14,14 @@ import * as socket from '../../socket';
 
 import './Nav.scss';
 
-const { openNicknameModal, closeNicknameModal, updateNickname, socketUpdatePlayer, updateGame, changeLocation } = actions;
+const {
+  openNicknameModal,
+  closeNicknameModal,
+  updateNickname,
+  socketUpdatePlayer,
+  updateGame,
+  changeLocation,
+  killAudio } = actions;
 
 const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
   let currentNickname = nickname;
@@ -68,6 +75,7 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
                 if (window.location.pathname !== '/') {
                     if (regexIsGameUrl.test(window.location.pathname)) {
                       socket.closeClient();
+                      dispatch(killAudio());
                     }
                     dispatch(changeLocation('/'));
                     dispatch(updateGame(null));
