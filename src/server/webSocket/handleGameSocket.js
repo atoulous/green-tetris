@@ -4,6 +4,7 @@ import Player from '../classes/Player';
 import handleSocketException from './handleSocketException';
 import SocketException from '../classes/SocketException';
 import { getConnection } from './socketManager';
+import Piece from '../classes/Piece';
 
 
 /**
@@ -86,6 +87,12 @@ function end(playerId, gameId) {
 
 function restart(gameId) {
   const currentGame = Game.getGameByid(gameId);
+  currentGame.get('players').forEach((player) => {
+    player.set('hasWon', null);
+    player.set('isReady', false);
+  });
+  currentGame.set('hasStarted', false);
+  currentGame.set('piecesQueue', [new Piece()]);
   currentGame.broadcast('/restart');
 };
 
