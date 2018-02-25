@@ -9,12 +9,6 @@ import Error from './Error/Error';
 
 import Layout from './Layout/Layout';
 
-const NotFound = () => (
-  <div>
-    NOTHING FOUND HERE
-  </div>
-);
-
 const App = () => (
   <BrowserRouter>
     <Layout>
@@ -24,7 +18,7 @@ const App = () => (
         <Route exact path="/games" component={AllGamesView} />
         <Route exact path="/play" component={TetrisView} />
         <Route exact path="/games/:id" component={GameSettingsView} />
-        <Route component={NotFound} />
+        <Route component={Home} />
       </Switch>
     </Layout>
   </BrowserRouter>

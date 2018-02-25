@@ -16,3 +16,11 @@ export function addAudioStream(state, action) {
 export function toggleMuted(state, action) {
   return { ...state, muted: action.data.muted };
 }
+
+export function initAudioStream(state) {
+  return { ...state, hasAudio: true };
+}
+
+export function hasCalled(state) {
+  return { ...state, hasCalled: true };
+}

@@ -16,13 +16,15 @@ import {
   setGrid,
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
-import { rtcMessage, addAudioStream, toggleMuted } from './connexion';
+import { rtcMessage, addAudioStream, toggleMuted, initAudioStream, hasCalled } from './connexion';
 import { updateGamesList, updateGame, endGame, restartGame } from './game';
 import { updateError } from './error';
 
 import { initBag, initGrid, initSpectrum } from '../utils/tetris';
 
 const initialState = {
+  hasAudio: false,
+  hasCalled: false,
   hasWon: null,
   piecesQueue: [],
   gridWithoutCurrent: initGrid(),
@@ -66,6 +68,8 @@ const {
   RTC_MESSAGE,
   ADD_AUDIO_STREAM,
   TOGGLE_MUTED,
+  INIT_AUDIO_STREAM,
+  HAS_CALLED,
 
   ADD_PIECE_TO_QUEUE,
 
@@ -123,11 +127,13 @@ export default function reducer(state = initialState, action) {
       return addAudioStream(state, action);
     case TOGGLE_MUTED:
       return toggleMuted(state, action);
-
+    case INIT_AUDIO_STREAM:
+      return initAudioStream(state);
+    case HAS_CALLED:
+      return hasCalled(state);
 
     case ADD_PIECE_TO_QUEUE:
       return addPieceToQueue(state, action);
-
 
     case END_GAME:
       return endGame(state, action);
