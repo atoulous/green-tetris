@@ -2,6 +2,8 @@
 export const RTC_MESSAGE = 'RTC_MESSAGE';
 export const ADD_AUDIO_STREAM = 'ADD_AUDIO_STREAM';
 export const TOGGLE_MUTED = 'TOGGLE_MUTED';
+export const INIT_AUDIO_STREAM = 'INIT_AUDIO_STREAM';
+export const HAS_CALLED = 'HAS_CALLED';
 
 // Action objects
 export const RTCConnectionMessage = msg => ({
@@ -12,6 +14,14 @@ export const RTCConnectionMessage = msg => ({
 export const addAudioStream = stream => ({
   type: ADD_AUDIO_STREAM,
   data: stream,
+});
+
+export const hasAudio = () => ({
+  type: INIT_AUDIO_STREAM,
+});
+
+export const hasCalled = () => ({
+  type: HAS_CALLED,
 });
 
 export const toggleMuted = muted => ({

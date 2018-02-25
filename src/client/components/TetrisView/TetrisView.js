@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Toggle from 'material-ui/Toggle';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,8 +8,6 @@ import TetrisPlayersList from '../../components/TetrisPlayersList/TetrisPlayersL
 
 import './TetrisView.scss';
 
-import store from '../../store';
-import { togglePlay } from '../../actions/tetris';
 import EndGame from '../../containers/EndGame/EndGame';
 
 const TetrisView = ({ game, playerId, onPause, hasWon }) => {
@@ -31,10 +28,9 @@ const TetrisView = ({ game, playerId, onPause, hasWon }) => {
         hasWon === null &&
         <div className="container">
           <div className="tetris-view">
-            <Tetris game={game} playerId={playerId} />
+            <Tetris game={game} playerId={playerId} onPause={onPause} />
             <TetrisPlayersList game={game} playerId={playerId} />
           </div>
-          <Toggle label="Pause Game" onToggle={() => store.dispatch(togglePlay())} toggled={onPause} />
         </div>
       }
     </div>

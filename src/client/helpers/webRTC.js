@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-import { RTCConnectionMessage, addAudioStream } from '../actions/connexion';
+import { RTCConnectionMessage, addAudioStream, hasAudio } from '../actions/connexion';
 import store from '../store';
 
 let peer = null;
@@ -46,6 +46,7 @@ export function getAudioStream() {
 }
 
 export function initAudioStream(stream) {
+  store.dispatch(hasAudio());
   audioInputStream = stream;
 }
 

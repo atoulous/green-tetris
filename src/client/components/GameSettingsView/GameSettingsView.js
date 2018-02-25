@@ -18,11 +18,13 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
 
   return (
     <div className="container">
+      <div className="audioContainer">
+        <AudioContainer />
+      </div>
       <div className="game-settings-view">
         <GameSettings game={game} dispatch={dispatch} player={player} />
         {!isSolo && <GamePlayers game={game} dispatch={dispatch} player={player} />}
       </div>
-      <AudioContainer />
     </div>
   );
 };

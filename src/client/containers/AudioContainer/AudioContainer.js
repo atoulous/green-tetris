@@ -5,12 +5,13 @@ import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { initAudioStream, getPeer, callPeer } from '../../helpers/webRTC';
-import { toggleMuted } from '../../actions/connexion';
+import { toggleMuted, hasCalled } from '../../actions/connexion';
+
+import './AudioContainer.scss';
 
 navigator.mediaDevices.getUserMedia({ audio: true })
   .then((stream) => {
     /* use the stream */
-    console.log('you are able to talk to others');
     initAudioStream(stream);
   })
   .catch((err) => {
@@ -21,11 +22,13 @@ navigator.mediaDevices.getUserMedia({ audio: true })
   sub component
  */
 
-const StartChat = ({ players, audioStreams }) => {
+const StartChat = ({ players, audioStreams, dispatch, hasCalledState }) => {
+  if (hasCalledState) return (null);
   return (
     <RaisedButton
       label="START CHAT"
       onClick={() => {
+        dispatch(hasCalled());
         players.forEach(({ webRTCId }) => {
           if (webRTCId !== getPeer().id && !audioStreams.find(({from}) => (from === webRTCId))) callPeer(webRTCId);
         });
@@ -37,6 +40,7 @@ const StartChat = ({ players, audioStreams }) => {
 const getPlayersFromState = state => ({
   players: state.game.players,
   audioStreams: state.audioStreams,
+  hasCalledState: state.hasCalled,
 });
 
 const StartChatConnected = connect(getPlayersFromState)(StartChat);
@@ -45,11 +49,11 @@ const StartChatConnected = connect(getPlayersFromState)(StartChat);
   sub component
  */
 
-const ToggleMute = ({ muted, onToggleClick }) => {
+const ToggleMute = ({ muted, onToggleClick, hasCalled }) => {
 
   return (
     <div style={{ margin: '15 px', width: '30%' }}>
-      <Toggle label="Mute Sound" onToggle={onToggleClick} toggled={muted} />
+      <Toggle disabled={!hasCalled} label={muted ? 'UNMUTE' : 'MUTE'} onToggle={onToggleClick} toggled={muted} />
     </div>
   );
 
@@ -67,21 +71,25 @@ const ToggleMuteConnected = connect(null, mapDispatchToProps)(ToggleMute);
   main component
  */
 
-const AudioContainer = ({ muted, audioStreams, dispatch }) => {
+const AudioContainer = ({ muted, audioStreams, dispatch, hasAudio, hasCalled }) => {
+  if (!hasAudio) return (null);
   return (
-    <div>
-      <StartChatConnected />
-      <ToggleMuteConnected muted={muted} dispatch={dispatch}/>
-      {
-        audioStreams.map(({ stream }, i) => (<audio autoPlay muted={muted} key={i} src={window.URL.createObjectURL(stream)} />))
-      }
-    </div>
+      <div className="flex">
+        <StartChatConnected/>
+        <ToggleMuteConnected muted={muted} dispatch={dispatch} hasCalled={hasCalled} />
+        {
+          audioStreams.map(({stream}, i) => (
+            <audio autoPlay muted={muted} key={i} src={window.URL.createObjectURL(stream)}/>))
+        }
+      </div>
   );
 };
 
 const mapStateToProps = state => ({
   audioStreams: state.audioStreams,
   muted: state.muted,
+  hasAudio: state.hasAudio,
+  hasCalled: state.hasCalled,
 });
 
 export default connect(mapStateToProps)(AudioContainer);
