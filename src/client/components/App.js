@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Home from './HomeView/Home';
+import Home from './Home/Home';
 import AllGamesView from './AllGamesView/AllGamesView';
 import GameSettingsView from './GameSettingsView/GameSettingsView';
 import TetrisView from './TetrisView/TetrisView';

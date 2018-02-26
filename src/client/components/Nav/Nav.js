@@ -8,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import ActionHome from 'material-ui/svg-icons/action/home';
+import IconButton from 'material-ui/IconButton';
 
 import actions from '../../actions';
 import * as socket from '../../socket';
@@ -25,6 +27,9 @@ const {
 
 const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
   let currentNickname = nickname;
+
+  const regexIsGameUrl = new RegExp(/^\/games\/[0-9a-z-]{36}$/);
+
   const _openModal = () => {
     dispatch(openNicknameModal());
   };
@@ -41,6 +46,17 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
     dispatch(updateNickname(currentNickname));
     if (game) dispatch(socketUpdatePlayer({ nickname: currentNickname }));
     _closeModal();
+  };
+
+  const _handleHomeButton = () => {
+    if (window.location.pathname !== '/') {
+      if (regexIsGameUrl.test(window.location.pathname)) {
+        socket.closeClient();
+        dispatch(killAudio());
+      }
+      dispatch(changeLocation('/'));
+      dispatch(updateGame(null));
+    }
   };
 
   const Menu = (
@@ -62,35 +78,19 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
     />
   ];
 
-  const regexIsGameUrl = new RegExp(/^\/games\/[0-9a-z-]{36}$/);
-
   return (
     <div>
       <AppBar
-        title={
-          <div>
-            <FlatButton
-              label='HOME'
-              onClick={() => {
-                if (window.location.pathname !== '/') {
-                    if (regexIsGameUrl.test(window.location.pathname)) {
-                      socket.closeClient();
-                      dispatch(killAudio());
-                    }
-                    dispatch(changeLocation('/'));
-                    dispatch(updateGame(null));
-                }
-              }
-              }
-            />
-            <span>
-            {`Green Tetris - ${nickname}`}
-          </span>
-          </div>
-        }
-        showMenuIconButton={false}
+        className="navBar"
+        title={`Red Tetris - ${nickname}`}
         iconElementRight={Menu}
+        iconElementLeft={
+          <IconButton tooltip="SVG Icon" onClick={_handleHomeButton}>
+            <ActionHome />
+          </IconButton>
+        }
       />
+
       <Dialog
         title="Choose a nickname"
         actions={actionsModal}
@@ -104,6 +104,7 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
           onChange={_handleModalChange}
         />
       </Dialog>
+
     </div>
   );
 };

@@ -10,8 +10,7 @@ import Piece from '../classes/Piece';
 /**
  * Create a new game with player as gameMaster.
  */
-function create(playerId, settings) {
-  settings = settings || {};
+function create(playerId, settings = {}) {
   const { allGames } = Game;
   allGames.push(new Game(playerId, settings));
 }

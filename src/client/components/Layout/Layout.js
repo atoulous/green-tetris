@@ -1,17 +1,14 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
 
-import Nav from '../Nav/Nav';
+import Header from './Header/Header';
 import Footer from './Footer/Footer';
-
-const Header = () => (
-  <Nav />
-);
 
 const Layout = props => (
   <div>
     <Header />
-    <Paper>{props.children}</Paper>
+    <main>
+      {props.children}
+    </main>
     <Footer />
   </div>
 );

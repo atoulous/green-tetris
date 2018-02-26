@@ -44,14 +44,12 @@ class Game extends Payload {
     return _allGames.find(game => game.get('id') === id);
   }
 
-  broadcast(subject, data, idsToOmit = []) {
-    data = data || {};
-    data.path = subject;
+  broadcast(subject, data = {}, idsToOmit = []) {
     this.payload.players.forEach((player) => {
       // Don't emit to specific ids.
       if (!idsToOmit.includes(player.get('id'))) {
         const socket = player.get('socket');
-        socket.emit('/game', data);
+        socket.emit('/game', { ...data, path: subject });
       }
     });
   }
@@ -128,10 +126,7 @@ class Game extends Payload {
     return playerId === this.get('masterId');
   }
 
-  update(settings) {
-    // Settings must be an object.
-    settings = settings || {};
-
+  update(settings = {}) {
     // If maxPlayer is set, we might have to kick players.
     const players = this.get('players');
     const playersNumber = players.length;
