@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import remove from 'lodash/remove';
 
 import Game from '../classes/Game';
 import Player from '../classes/Player';
@@ -32,13 +32,13 @@ function disconnect(playerId) {
   if (player.get('gameId')) {
     const game = Game.getGameByid(player.get('gameId'));
     if (game) game.removePlayer(playerId);
-    if (game.get('players').length <= 1) {
+    if (game.get('players').length === 1) {
       getConnection().to(game.get('players')[0].get('id')).emit('/game', { path: '/end', hasWon: true });
     }
   }
 
   // Remove player from players list.
-  _.remove(Player.allPlayers, p => p.get('id') === playerId);
+  remove(Player.allPlayers, p => p.get('id') === playerId);
 }
 /*
 ** Kick Player.
