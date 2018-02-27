@@ -11,4 +11,12 @@ describe('classes/piece', () => {
     expect(payload).toHaveProperty('x', 0);
     expect(payload).toHaveProperty('y', 0);
   });
+
+  it('should get a random shape', async () => {
+    const randomShape = Piece.getRandom();
+
+    expect(randomShape).toBeTruthy();
+    expect(randomShape).toHaveProperty('blocks');
+    expect(randomShape).toHaveProperty('color');
+  });
 });
