@@ -18,9 +18,6 @@ class Game extends Payload {
     // Check that master player exists.
     const master = Player.getPlayerById(masterId);
     if (!master) throw new SocketException('Master not found');
-    // Handle settings for game creation.
-    let { isSolo } = settings;
-    isSolo = isSolo || false;
 
     super({
       id: getUUID(),
@@ -31,9 +28,10 @@ class Game extends Payload {
       players: [],
       hasStarted: false,
       piecesQueue: [new Piece()],
-      isSolo,
+      ...settings
     });
     this.addPlayer(masterId);
+    Game.allGames.push(this);
   }
 
   static get allGames() {

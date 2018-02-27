@@ -23,6 +23,7 @@ class Player extends Payload {
       score: 0,
       gameId: null,
     });
+    Player.allPlayers.push(this);
   }
 
   static get allPlayers() {
