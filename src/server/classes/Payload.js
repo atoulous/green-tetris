@@ -10,7 +10,7 @@ class Payload {
   }
 
   getPayload() {
-    return this.getPayload();
+    return this.payload;
   }
 
   format(filter) {
