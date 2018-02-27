@@ -71,6 +71,7 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch, location }) => {
 
   return (
     <div className="container">
+      <h1 className="title">MULTI - ALL GAMES</h1>
       <div className="games-list">
         <Table selectable={false}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>

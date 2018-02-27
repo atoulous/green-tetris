@@ -1,3 +1,7 @@
 .game-players {
-    flex:1;
+  flex: 1;
+
+  td {
+    vertical-align: middle;
+  }
 }

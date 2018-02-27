@@ -1,13 +1,12 @@
 import { initGrid, initSpectrum } from '../utils/tetris';
-// export function setGame(state, action) {
-//   return { ...state, game: action.data.game };
-// }
+
 /**
  * Update gameList in redux-tree.
  */
 export function updateGamesList(state, action) {
   return { ...state, gamesList: action.gamesList };
 }
+
 /**
  * Update game in redux-tree.
  */

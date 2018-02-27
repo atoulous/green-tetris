@@ -21,19 +21,18 @@ export function listen(server) {
 
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
-    /*
-    ** Add incoming socket messages handlers
-    */
+
+    /**
+     * Open socket messages handlers
+     */
     socket.on('/game', data => handleGameSocket(socket.id, data));
     socket.on('/piece', data => handlePieceSocket(socket.id, data));
     socket.on('/player', data => handlePlayerSocket(socket.id, data));
 
-    /*
-    ** Create new Player.
-    */
-    new Player(socket);
-    // const { allPlayers } = Player;
-    // allPlayers.push(new Player(socket));
+    /**
+     * Create new Player for each new connexion
+     */
+    new Player(socket); // eslint-disable-line no-new
 
     /**
      * Handle deconnexion

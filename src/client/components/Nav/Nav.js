@@ -8,7 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import HomeIcon from 'material-ui/svg-icons/action/home';
+import AccountIcon from 'material-ui/svg-icons/action/account-circle';
 import IconButton from 'material-ui/IconButton';
 
 import actions from '../../actions';
@@ -59,12 +60,6 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
     }
   };
 
-  const Menu = (
-    <DropDownMenu value="Menu" onChange={_openModal}>
-      <MenuItem primaryText="Change Nickname" />
-    </DropDownMenu>
-  );
-
   const actionsModal = [
     <FlatButton
       label="Ok"
@@ -83,16 +78,22 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
       <AppBar
         className="navBar"
         title={`Red Tetris - ${nickname}`}
-        iconElementRight={Menu}
+
+        iconElementRight={
+          <IconButton tooltip={nickname} onClick={_openModal}>
+            <AccountIcon />
+          </IconButton>
+        }
+
         iconElementLeft={
-          <IconButton tooltip="SVG Icon" onClick={_handleHomeButton}>
-            <ActionHome />
+          <IconButton tooltip="Home" onClick={_handleHomeButton}>
+            <HomeIcon />
           </IconButton>
         }
       />
 
       <Dialog
-        title="Choose a nickname"
+        title="Change your pseudo"
         actions={actionsModal}
         modal={false}
         open={isNicknameModalOpen}
