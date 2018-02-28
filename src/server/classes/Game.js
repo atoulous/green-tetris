@@ -4,7 +4,7 @@ import { getUUID } from '../helpers/utils';
 import Payload from './Payload';
 import Player from './Player';
 import SocketException from './SocketException';
-import Piece from './Piece';
+import Bag from './Bag';
 
 const _allGames = [];
 
@@ -27,9 +27,13 @@ class Game extends Payload {
       maxPlayers: 5,
       players: [],
       hasStarted: false,
-      piecesQueue: [new Piece()],
+      piecesQueue: [],
       ...settings
     });
+
+    // Add a first Piece in PieceQueue.
+    this.bag = new Bag();
+    this.payload.piecesQueue.push(this.bag.getRandomPiece());
     this.addPlayer(masterId);
     Game.allGames.push(this);
   }
@@ -61,6 +65,11 @@ class Game extends Payload {
     } else {
       throw new SocketException('All players are not ready');
     }
+  }
+
+  sendPiece() {
+    const newPiece = this.bag.getRandomPiece();
+    this.broadcast('/newPiece', { newPiece: newPiece.format() });
   }
 
   addPlayer(playerId) {
