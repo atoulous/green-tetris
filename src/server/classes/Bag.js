@@ -21,7 +21,8 @@ const pieces = {
  */
 class Bag {
   constructor() {
-    this.initBag();
+    this.bag = [];
+    this._initBag();
   }
 
   getRandomPiece() {

@@ -33,7 +33,7 @@ class Game extends Payload {
 
     // Add a first Piece in PieceQueue.
     this.bag = new Bag();
-    this.set('pieceQueue', this.bag.getRandomPiece());
+    this.payload.piecesQueue.push(this.bag.getRandomPiece());
     this.addPlayer(masterId);
     Game.allGames.push(this);
   }
