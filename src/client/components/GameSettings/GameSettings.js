@@ -4,10 +4,8 @@ import { Redirect } from 'react-router-dom';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as socket from '../../socket';
-
 
 import './GameSettings.scss';
 
@@ -20,10 +18,8 @@ const {
   socketStartGame,
   killAudio } = actions;
 
-
 const GameSettings = ({ game, dispatch, player, isSolo }) => {
   if (game.hasStarted) return <Redirect to="/play" />;
-
 
   const speedItems = [
     { label: 'Slow', value: 1500 },
@@ -38,11 +34,6 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
     { label: 'Big', value: 24 },
     { label: 'Very Big', value: 27 },
   ];
-
-
-  const toggleStyle = {
-    marginBottom: 15,
-  };
 
   const { isReady } = player;
   const isGameMaster = player.id === game.masterId;

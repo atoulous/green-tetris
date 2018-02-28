@@ -2,7 +2,7 @@
 export const heightSize = 20;
 export const widthSize = (heightSize / 3) * 2;
 
-// All pieces
+// All pieces, used for legacy bag logic, should not be use anymore
 export const pieces = {
   i: { blocks: [0x0f00, 0x2222, 0x00f0, 0x4444], color: 'cyan' },
   j: { blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20], color: 'blue' },

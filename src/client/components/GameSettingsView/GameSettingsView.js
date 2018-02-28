@@ -15,9 +15,11 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
 
   const { isSolo } = game;
   const player = game.players.find(p => p.id === playerId) || {};
+  const title = isSolo ? 'SOLO' : 'MULTI - WAITING ROOM';
 
   return (
     <div className="container">
+      <h1 className="title">{title}</h1>
       <div className="audioContainer">
         <AudioContainer />
       </div>
