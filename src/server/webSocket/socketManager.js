@@ -31,8 +31,9 @@ export function listen(server) {
     /*
     ** Create new Player.
     */
-    const { allPlayers } = Player;
-    allPlayers.push(new Player(socket));
+    new Player(socket);
+    // const { allPlayers } = Player;
+    // allPlayers.push(new Player(socket));
 
     /**
      * Handle deconnexion

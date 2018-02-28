@@ -11,8 +11,9 @@ import Piece from '../classes/Piece';
  * Create a new game with player as gameMaster.
  */
 function create(playerId, settings = {}) {
-  const { allGames } = Game;
-  allGames.push(new Game(playerId, settings));
+  // const { allGames } = Game;
+  // allGames.push(new Game(playerId, settings));
+  new Game(playerId, settings);
 }
 /**
  * Join an existing game. If fail to find game, disconnect.
@@ -93,7 +94,7 @@ function restart(gameId) {
   currentGame.set('hasStarted', false);
   currentGame.set('piecesQueue', [new Piece()]);
   currentGame.broadcast('/restart');
-};
+}
 
 /**
  * handle game socket input

@@ -4,7 +4,7 @@ import { getUUID } from '../helpers/utils';
 import Payload from './Payload';
 import Player from './Player';
 import SocketException from './SocketException';
-import Piece from './Piece';
+import Bag from './Bag';
 
 const _allGames = [];
 
@@ -18,9 +18,6 @@ class Game extends Payload {
     // Check that master player exists.
     const master = Player.getPlayerById(masterId);
     if (!master) throw new SocketException('Master not found');
-    // Handle settings for game creation.
-    let { isSolo } = settings;
-    isSolo = isSolo || false;
 
     super({
       id: getUUID(),
@@ -30,10 +27,15 @@ class Game extends Payload {
       maxPlayers: 5,
       players: [],
       hasStarted: false,
-      piecesQueue: [new Piece()],
-      isSolo,
+      piecesQueue: [],
+      ...settings
     });
+
+    // Add a first Piece in PieceQueue.
+    this.bag = new Bag();
+    this.set('pieceQueue', this.bag.getRandomPiece());
     this.addPlayer(masterId);
+    Game.allGames.push(this);
   }
 
   static get allGames() {
@@ -63,6 +65,11 @@ class Game extends Payload {
     } else {
       throw new SocketException('All players are not ready');
     }
+  }
+
+  sendPiece() {
+    const newPiece = this.bag.getRandomPiece();
+    this.broadcast('/newPiece', { newPiece: newPiece.format() });
   }
 
   addPlayer(playerId) {
