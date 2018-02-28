@@ -14,10 +14,10 @@ describe('classes/bag', () => {
     const piece = bag.getRandomPiece();
 
     expect(piece).toBeInstanceOf(Piece);
-    expect(piece).toHaveProperty('shape');
-    expect(piece).toHaveProperty('direction');
-    expect(piece).toHaveProperty('x');
-    expect(piece).toHaveProperty('y');
+    expect(piece.getPayload()).toHaveProperty('shape');
+    expect(piece.getPayload()).toHaveProperty('direction');
+    expect(piece.getPayload()).toHaveProperty('x');
+    expect(piece.getPayload()).toHaveProperty('y');
 
     expect(bag.bag.length).toBe(13);
   });

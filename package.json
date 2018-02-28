@@ -10,7 +10,7 @@
     "client-dev": "webpack -d --watch --colors --hot",
     "server-dist": "DEBUG=tetris:* babel src --out-dir dist",
     "client-dist": "NODE_ENV=production webpack --progress --colors",
-    "test": "jest test/server",
+    "test": "jest",
     "tets": "npm run test",
     "coverage": "jest test/server --coverage"
   },
