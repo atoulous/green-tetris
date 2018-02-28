@@ -1,4 +1,6 @@
 import SocketException from '../../../src/server/classes/SocketException';
+import Player from '../../../src/server/classes/Player';
+import MockSocket from './MockSocket';
 
 
 describe('/classes/SocketException', () => {
@@ -20,7 +22,8 @@ describe('/classes/SocketException', () => {
 
   it('should disconnect player', () => {
     const s = new SocketException('this is a test', true);
-    s.socketId = 'test';
+    const player = new Player(new MockSocket());
+    s.socketId = player.get('id');
     s.respond();
   });
 });
