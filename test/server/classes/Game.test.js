@@ -23,7 +23,7 @@ describe('classes/game', () => {
     // players is a valid array with one Player inside.
     expect(game.get('players')).toEqual(expect.arrayContaining([masterPlayer]));
     // pieceQueue is a valid array with one Piece inside.
-    expect(game.get('piecesQueue')[0]).toEqual(expect.any(Piece));
+    expect(game.get('firstPiece')).toEqual(expect.any(Piece));
   });
 
   it('should create a game with maxPlayers = 3 and add 2 players', async () => {
