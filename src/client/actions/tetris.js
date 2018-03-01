@@ -69,7 +69,7 @@ export function setGrid() {
  * @returns {function(*)}
  */
 export function addPieceToQueue(newPiece) {
-  return { type: ADD_PIECE_TO_QUEUE, data: newPiece };
+  return { type: ADD_PIECE_TO_QUEUE, newPiece };
 }
 
 // Action thunk functions
@@ -122,16 +122,15 @@ export function setNewPiece() {
     // Save Grid state without current piece for later comparison.
     dispatch({ type: REFRESH_GRID_WITHOUT_CURRENT });
 
-    const { currentPiece, gridWithoutCurrent, game } = getState();
+    const { currentPiece, gridWithoutCurrent, game, piecesQueue } = getState();
     const interval = game.speed.value;
 
-    if (game.piecesQueue.length <= 1) {
+    if (piecesQueue.length <= 1) {
       dispatch(newPiece({ gameId: game.id }));
     }
 
     // Not enough space to place piece. Game is lost.
     if (!isPiecePlacable(currentPiece, gridWithoutCurrent)) {
-
       dispatch(socketEndGame(getState().game.id));
     } else {
       dispatch(updateSpectrum(gridWithoutCurrent));

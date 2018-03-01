@@ -25,13 +25,14 @@ function _addRow() {
 function _receivePiece(data) {
   const { newPiece } = data;
   if (!newPiece) throw new Error('client/piecesListener: missing newPiece');
-  store.dispatch(addPieceToQueue(data.newPiece));
+  store.dispatch(addPieceToQueue(newPiece));
 }
 
 function _start(data) {
   const { game } = data;
   store.dispatch(setGrid());
   store.dispatch(updateGame(game));
+  store.dispatch(addPieceToQueue(game.firstPiece));
   store.dispatch(setNewPiece());
 }
 
