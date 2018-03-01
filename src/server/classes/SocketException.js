@@ -15,7 +15,7 @@ export default class SocketException {
     const data = {
       error: { message: this.message },
     };
-    io.to(this.socketId).emit('/error', data);
+    if (io) io.to(this.socketId).emit('/error', data);
   }
 
   disconnect() {
