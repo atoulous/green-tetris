@@ -27,13 +27,13 @@ class Game extends Payload {
       maxPlayers: 5,
       players: [],
       hasStarted: false,
-      piecesQueue: [],
+      firstPiece: null,
       ...settings
     });
 
     // Add a first Piece in PieceQueue.
     this.bag = new Bag();
-    this.payload.piecesQueue.push(this.bag.getRandomPiece());
+    this.set('firstPiece', this.bag.getRandomPiece());
     this.addPlayer(masterId);
     Game.allGames.push(this);
   }
