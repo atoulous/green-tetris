@@ -30,7 +30,7 @@ const StartChat = ({ players, audioStreams, dispatch, hasCalledState }) => {
       onClick={() => {
         dispatch(hasCalled());
         players.forEach(({ webRTCId }) => {
-          if (webRTCId !== getPeer().id && !audioStreams.find(({from}) => (from === webRTCId))) callPeer(webRTCId);
+          if (webRTCId !== getPeer().id && !audioStreams.find(({ from }) => (from === webRTCId))) callPeer(webRTCId);
         });
       }}
     />
@@ -49,15 +49,11 @@ const StartChatConnected = connect(getPlayersFromState)(StartChat);
   sub component
  */
 
-const ToggleMute = ({ muted, onToggleClick, hasCalled }) => {
-
-  return (
-    <div style={{ margin: '15 px', width: '30%' }}>
-      <Toggle disabled={!hasCalled} label={muted ? 'UNMUTE' : 'MUTE'} onToggle={onToggleClick} toggled={muted} />
-    </div>
-  );
-
-};
+const ToggleMute = ({ muted, onToggleClick, hasCalled }) => (
+  <div style={{ margin: '15 px', width: '30%' }}>
+    <Toggle disabled={!hasCalled} label={muted ? 'UNMUTE' : 'MUTE'} onToggle={onToggleClick} toggled={muted} />
+  </div>
+);
 
 const mapDispatchToProps = dispatch => ({
   onToggleClick: (e, checked) => {
@@ -74,14 +70,14 @@ const ToggleMuteConnected = connect(null, mapDispatchToProps)(ToggleMute);
 const AudioContainer = ({ muted, audioStreams, dispatch, hasAudio, hasCalled }) => {
   if (!hasAudio) return (null);
   return (
-      <div className="flex">
-        <StartChatConnected/>
-        <ToggleMuteConnected muted={muted} dispatch={dispatch} hasCalled={hasCalled} />
-        {
-          audioStreams.map(({stream}, i) => (
-            <audio autoPlay muted={muted} key={i} src={window.URL.createObjectURL(stream)}/>))
+    <div className="flex">
+      <StartChatConnected />
+      <ToggleMuteConnected muted={muted} dispatch={dispatch} hasCalled={hasCalled} />
+      {
+          audioStreams.map(({ stream }, i) => (
+            <audio autoPlay muted={muted} key={i} src={window.URL.createObjectURL(stream)} />))
         }
-      </div>
+    </div>
   );
 };
 
