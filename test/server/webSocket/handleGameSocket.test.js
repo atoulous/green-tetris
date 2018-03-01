@@ -63,20 +63,40 @@ describe('webSocket/handleGameScoket', () => {
       }
     });
 
-    it('should test the /update path', () => {
-
+    it('should test the /update path with maxPlayers = 3', () => {
+      const data = { path: '/update', gameId: game.get('id'), settings: { maxPlayers: 3 } };
+      handleGameSocket(player.get('id'), data);
+      // maxPlayer should be 3.
+      expect(game.get('maxPlayers')).toBe(3);
+      // Players must not have changed
+      expect(game.get('players').length).toBe(2);
     });
 
     it('should test the /line path', () => {
-
+      const data = { path: '/line' };
+      handleGameSocket(player.get('id'), data);
+      // Player score must be updated.
+      expect(player.get('score')).toBe(10);
     });
 
-    it('should test the /start path', () => {
+    it('should test the /start path but fail because player is not master', () => {
+      const data = { path: '/start', gameId: game.get('id') };
+      player.update({ isReady: true });
+      player2.update({ isReady: true });
+      handleGameSocket(player3.get('id'), data);
+      // hasStarted must not be updated.
+      expect(game.get('hasStarted')).toBe(false);
+    });
 
+    it('should test the /start path and succeed', () => {
+      const data = { path: '/start', gameId: game.get('id') };
+      handleGameSocket(player.get('id'), data);
+      // hasStarted must be updated.
+      expect(game.get('hasStarted')).toBe(true);
     });
 
     it('should test the /end path', () => {
-
+      // Cannot be tested at that point.
     });
   });
 });
