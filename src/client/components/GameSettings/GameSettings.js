@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as socket from '../../socket';
 
 import './GameSettings.scss';
 
@@ -13,10 +12,8 @@ import actions from '../../actions';
 
 const {
   socketUpdateGame,
-  updateGame,
   socketUpdatePlayer,
-  socketStartGame,
-  killAudio } = actions;
+  socketStartGame } = actions;
 
 const GameSettings = ({ game, dispatch, player, isSolo }) => {
   if (game.hasStarted) return <Redirect to="/play" />;
@@ -55,14 +52,14 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
   };
 
   const handleCancel = () => {
-    socket.closeClient();
-    dispatch(updateGame(null));
-    dispatch(killAudio());
+    window.location = isSolo ? '/' : '/games';
   };
 
   const handleReady = () => {
     dispatch(socketUpdatePlayer({ isReady: !isReady }));
   };
+
+  const enableStartButton = () => !game.players.every(_player => _player.isReady);
 
   return (
     <div className="game-settings">
@@ -90,6 +87,7 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
         >
           {
             speedItems.map((item, index) =>
+              /* eslint-disable-next-line */
               (<MenuItem key={index} value={item.label} primaryText={item.label} />))
           }
         </SelectField>
@@ -106,7 +104,7 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
         </SelectField>
       </section>
       <section>
-        {isGameMaster && <RaisedButton label="START" style={{ marginRight: 20 }} onClick={handleStart} />}
+        {isGameMaster && <RaisedButton disabled={enableStartButton()} label="START" style={{ marginRight: 20 }} onClick={handleStart} />}
         <RaisedButton label="CANCEL" secondary style={{ marginRight: 20 }} onClick={handleCancel} />
         <RaisedButton label={isReady ? 'NOT READY' : 'READY'} onClick={handleReady} primary={isReady} secondary={!isReady} />
       </section>

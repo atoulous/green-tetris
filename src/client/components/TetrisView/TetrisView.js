@@ -5,34 +5,30 @@ import PropTypes from 'prop-types';
 
 import Tetris from '../../containers/Tetris/Tetris';
 import TetrisPlayersList from '../../components/TetrisPlayersList/TetrisPlayersList';
+import EndGame from '../../containers/EndGame/EndGame';
 
 import './TetrisView.scss';
-
-import EndGame from '../../containers/EndGame/EndGame';
 
 const TetrisView = ({ game, playerId, onPause, hasWon }) => {
   if (!game) return <Redirect to="/" />;
   if (!game.hasStarted) return <Redirect to={`/games/${game.id}`} />;
 
   return (
-    <div>
+    <div className="container">
+      <div className="tetris-view">
+        <Tetris game={game} playerId={playerId} onPause={onPause} />
+        <TetrisPlayersList game={game} playerId={playerId} />
+      </div>
+
       {
         (hasWon === false || hasWon) &&
-          <EndGame
-            hasWon={hasWon}
-            isMaster={game.masterId === playerId}
-            gameId={game.id}
-          />
+        <EndGame
+          hasWon={hasWon}
+          isMaster={game.masterId === playerId}
+          gameId={game.id}
+        />
       }
-      {
-        hasWon === null &&
-        <div className="container">
-          <div className="tetris-view">
-            <Tetris game={game} playerId={playerId} onPause={onPause} />
-            <TetrisPlayersList game={game} playerId={playerId} />
-          </div>
-        </div>
-      }
+
     </div>
   );
 };
