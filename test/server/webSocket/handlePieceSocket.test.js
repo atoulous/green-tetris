@@ -14,16 +14,35 @@ describe('webSocket/handlePieceSocket', () => {
   });
 
   it('should get send one piece and decrement game bag', () => {
-    const data = { path: 'newPiece', gameId: game.get('id') };
+    const data = { path: '/new', gameId: game.get('id') };
     handlePieceSocket(player.get('id'), data);
-    // Game bag must decrement of two piece (to 13 pieces)
-    expect(game.bag.bag.length).toBe(13);
+    // Game bag must decrement of two piece (to 11 pieces)
+    expect(game.bag.bag.length).toBe(12);
   });
 
   it('should get send one piece and decrement game bag', () => {
-    const data = { path: 'newPiece', gameId: game.get('id') };
+    const data = { path: '/new', gameId: game.get('id') };
     handlePieceSocket(player.get('id'), data);
-    // Game bag must decrement of two piece (to 13 pieces)
-    expect(game.bag.bag.length).toBe(13);
+    // Game bag must decrement of two piece (to 11 pieces)
+    expect(game.bag.bag.length).toBe(11);
+  });
+
+  it('should trigger default and do nothing', () => {
+    const data = { path: 'this is test', gameId: game.get('id') };
+    handlePieceSocket(player.get('id'), data);
+    // Game bag must decrement of two piece (to 11 pieces)
+    expect(game.bag.bag.length).toBe(11);
+  });
+
+  it('should trigger default and throw exception', () => {
+    const data = {};
+    let isExceptionTriggered = false;
+    try {
+      handlePieceSocket(player.get('id'), data);
+    } catch (e) {
+      expect(e).toBeInstanceOf(SocketException);
+      isExceptionTriggered = true;
+    }
+    expect(isExceptionTriggered).toBe(true);
   });
 });
