@@ -12,7 +12,8 @@ import Game from './Game';
 const _allPlayers = [];
 
 class Player extends Payload {
-  constructor(socket) {
+  constructor(socket = null) {
+    if (!socket) throw new Error('socker required to construct Player instance');
     super({
       socket,
       id: socket.id,

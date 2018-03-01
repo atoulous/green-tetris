@@ -14,7 +14,7 @@ const _allGames = [];
  *
  */
 class Game extends Payload {
-  constructor(masterId, settings) {
+  constructor(masterId, settings = {}) {
     // Check that master player exists.
     const master = Player.getPlayerById(masterId);
     if (!master) throw new SocketException('Master not found');

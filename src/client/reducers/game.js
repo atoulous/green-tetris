@@ -11,6 +11,14 @@ export function updateGamesList(state, action) {
  * Update game in redux-tree.
  */
 export function updateGame(state, action) {
+  if (state.game && state.game.hasStarted && !state.game.isSolo) {
+    action.game.players.forEach((player) => {
+      // we will take current player state to extract its spectrum
+      const matched = state.game.players.find(({ id }) => (player.id === id));
+      // and now we set it to new state
+      player.spectrum = matched.spectrum || [];
+    });
+  }
   return { ...state, game: action.game };
 }
 
