@@ -36,7 +36,7 @@ NextPiece.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  piecesQueue: state.game.piecesQueue,
+  piecesQueue: state.piecesQueue,
 });
 
 export default connect(mapStateToProps)(NextPiece);

@@ -20,7 +20,7 @@ import { rtcMessage, addAudioStream, toggleMuted, initAudioStream, hasCalled, ki
 import { updateGamesList, updateGame, endGame, restartGame, location } from './game';
 import { updateError } from './error';
 
-import { initBag, initGrid, initSpectrum } from '../utils/tetris';
+import { initGrid, initSpectrum } from '../utils/tetris';
 
 const initialState = {
   location: null,

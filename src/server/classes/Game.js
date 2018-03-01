@@ -27,13 +27,13 @@ class Game extends Payload {
       maxPlayers: 5,
       players: [],
       hasStarted: false,
-      piecesQueue: [],
+      firstPiece: null,
       ...settings
     });
 
     // Add a first Piece in PieceQueue.
     this.bag = new Bag();
-    this.payload.piecesQueue.push(this.bag.getRandomPiece());
+    this.set('firstPiece', this.bag.getRandomPiece());
     this.addPlayer(masterId);
     Game.allGames.push(this);
   }
@@ -121,12 +121,12 @@ class Game extends Payload {
 
   format(props = ['id', 'masterId', 'speed', 'size', 'maxPlayers', 'hasStarted', 'isSolo']) {
     // Format Pieces.
-    let piecesQueue = this.get('piecesQueue');
-    piecesQueue = piecesQueue.map(p => p.format());
+    let firstPiece = this.get('firstPiece');
+    firstPiece = firstPiece.format();
     // Format Players.
     let players = this.get('players');
     players = players.map(p => p.format());
-    return _.merge(super.format(props), { players, piecesQueue });
+    return _.merge(super.format(props), { players, firstPiece });
   }
 
   isMaster(playerId) {

@@ -56,7 +56,7 @@ export function setPiece(state, piece) {
 export function addPieceToQueue(state, action) {
   return {
     ...state,
-    game: { ...state.game, piecesQueue: [...state.game.piecesQueue, action.data] } };
+    piecesQueue: [...state.piecesQueue, action.newPiece] };
 }
 
 /**
@@ -66,10 +66,9 @@ export function addPieceToQueue(state, action) {
  * @returns {*}
  */
 export function setNewPiece(state) {
-  if (state.game && state.game.piecesQueue.length) {
-    const { piecesQueue } = state.game;
+  const { piecesQueue } = state;
+  if (piecesQueue.length) {
     const piece = piecesQueue.shift();
-
     return { ...state, currentPiece: piece };
   }
 
