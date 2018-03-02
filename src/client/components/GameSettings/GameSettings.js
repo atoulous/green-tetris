@@ -8,12 +8,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import './GameSettings.scss';
 
+import * as socket from '../../socket';
 import actions from '../../actions';
 
 const {
   socketUpdateGame,
   socketUpdatePlayer,
-  socketStartGame } = actions;
+  socketStartGame,
+  updateGame,
+  killAudio } = actions;
 
 const GameSettings = ({ game, dispatch, player, isSolo }) => {
   if (game.hasStarted) return <Redirect to="/play" />;
@@ -52,7 +55,13 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
   };
 
   const handleCancel = () => {
-    window.location = isSolo ? '/' : '/games';
+    if (isSolo) {
+      window.location = '/';
+    } else {
+      socket.closeClient();
+      dispatch(updateGame(null));
+      dispatch(killAudio());
+    }
   };
 
   const handleReady = () => {

@@ -22,7 +22,7 @@ import { updateError } from './error';
 
 import { initGrid, initSpectrum } from '../utils/tetris';
 
-const initialState = {
+export const initialState = {
   location: null,
   hasAudio: false,
   hasCalled: false,

@@ -1,27 +1,31 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Provider } from 'react-redux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import store from './store';
-import App from './components/App';
+import Root from './Root';
 
-const Root = () => (
-  <Provider store={store}>
-    <MuiThemeProvider>
-      <App />
-    </MuiThemeProvider>
-  </Provider>
-);
-
-const render = RootComponent => (
+/**
+ * Render web app
+ *
+ * @param RootComponent
+ */
+export function render(RootComponent) {
   ReactDom.render(
     <RootComponent />,
     document.getElementById('tetris')
-  )
-);
+  );
+}
 
-render(Root);
+/**
+ * Start the web app
+ *
+ * @param _Root
+ */
+export function start(_Root) {
+  return render(_Root);
+}
+
+if (!module.parent) start(Root);
 
 /** Hot Module Replacement API */
-if (module.hot) { module.hot.accept(() => render(Root)); }
+if (module.hot) module.hot.accept('./Root', () => render(require('./Root').default)); // eslint-disable-line global-require
+

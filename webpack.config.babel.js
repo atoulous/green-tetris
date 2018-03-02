@@ -29,7 +29,6 @@ export default {
       $: 'jquery',
       jquery: 'jquery',
     }),
-    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HappyPack({ id: 'js', loaders: ['babel-loader'] }),

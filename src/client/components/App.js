@@ -16,9 +16,9 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/games" component={AllGamesView} />
-        <Route exact path="/play" component={TetrisView} />
         <Route exact path="/games/:id" component={GameSettingsView} />
-        <Route component={Home} />
+        <Route exact path="/play" component={TetrisView} />
+        {/*<Route component={Home} />*/}
       </Switch>
     </Layout>
   </BrowserRouter>
