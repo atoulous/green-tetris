@@ -37,16 +37,20 @@ export function erasePiece() {
   return { type: ERASE_PIECE };
 }
 
+export function addRow() {
+  return { type: ADD_ROW };
+}
+
+export function setGrid() {
+  return { type: SET_GRID };
+}
+
 export function setPiece(piece) {
   return { type: SET_PIECE, piece };
 }
 
 export function deleteRows(rowsToDelete) {
   return { type: DELETE_ROWS, rowsToDelete };
-}
-
-export function addRow() {
-  return { type: ADD_ROW };
 }
 
 export function updateSpectrum(grid) {
@@ -58,10 +62,6 @@ export function updateScore(score) {
 }
 
 export const SET_GRID = 'SET_GRID';
-export function setGrid() {
-  return { type: SET_GRID };
-}
-
 /**
  * Add piece received by web socket to end of queue
  *
