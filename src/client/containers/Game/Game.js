@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { move } from '../../actions/tetris';
 import Grid from '../../components/Grid/Grid';
 
 import './Game.scss';
 
 const Game = ({ grid, currentPiece, move }) => (
   <div className="game">
-    <Grid grid={grid} currentPiece={currentPiece} move={move} />
+    <Grid grid={grid} currentPiece={currentPiece} />
   </div>
 );
 
@@ -18,10 +17,5 @@ const mapStateToProps = state => ({
   isPlaying: state.isPlaying
 });
 
-const mapDispatchToProps = dispatch => ({
-  move: (e) => {
-    dispatch(move(e));
-  },
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps)(Game);

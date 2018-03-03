@@ -7,9 +7,12 @@ import Tetris from '../../containers/Tetris/Tetris';
 import TetrisPlayersList from '../../components/TetrisPlayersList/TetrisPlayersList';
 import EndGame from '../../containers/EndGame/EndGame';
 
+import { move, isListeningKey } from '../../actions/tetris';
 import './TetrisView.scss';
 
-const TetrisView = ({ game, playerId, onPause, hasWon }) => {
+
+const TetrisView = ({ game, playerId, onPause, hasWon, move, isListeningKey }) => {
+  if (!isListeningKey) move();
   if (!game) return <Redirect to="/" />;
   if (!game.hasStarted) return <Redirect to={`/games/${game.id}`} />;
 
@@ -38,6 +41,14 @@ const mapStateToProps = state => ({
   playerId: state.player.id,
   onPause: state.onPause,
   hasWon: state.hasWon,
+  isListeningKey: state.isListeningKey,
+});
+
+const mapDispatchToProps = dispatch => ({
+  move: () => {
+    window.addEventListener('keydown', e => dispatch(move(e)));
+    dispatch(isListeningKey());
+  },
 });
 
 TetrisView.propTypes = {
@@ -45,6 +56,8 @@ TetrisView.propTypes = {
   playerId: PropTypes.string,
   onPause: PropTypes.bool,
   hasWon: PropTypes.bool,
+  move: PropTypes.func.isRequired,
+  isListeningKey: PropTypes.bool.isRequired
 };
 
 TetrisView.defaultProps = {
@@ -54,4 +67,4 @@ TetrisView.defaultProps = {
   hasWon: null,
 };
 
-export default connect(mapStateToProps)(TetrisView);
+export default connect(mapStateToProps, mapDispatchToProps)(TetrisView);

@@ -169,3 +169,9 @@ export function setGrid(state) {
   };
 }
 
+/*
+** Just to know if we already listen to key events
+*/
+export function isListeningKey(state) {
+  return { ...state, isListeningKey: !state.isListeningKey };
+}
