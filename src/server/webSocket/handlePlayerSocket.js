@@ -6,7 +6,7 @@ import logger from '../helpers/logger';
 import SocketException from '../classes/SocketException';
 import handleSocketException from './handleSocketException';
 
-import { getConnection } from './socketManager';
+// import { getConnection } from './socketManager';
 
 /*
 ** Update Player Settings
@@ -33,7 +33,10 @@ function disconnect(playerId) {
     const game = Game.getGameByid(player.get('gameId'));
     if (game) game.removePlayer(playerId);
     if (game.get('players').length === 1) {
-      getConnection().to(game.get('players')[0].get('id')).emit('/game', { path: '/end', hasWon: true });
+      // Choose this syntax easier to test.
+      const winner = game.get('players')[0];
+      winner.get('socket').emit('/game', { path: '/end', hasWon: true });
+      // getConnection().to(game.get('players')[0].get('id')).emit('/game', { path: '/end', hasWon: true });
     }
   }
 
