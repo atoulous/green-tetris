@@ -147,7 +147,7 @@ export function addRow(state) {
 export function updateSpectrum(state, grid) {
   const spectrum = tetrisHelper.getSpectrum(grid);
   sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
-  return { ...state, spectrum: tetrisHelper.getSpectrum(grid) };
+  return { ...state, spectrum };
 }
 
 /**
