@@ -65,11 +65,11 @@ export const SET_GRID = 'SET_GRID';
 /**
  * Add piece received by web socket to end of queue
  *
- * @param newPiece
+ * @param piece
  * @returns {function(*)}
  */
-export function addPieceToQueue(newPiece) {
-  return { type: ADD_PIECE_TO_QUEUE, newPiece };
+export function addPieceToQueue(piece) {
+  return { type: ADD_PIECE_TO_QUEUE, newPiece: piece };
 }
 
 // Action thunk functions
@@ -154,31 +154,21 @@ export function togglePlay() {
   };
 }
 
+
 /*
-** Map key events to actions.
+** Draw next piece position as a response to key events.
 */
-export function move(event) {
-  return (dispatch, getState) => {
-    const state = getState();
-    if (state.onPause) return;
-    switch (event.keyCode) {
-      case keys.LEFT:
-        movePieceLeft(dispatch, getState);
-        break;
-      case keys.RIGHT:
-        movePieceRight(dispatch, getState);
-        break;
-      case keys.UP:
-        rotatePiece(dispatch, getState);
-        break;
-      case keys.DOWN:
-        movePieceDown(dispatch, getState);
-        break;
-      case keys.SPACE:
-        stickPieceDown(dispatch, getState);
-        break;
-    }
-  };
+function drawWithNextPiece(dispatch, getState, getNextPiece) {
+  const state = getState();
+  const { currentPiece, gridWithoutCurrent } = state;
+  const nextPiece = getNextPiece(currentPiece);
+
+  // Enough space to place piece.
+  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
+    dispatch(erasePiece());
+    dispatch(setPiece(nextPiece));
+    dispatch(drawPiece());
+  }
 }
 
 function movePieceLeft(dispatch, getState) {
@@ -207,6 +197,7 @@ function stickPieceDown(dispatch, getState) {
   const state = getState();
   const { currentPiece, gridWithoutCurrent } = state;
 
+  console.log('bonjour thibo');
   function tryNextPiece(piece, gridWithoutCurrent) {
     const nextPiece = {
       ...piece,
@@ -223,24 +214,30 @@ function stickPieceDown(dispatch, getState) {
   }
   tryNextPiece(currentPiece, gridWithoutCurrent);
 }
-
 /*
-** Utils
+** Map key events to actions.
 */
-
-
-/*
-** Draw next piece position as a response to key events.
-*/
-function drawWithNextPiece(dispatch, getState, getNextPiece) {
-  const state = getState();
-  const { currentPiece, gridWithoutCurrent } = state;
-  const nextPiece = getNextPiece(currentPiece);
-
-  // Enough space to place piece.
-  if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-    dispatch(erasePiece());
-    dispatch(setPiece(nextPiece));
-    dispatch(drawPiece());
-  }
+export function move(event) {
+  return (dispatch, getState) => {
+    const state = getState();
+    if (state.onPause) return;
+    switch (event.keyCode) {
+      case keys.LEFT:
+        movePieceLeft(dispatch, getState);
+        break;
+      case keys.RIGHT:
+        movePieceRight(dispatch, getState);
+        break;
+      case keys.UP:
+        rotatePiece(dispatch, getState);
+        break;
+      case keys.DOWN:
+        movePieceDown(dispatch, getState);
+        break;
+      case keys.SPACE:
+        stickPieceDown(dispatch, getState);
+        break;
+    }
+  };
 }
+
