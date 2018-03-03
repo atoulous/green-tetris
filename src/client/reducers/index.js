@@ -14,6 +14,7 @@ import {
   updateScore,
   addPieceToQueue,
   setGrid,
+  isListeningKey,
 } from './tetris';
 import { updateNickname, openNicknameModal, closeNicknameModal, updatePlayerId } from './player';
 import { rtcMessage, addAudioStream, toggleMuted, initAudioStream, hasCalled, killAudio } from './connexion';
@@ -65,6 +66,7 @@ const {
   UPDATE_PLAYER_ID,
   UPDATE_ERROR,
   SET_GRID,
+  IS_LISTENING_KEY,
 
   RTC_MESSAGE,
   ADD_AUDIO_STREAM,
@@ -146,6 +148,8 @@ export default function reducer(state = initialState, action) {
       return restartGame(state);
     case LOCATION:
       return location(state, action);
+    case IS_LISTENING_KEY:
+      return isListeningKey(state);
 
     default:
       return state;
