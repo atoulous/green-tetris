@@ -19,8 +19,13 @@ export const DELETE_ROWS = 'DELETE_ROWS';
 export const ADD_ROW = 'ADD_ROW';
 export const UPDATE_SPECTRUM = 'UPDATE_SPECTRUM';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const IS_LISTENING_KEY = 'IS_LISTENING_KEY';
 
 // Action objects
+export function isListeningKey() {
+  return { type: IS_LISTENING_KEY };
+}
+
 export function refreshGridWithoutCurrent() {
   return { type: REFRESH_GRID_WITHOUT_CURRENT };
 }

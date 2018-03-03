@@ -31,20 +31,24 @@ export function location(state, action) {
 }
 
 export function restartGame(state) {
+  const { game } = state;
+  const height = game.size.value;
+  const width = (height / 3) * 2;
+
   return {
     ...state,
     game: {
       ...state.game,
       hasStarted: false,
       players: state.game.players.map(
-        player => ({ ...player, spectrum: initSpectrum(), isReady: false }))
+        player => ({ ...player, spectrum: initSpectrum(height, width), isReady: false }))
     },
     audioStreams: [],
     hasCalled: false,
     hasWon: null,
     piecesQueue: [],
     currentPiece: null,
-    spectrum: initSpectrum(),
+    spectrum: initSpectrum(height, width),
     gridWithoutCurrent: initGrid(),
     grid: initGrid(),
     onPause: false,

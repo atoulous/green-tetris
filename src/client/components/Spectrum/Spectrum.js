@@ -6,7 +6,7 @@ import './Spectrum.scss';
 
 const Spectrum = ({ spectrum }) => (
   <div className="spectrum">
-    {spectrum.map((e, i) => (<Row key={i} row={e} />))}
+    {spectrum.map((e, i) => (<Row key={i} row={e} width={spectrum.length} />))}
   </div>
 );
 

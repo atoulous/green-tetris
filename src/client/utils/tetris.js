@@ -84,10 +84,10 @@ export function initRow(isFilled = false, width = widthSize) {
   return row;
 }
 
-export function initSpectrum() {
+export function initSpectrum(height = heightSize, width = widthSize) {
   const spectrum = [];
-  for (let i = 0; i < widthSize; i++) {
-    spectrum.push(heightSize);
+  for (let i = 0; i < width; i++) {
+    spectrum.push(height);
   }
   return spectrum;
 }
@@ -135,7 +135,7 @@ function is(array, f) {
 ** Takes Grid, return array of int representing Spectrum
 */
 export function getSpectrum(grid) {
-  const spectrum = initSpectrum();
+  const spectrum = initSpectrum(grid.length, ((grid.length * 2) / 3));
   grid.forEach((row, rowIndex) => {
     row.forEach((cell, cellIndex) => {
       const spectrumValue = spectrum[cellIndex];

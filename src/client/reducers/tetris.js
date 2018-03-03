@@ -147,7 +147,7 @@ export function addRow(state) {
 export function updateSpectrum(state, grid) {
   const spectrum = tetrisHelper.getSpectrum(grid);
   sendDataToPeers(JSON.stringify({ peer: getPeer().id, spectrum }));
-  return { ...state, spectrum: tetrisHelper.getSpectrum(grid) };
+  return { ...state, spectrum };
 }
 
 /**
@@ -169,3 +169,9 @@ export function setGrid(state) {
   };
 }
 
+/*
+** Just to know if we already listen to key events
+*/
+export function isListeningKey(state) {
+  return { ...state, isListeningKey: !state.isListeningKey };
+}
