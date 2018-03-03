@@ -4,7 +4,7 @@ import Player from '../classes/Player';
 import handleSocketException from './handleSocketException';
 import SocketException from '../classes/SocketException';
 import { getConnection } from './socketManager';
-import Piece from '../classes/Piece';
+import Bag from '../classes/Bag';
 
 /**
  * Create a new game with player as gameMaster.
@@ -108,7 +108,8 @@ function restart(gameId) {
     player.set('isReady', false);
   });
   currentGame.set('hasStarted', false);
-  currentGame.set('piecesQueue', [new Piece()]);
+  currentGame.bag = new Bag();
+  currentGame.set('firstPiece', currentGame.bag.getRandomPiece());
   currentGame.broadcast('/restart');
 }
 
@@ -152,7 +153,7 @@ export default function (playerId, data) {
         break;
       }
       default:
-        break;
+        throw new SocketException('No path match');
     }
     logger.info('All Games', Game.allGames);
   } catch (e) {
