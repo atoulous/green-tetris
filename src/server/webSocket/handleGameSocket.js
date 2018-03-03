@@ -153,7 +153,7 @@ export default function (playerId, data) {
         break;
       }
       default:
-        break;
+        throw new SocketException('No path match');
     }
     logger.info('All Games', Game.allGames);
   } catch (e) {
