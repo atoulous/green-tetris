@@ -43,6 +43,7 @@ export const initialState = {
   },
   isNicknameModalOpen: false,
   error: null,
+  isListeningKey: false,
 };
 
 const {
