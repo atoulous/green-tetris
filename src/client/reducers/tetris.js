@@ -72,6 +72,7 @@ export function setNewPiece(state) {
     return { ...state, currentPiece: piece };
   }
 
+  /*
   // else if no piece in queue, legacy
   const currentBag = state.bag.length ? state.bag : tetrisHelper.initBag();
   const indexPiece = tetrisHelper.getRandomPieceFromBag(currentBag);
@@ -83,6 +84,7 @@ export function setNewPiece(state) {
   };
   const nextBag = tetrisHelper.sliceBagFromIndex(currentBag, indexPiece);
   return Object.assign(state, { currentPiece: piece, bag: nextBag });
+  */
 }
 
 /**
