@@ -24,6 +24,8 @@ import { updateError } from './error';
 import { initGrid, initSpectrum } from '../utils/tetris';
 
 export const initialState = {
+  score: 0,
+  speed: 1000,
   location: null,
   hasAudio: false,
   hasCalled: false,

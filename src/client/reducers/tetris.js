@@ -71,7 +71,9 @@ export function setNewPiece(state) {
     const piece = piecesQueue.shift();
     return { ...state, currentPiece: piece };
   }
+  return state;
 
+  /*
   // else if no piece in queue, legacy
   const currentBag = state.bag.length ? state.bag : tetrisHelper.initBag();
   const indexPiece = tetrisHelper.getRandomPieceFromBag(currentBag);
@@ -83,6 +85,7 @@ export function setNewPiece(state) {
   };
   const nextBag = tetrisHelper.sliceBagFromIndex(currentBag, indexPiece);
   return Object.assign(state, { currentPiece: piece, bag: nextBag });
+  */
 }
 
 /**
@@ -119,24 +122,24 @@ export function deleteRows(state, rowsToDelete) {
  *
  * todo: simply understanding, up all blocks when we add bottom row.
  */
+export function _addRowToGrid(currentGrid, rowWidth) {
+  const newGrid = tetrisHelper.copyGrid(currentGrid);
+  let added = false;
+  tetrisHelper.reverseForeach(currentGrid, (row, index) => {
+    if (!added && !tetrisHelper.isRowFull(row)) {
+      newGrid[index] = tetrisHelper.initRow(true, rowWidth);
+      added = true;
+    }
+  });
+  return newGrid;
+}
+
 export function addRow(state) {
   let { grid, gridWithoutCurrent } = state;
   const rowWidth = (state.game.size.value * 2) / 3;
 
-  function _addRowToGrid(currentGrid) {
-    const newGrid = tetrisHelper.copyGrid(currentGrid);
-    let added = false;
-    tetrisHelper.reverseForeach(currentGrid, (row, index) => {
-      if (!added && !tetrisHelper.isRowFull(row)) {
-        newGrid[index] = tetrisHelper.initRow(true, rowWidth);
-        added = true;
-      }
-    });
-    return newGrid;
-  }
-
-  grid = _addRowToGrid(grid);
-  gridWithoutCurrent = _addRowToGrid(gridWithoutCurrent);
+  grid = _addRowToGrid(grid, rowWidth);
+  gridWithoutCurrent = _addRowToGrid(gridWithoutCurrent, rowWidth);
 
   return { ...state, grid, gridWithoutCurrent };
 }
