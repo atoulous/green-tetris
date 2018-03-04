@@ -24,6 +24,7 @@ export function forEachBlockInPiece({
 */
 export function isPiecePlacable(piece, grid) {
   let result = true;
+  if (!piece) return false;
   forEachBlockInPiece(piece, (x, y) => {
     if (!result || !grid[x] || !grid[x][y] || grid[x][y].fill === true) { result = false; }
   });

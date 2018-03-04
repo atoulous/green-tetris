@@ -12,7 +12,7 @@
     "client-dist": "NODE_ENV=production webpack --progress --colors",
     "test": "jest",
     "tets": "npm run test",
-    "coverage": "jest test/server --coverage"
+    "coverage": "jest test/ --coverage"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -21,6 +21,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "fetch-mock": "^6.0.1",
     "helmet": "^3.9.0",
     "html": "^1.0.0",
     "http-status-codes": "^1.3.0",

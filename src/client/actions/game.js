@@ -20,11 +20,10 @@ export const updateGame = game => ({
  * Get all Games (thunk-function)
  */
 export const getAllGames = () => (dispatch) => {
-  fetch('/api/games')
-    .then(response => response.json())
+  return fetch('/api/games')
+    .then(response => (response.json()))
     .then((json) => {
-      const games = JSON.parse(json);
-      dispatch(updateGamesList(games));
+      dispatch(updateGamesList(json));
     });
 };
 
