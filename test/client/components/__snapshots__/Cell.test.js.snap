@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cell with fill 1`] = `
+<div
+  className="cell"
+  style={Object {}}
+/>
+`;
+
+exports[`color with no fill 1`] = `
+<div
+  className="cell"
+  style={Object {}}
+/>
+`;
