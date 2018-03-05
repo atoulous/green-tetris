@@ -135,7 +135,7 @@ function is(array, f) {
 ** Takes Grid, return array of int representing Spectrum
 */
 export function getSpectrum(grid) {
-  const spectrum = initSpectrum(grid.length, ((grid.length * 2) / 3));
+  const spectrum = initSpectrum(grid.length, ((grid.length / 3) * 2));
   grid.forEach((row, rowIndex) => {
     row.forEach((cell, cellIndex) => {
       const spectrumValue = spectrum[cellIndex];

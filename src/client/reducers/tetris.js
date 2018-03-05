@@ -162,10 +162,10 @@ export function updateScore(state, score) {
  */
 export function setGrid(state) {
   const { size } = state.game;
-  const height = size.value || 20;
+  const height = size.value || 21;
   return { ...state,
-    grid: tetrisHelper.initGrid(height, ((height * 2) / 3)),
-    gridWithoutCurrent: tetrisHelper.initGrid(height, ((height * 2) / 3)),
+    grid: tetrisHelper.initGrid(height, ((height / 3) * 2)),
+    gridWithoutCurrent: tetrisHelper.initGrid(height, ((height / 3) * 2)),
   };
 }
 

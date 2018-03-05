@@ -23,7 +23,7 @@ class Game extends Payload {
       id: getUUID(),
       masterId: master.get('id'),
       speed: { label: 'Normal', value: 1000 },
-      size: { label: 'Normal', value: 20 },
+      size: { label: 'Normal', value: 21 },
       maxPlayers: 5,
       players: [],
       hasStarted: false,
