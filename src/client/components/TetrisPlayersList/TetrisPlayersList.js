@@ -1,10 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import TetrisPlayer from '../../components/TetrisPlayer/TetrisPlayer';
 import './TetrisPlayersList.scss';
-
 
 const TetrisPlayersList = ({ game: { players }, playerId }) => (
   <div className="tetris-players-list">

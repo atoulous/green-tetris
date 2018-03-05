@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AppBar from 'material-ui/AppBar';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -12,8 +10,8 @@ import HomeIcon from 'material-ui/svg-icons/action/home';
 import AccountIcon from 'material-ui/svg-icons/action/account-circle';
 import IconButton from 'material-ui/IconButton';
 
-import actions from '../../actions';
-import * as socket from '../../socket';
+import actions from '../../actions/index';
+import * as socket from '../../socket/index';
 
 import './Nav.scss';
 
@@ -117,7 +115,7 @@ const mapStateToProps = state => ({
 });
 
 Nav.propTypes = {
-  nickname: PropTypes.string.isRequired,
+  nickname: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
   isNicknameModalOpen: PropTypes.bool.isRequired,
   game: PropTypes.object,
@@ -125,6 +123,7 @@ Nav.propTypes = {
 
 Nav.defaultProps = {
   game: null,
+  nickname: 'Player'
 };
 
 export default connect(mapStateToProps)(Nav);

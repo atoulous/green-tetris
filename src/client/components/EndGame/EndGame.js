@@ -1,17 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+import store from '../../store/index';
+
 import { socketRestartGame } from '../../actions/socket';
 
-const GameEnd = ({ isMaster, hasWon, gameId, dispatch }) => {
+const EndGame = ({ isMaster, hasWon, gameId }) => {
   const restartGame = [
     <FlatButton
       label="RESTART GAME"
-      onClick={() => { dispatch(socketRestartGame(gameId)); }}
+      onClick={() => { store.dispatch(socketRestartGame(gameId)); }}
       primary
     />,
   ];
@@ -45,11 +46,10 @@ const GameEnd = ({ isMaster, hasWon, gameId, dispatch }) => {
   );
 };
 
-GameEnd.propTypes = {
+EndGame.propTypes = {
   isMaster: PropTypes.bool.isRequired,
   hasWon: PropTypes.bool.isRequired,
-  gameId: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  gameId: PropTypes.string.isRequired
 };
 
-export default connect()(GameEnd);
+export default EndGame;

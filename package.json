@@ -10,9 +10,9 @@
     "client-dev": "webpack -d --watch --colors --hot",
     "server-dist": "DEBUG=tetris:* babel src --out-dir dist",
     "client-dist": "NODE_ENV=production webpack --progress --colors",
-    "test": "jest",
+    "test": "jest test",
     "tets": "npm run test",
-    "coverage": "jest test/ --coverage"
+    "coverage": "jest test --coverage"
   },
   "dependencies": {
     "axios": "^0.17.1",

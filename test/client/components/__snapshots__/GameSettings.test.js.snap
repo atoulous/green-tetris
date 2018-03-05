@@ -28,7 +28,7 @@ exports[`renders is ready ok 1`] = `
     >
       <label
         className={undefined}
-        htmlFor="undefined-undefined-Gamespeed-10559"
+        htmlFor="undefined-undefined-Gamespeed-9837"
         onClick={undefined}
         style={
           Object {
@@ -50,7 +50,7 @@ exports[`renders is ready ok 1`] = `
       </label>
       <div
         className={undefined}
-        id="undefined-undefined-Gamespeed-10559"
+        id="undefined-undefined-Gamespeed-9837"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
@@ -287,7 +287,7 @@ exports[`renders is ready ok 1`] = `
     >
       <label
         className={undefined}
-        htmlFor="undefined-undefined-Gamesize-62168"
+        htmlFor="undefined-undefined-Gamesize-58064"
         onClick={undefined}
         style={
           Object {
@@ -309,7 +309,7 @@ exports[`renders is ready ok 1`] = `
       </label>
       <div
         className={undefined}
-        id="undefined-undefined-Gamesize-62168"
+        id="undefined-undefined-Gamesize-58064"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}

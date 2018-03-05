@@ -6,11 +6,11 @@ import { Redirect } from 'react-router-dom';
 import GamePlayers from '../../components/GamePlayers/GamePlayers';
 import GameSettings from '../../components/GameSettings/GameSettings';
 
-import AudioContainer from '../../containers/AudioContainer/AudioContainer';
+import AudioContainer from '../AudioContainer/AudioContainer';
 
 import './GameSettingsView.scss';
 
-const GameSettingsView = ({ match, game, dispatch, playerId }) => {
+const GameSettingsView = ({ game, dispatch, playerId }) => {
   if (!game) return <Redirect to="/games" />;
 
   const { isSolo } = game;
@@ -34,18 +34,12 @@ const GameSettingsView = ({ match, game, dispatch, playerId }) => {
 GameSettingsView.propTypes = {
   dispatch: PropTypes.func.isRequired,
   game: PropTypes.object,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    })
-  }).isRequired,
   playerId: PropTypes.string.isRequired,
 };
 
 GameSettingsView.defaultProps = {
   game: null,
 };
-
 
 const mapStateToProps = state => ({
   game: state.game,

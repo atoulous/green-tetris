@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from './Home/Home';
-import AllGamesView from './AllGamesView/AllGamesView';
-import GameSettingsView from './GameSettingsView/GameSettingsView';
-import TetrisView from './TetrisView/TetrisView';
-import Error from './Error/Error';
+import AllGamesView from '../containers/AllGamesView/AllGamesView';
+import GameSettingsView from '../containers/GameSettingsView/GameSettingsView';
+import TetrisView from '../containers/TetrisView/TetrisView';
+import Error from '../containers/Error/Error';
 
 import Layout from './Layout/Layout';
 
@@ -18,7 +18,7 @@ const App = () => (
         <Route exact path="/games" component={AllGamesView} />
         <Route exact path="/games/:id" component={GameSettingsView} />
         <Route exact path="/play" component={TetrisView} />
-        {/*<Route component={Home} />*/}
+        <Route component={Home} />
       </Switch>
     </Layout>
   </BrowserRouter>

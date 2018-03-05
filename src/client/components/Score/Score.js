@@ -11,7 +11,11 @@ const Score = ({ score }) => (
 );
 
 Score.propTypes = {
-  score: PropTypes.number.isRequired
+  score: PropTypes.number
+};
+
+Score.defaultProps = {
+  score: 0
 };
 
 export default Score;

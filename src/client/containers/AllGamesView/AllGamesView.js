@@ -14,10 +14,10 @@ import {
 } from 'material-ui/Table';
 
 
-import * as socket from '../../socket';
-import actions from '../../actions';
+import * as socket from '../../socket/index';
+import actions from '../../actions/index';
 import { getPeer } from '../../helpers/webRTC';
-import store from '../../store';
+import store from '../../store/index';
 
 import './AllGamesView.scss';
 

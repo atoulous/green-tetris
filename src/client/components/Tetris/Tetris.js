@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import Toggle from 'material-ui/Toggle';
 
 import Score from '../Score/Score';
-import Game from '../Game/Game';
-import NextPiece from '../NextPiece/NextPiece';
+import Game from '../../containers/Game/Game';
+import NextPiece from '../../containers/NextPiece/NextPiece';
 
-import store from '../../store';
+import store from '../../store/index';
 import { togglePlay } from '../../actions/tetris';
 import AudioContainer from '../../containers/AudioContainer/AudioContainer';
 import './Tetris.scss';
