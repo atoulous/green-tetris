@@ -1,5 +1,6 @@
 export function rtcMessage(state, action) {
 
+  if (!state.game) return state;
   const data = JSON.parse(action.data);
   const peerIndex = state.game.players.findIndex(p => (p.webRTCId === data.peer));
   const players = [...state.game.players];

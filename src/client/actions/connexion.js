@@ -30,6 +30,6 @@ export const toggleMuted = muted => ({
   data: muted,
 });
 
-export const killAudio = muted => ({
+export const killAudio = () => ({
   type: KILL_AUDIO,
 });

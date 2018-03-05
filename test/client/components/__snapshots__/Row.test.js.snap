@@ -1,0 +1,235 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`row with row props array 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "cyan",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "red",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "green",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`row with row props number 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={Object {}}
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+  <div
+    className="cell"
+    style={
+      Object {
+        "backgroundColor": "grey",
+      }
+    }
+  />
+</div>
+`;

@@ -36,6 +36,17 @@ describe('socketCreateGame', () => {
   });
 });
 
+describe('socketCreateGame null', () => {
+  it('should create an action socket', () => {
+    const expectedAction = {
+      type: 'socket',
+      data: { call: '/game', path: '/create', settings: {} }
+    };
+    expect(actions.socketCreateGame())
+      .toEqual(expectedAction);
+  });
+});
+
 describe('socketJoinGame', () => {
   it('should create an action socket', () => {
     const gameId = 'oijoijoij';

@@ -202,7 +202,6 @@ function stickPieceDown(dispatch, getState) {
   const state = getState();
   const { currentPiece, gridWithoutCurrent } = state;
 
-  console.log('bonjour thibo');
   function tryNextPiece(piece, gridWithoutCurrent) {
     const nextPiece = {
       ...piece,
