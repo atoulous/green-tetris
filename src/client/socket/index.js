@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
 import handleGameSocket from './handleGameSocket';
-import handleTetrisSocket from './handleTetrisSocket';
 import handlePlayerSocket from './handlePlayerSocket';
 import handleErrorSocket from './handleErrorSocket';
 
@@ -27,7 +26,6 @@ export function openClient() {
   });
 
   client.on('/game', data => handleGameSocket(data));
-  client.on('/tetris', data => handleTetrisSocket(data));
   client.on('/player', data => handlePlayerSocket(data));
   client.on('/error', data => handleErrorSocket(data));
 

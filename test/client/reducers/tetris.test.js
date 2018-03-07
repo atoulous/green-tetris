@@ -7,7 +7,7 @@ const piece = { shape: { blocks: [3840, 8738, 240, 17476], color: 'cyan' }, dire
 const game = { id: '6124ad40-1f92-11e8-9106-0b3dc1db0f6e',
   masterId: 'd-vlczkWyTHtIJZvAAAB',
   speed: { label: 'Normal', value: 1000 },
-  size: { label: 'Normal', value: 20 },
+  size: { label: 'Normal', value: 21 },
   maxPlayers: 5,
   hasStarted: true,
   players:
@@ -152,8 +152,8 @@ describe('set grid', () => {
       .toEqual({
         ...initialState,
         game,
-        grid: initGrid(20, 14),
-        gridWithoutCurrent: initGrid(20, 14),
+        grid: initGrid(21, 14),
+        gridWithoutCurrent: initGrid(21, 14),
       });
   });
 });
@@ -164,8 +164,8 @@ describe('set grid null', () => {
       .toEqual({
         ...initialState,
         game: { size: {} },
-        grid: initGrid(20, 14),
-        gridWithoutCurrent: initGrid(20, 14),
+        grid: initGrid(21, 14),
+        gridWithoutCurrent: initGrid(21, 14),
       });
   });
 });

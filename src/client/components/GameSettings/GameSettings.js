@@ -93,6 +93,7 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
           value={game.speed.label}
           onChange={handleSpeed}
           disabled={!isGameMaster}
+          id={game.id}
         >
           {
             speedItems.map((item, index) =>
@@ -105,6 +106,7 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
           value={game.size.label}
           onChange={handleSize}
           disabled={!isGameMaster}
+          id={game.id}
         >
           {
             sizeItems.map((item, index) =>

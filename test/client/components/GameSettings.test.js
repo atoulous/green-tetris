@@ -25,6 +25,7 @@ it('renders is ready ok', () => {
         />
       </MuiThemeProvider>)
     .toJSON();
+
   expect(tree).toMatchSnapshot();
 });
 

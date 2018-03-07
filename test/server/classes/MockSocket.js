@@ -4,7 +4,6 @@ import uuid from 'uuid/v1';
 import Player from '../../../src/server/classes/Player';
 import Game from '../../../src/server/classes/Game';
 
-
 export default class MockSocket {
   constructor() {
     this.id = uuid();

@@ -1,8 +1,7 @@
 import logger from '../helpers/logger';
 import Game from '../classes/Game';
 import SocketException from '../classes/SocketException';
-import handleSocketException from './handleSocketException';
-
+import * as handleSocketException from './handleSocketException';
 
 const newPiece = (gameId) => {
   const game = Game.allGames.find(g => (g.get('id') === gameId));
@@ -33,7 +32,7 @@ export default async (playerId, data) => {
   } catch (e) {
     if (e instanceof SocketException) {
       e.socketId = playerId;
-      handleSocketException(e);
+      handleSocketException.handleSocketException(e);
     } else throw e;
   }
 };

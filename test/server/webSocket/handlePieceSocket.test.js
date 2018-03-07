@@ -1,8 +1,8 @@
 import handlePieceSocket from '../../../src/server/webSocket/handlePieceSocket';
 import Player from '../../../src/server/classes/Player';
 import Game from '../../../src/server/classes/Game';
-import SocketException from '../../../src/server/classes/SocketException';
 import MockSocket from '../classes/MockSocket';
+import * as handleSocketException from '../../../src/server/webSocket/handleSocketException';
 
 describe('webSocket/handlePieceSocket', () => {
   let player;
@@ -36,13 +36,10 @@ describe('webSocket/handlePieceSocket', () => {
 
   it('should trigger default and throw exception', () => {
     const data = {};
-    let isExceptionTriggered = false;
-    try {
-      handlePieceSocket(player.get('id'), data);
-    } catch (e) {
-      expect(e).toBeInstanceOf(SocketException);
-      isExceptionTriggered = true;
-    }
-    expect(isExceptionTriggered).toBe(true);
+    const spy = jest.spyOn(handleSocketException, 'handleSocketException');
+
+    handlePieceSocket(player.get('id'), data);
+
+    expect(spy).toHaveBeenCalled();
   });
 });
