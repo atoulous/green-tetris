@@ -25,7 +25,7 @@ const HomeRender = ({ dispatch, game }) => {
   if (game) return <Redirect to={`/games/${game.id}`} />;
 
   return (
-    <div className="container">
+    <div className="container" style={{ backgroundImage: `url(${'../../assets/ScreenShot.png'})` }}>
       <h1 className="title">GAME MODE</h1>
       <div className="container-menu">
         <ul id="home-menu">

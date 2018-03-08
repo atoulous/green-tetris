@@ -21,17 +21,14 @@ export default {
     loaders: [
       { test: /\.js$/, loader: 'happypack/loader?id=js', exclude: NODE_MODULES, include: CLIENT },
       { test: [/\.css$/, /\.scss$/], loader: 'happypack/loader?id=style' },
+      { test: /\.png$/, loader: 'happypack/loader?id=file' }
     ],
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-      $: 'jquery',
-      jquery: 'jquery',
-    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new HappyPack({ id: 'js', loaders: ['babel-loader'] }),
     new HappyPack({ id: 'style', loaders: ['style-loader', 'css-loader', 'sass-loader'] }),
+    new HappyPack({ id: 'file', loaders: ['file-loader'] }),
   ],
 };

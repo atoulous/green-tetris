@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "eslint": "eslint src",
+    "start": "run-p client-dev server-dev",
     "start-dev": "run-p client-dev server-dev",
     "server-dev": "DEBUG=tetris:* nodemon --exec babel-node --watch src/server src/server",
     "client-dev": "webpack -d --watch --colors --hot",
@@ -22,6 +23,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "fetch-mock": "^6.0.1",
+    "file-loader": "^1.1.11",
     "helmet": "^3.9.0",
     "html": "^1.0.0",
     "http-status-codes": "^1.3.0",
