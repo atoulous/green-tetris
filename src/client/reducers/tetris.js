@@ -140,7 +140,9 @@ export function addRow(state) {
 
   grid = _addRowToGrid(grid, rowWidth);
   gridWithoutCurrent = _addRowToGrid(gridWithoutCurrent, rowWidth);
-
+  sendDataToPeers(JSON.stringify(
+    { peer: getPeer().id, spectrum: tetrisHelper.getSpectrum(gridWithoutCurrent) }
+  ));
   return { ...state, grid, gridWithoutCurrent };
 }
 
