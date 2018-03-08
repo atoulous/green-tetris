@@ -86,18 +86,23 @@ const AllGamesView = ({ nickname, game, gamesList, dispatch, location }) => {
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {
-            gamesList.map(game => (
-              <TableRow key={game.id}>
-                <TableRowColumn>{game.id}</TableRowColumn>
-                <TableRowColumn>{game.masterId}</TableRowColumn>
-                <TableRowColumn>{game.speed.label}</TableRowColumn>
-                <TableRowColumn>{game.size.label} </TableRowColumn>
-                <TableRowColumn>{`${game.players.length}/${game.maxPlayers}`}</TableRowColumn>
-                <TableRowColumn>
-                  <RaisedButton label="JOIN" onClick={_handleJoin(game)} />
-                </TableRowColumn>
-              </TableRow>
-                ))
+            gamesList.map((game) => {
+              const masterName = game.players.map((player) => {
+                if (game.masterId === player.id) return player.nickname;
+              });
+              return (
+                <TableRow key={game.id}>
+                  <TableRowColumn>{game.id}</TableRowColumn>
+                  <TableRowColumn>{masterName || game.masterId}</TableRowColumn>
+                  <TableRowColumn>{game.speed.label}</TableRowColumn>
+                  <TableRowColumn>{game.size.label} </TableRowColumn>
+                  <TableRowColumn>{`${game.players.length}/${game.maxPlayers}`}</TableRowColumn>
+                  <TableRowColumn>
+                    <RaisedButton label="JOIN" onClick={_handleJoin(game)} />
+                  </TableRowColumn>
+                </TableRow>
+                );
+            })
         }
           </TableBody>
         </Table>
