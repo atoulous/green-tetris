@@ -72,8 +72,8 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
 
   return (
     <div className="game-settings">
-      <section>
-        <h1>Game Settings</h1>
+      <section style={{ display: 'inline-grid' }}>
+        <h1 className="title-settings">Game Settings</h1>
         {!isSolo &&
         <SelectField
           floatingLabelText="Maximum Players"
@@ -96,9 +96,10 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
           id={game.id}
         >
           {
-            speedItems.map((item, index) =>
-              /* eslint-disable-next-line */
-              (<MenuItem key={index} value={item.label} primaryText={item.label} />))
+            speedItems.map((item, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <MenuItem key={index} value={item.label} primaryText={item.label} />
+            ))
           }
         </SelectField>
         <SelectField
@@ -109,8 +110,10 @@ const GameSettings = ({ game, dispatch, player, isSolo }) => {
           id={game.id}
         >
           {
-            sizeItems.map((item, index) =>
-              (<MenuItem key={index} value={item.label} primaryText={item.label} />))
+            sizeItems.map((item, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <MenuItem key={index} value={item.label} primaryText={item.label} />
+            ))
           }
         </SelectField>
       </section>

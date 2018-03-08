@@ -21,35 +21,34 @@ const { socketKickPlayer } = actions;
 const GamePlayers = ({ game, dispatch, player }) => {
   const isGameMaster = player.id === game.masterId;
 
-
   const handleKick = player => () => {
     dispatch(socketKickPlayer(player.id));
   };
-
 
   const playersTable = [];
 
   for (let i = 0; i < game.maxPlayers; i++) {
     if (game.players[i]) {
-      playersTable.push(<TableRow key={i}>
-        <TableRowColumn>{game.players[i].nickname}</TableRowColumn>
-        <TableRowColumn>{
-              (game.players[i].isReady) ? <Chip backgroundColor="#74d680">Ready</Chip> : <Chip backgroundColor="#ff7878">Waiting</Chip>
-            }
-        </TableRowColumn>
-        <TableRowColumn>
-          { isGameMaster && <RaisedButton label="Kick" onClick={handleKick(game.players[i])} /> }
-        </TableRowColumn>
-                        </TableRow>);
+      playersTable.push(
+        <TableRow key={i}>
+          <TableRowColumn>{game.players[i].nickname}</TableRowColumn>
+          <TableRowColumn>{
+                (game.players[i].isReady) ? <Chip backgroundColor="#74d680">Ready</Chip> : <Chip backgroundColor="#ff7878">Waiting</Chip>
+              }
+          </TableRowColumn>
+          <TableRowColumn>
+            { isGameMaster && <RaisedButton label="Kick" onClick={handleKick(game.players[i])} /> }
+          </TableRowColumn>
+        </TableRow>);
     } else {
-      playersTable.push(<TableRow key={i}>
-        <TableRowColumn> - </TableRowColumn>
-        <TableRowColumn />
-        <TableRowColumn />
-                        </TableRow>);
+      playersTable.push(
+        <TableRow key={i}>
+          <TableRowColumn> - </TableRowColumn>
+          <TableRowColumn />
+          <TableRowColumn />
+        </TableRow>);
     }
   }
-
 
   return (
     <div className="game-players">

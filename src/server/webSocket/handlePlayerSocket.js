@@ -36,7 +36,6 @@ function disconnect(playerId) {
       // Choose this syntax easier to test.
       const winner = game.get('players')[0];
       winner.get('socket').emit('/game', { path: '/end', hasWon: true });
-      // getConnection().to(game.get('players')[0].get('id')).emit('/game', { path: '/end', hasWon: true });
     }
   }
 
