@@ -28,6 +28,7 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
   let currentNickname = nickname;
 
   const regexIsGameUrl = new RegExp(/^\/games\/[0-9a-z-]{36}$/);
+  const regexIsPlayUrl = new RegExp(/^\/play$/);
 
   const _openModal = () => {
     dispatch(openNicknameModal());
@@ -49,7 +50,10 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
 
   const _handleHomeButton = () => {
     if (window.location.pathname !== '/') {
-      if (regexIsGameUrl.test(window.location.pathname)) {
+      if (
+        regexIsPlayUrl.test(window.location.pathname)
+        || regexIsGameUrl.test(window.location.pathname)
+      ) {
         socket.closeClient();
         dispatch(killAudio());
       }
