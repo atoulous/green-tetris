@@ -23,9 +23,12 @@ const Tetris = ({ game, playerId, onPause }) => {
           <div className="audioContainer">
             <AudioContainer />
           </div>
+          {
+          game.isSolo &&
           <div>
             <Toggle label="Pause Game" onToggle={() => store.dispatch(togglePlay())} toggled={onPause} />
           </div>
+          }
         </div>
         <Score score={selfScore} />
         <NextPiece />
