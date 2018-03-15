@@ -89,7 +89,7 @@ export function dropPiece() {
     const state = getState();
 
     // State is resume. Stop dropping.
-    if (state.onPause) return;
+    if (state.onPause || !state.game) return;
 
     const { currentPiece, gridWithoutCurrent, grid } = state;
     const nextPiece = { ...currentPiece, ...{ x: currentPiece.x + 1 } };
@@ -224,7 +224,7 @@ function stickPieceDown(dispatch, getState) {
 export function move(event) {
   return (dispatch, getState) => {
     const state = getState();
-    if (state.onPause) return;
+    if (state.onPause || !state.game) return;
     switch (event.keyCode) {
       case keys.LEFT:
         movePieceLeft(dispatch, getState);
