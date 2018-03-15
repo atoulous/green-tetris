@@ -10,6 +10,10 @@ Work in progress
 
 ```yarn``` or ```npm install```
 
+### Production
+
+```yarn start``` or ```npm run start```
+
 ### Development
 
 ```yarn start-dev``` or ```npm run start-dev```
