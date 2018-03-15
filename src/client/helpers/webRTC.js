@@ -22,7 +22,9 @@ export function getPeer() {
   if (!peer) {
     peer = new Peer({ key: '7ie9ooeeas0grpb9' });
     peer.on('open', (webRTCId) => {
-      console.log(`My peer ID is: ${webRTCId}`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`My peer ID is: ${webRTCId}`);
+      }
     });
 
     peer.on('connection', (conn) => {
@@ -30,7 +32,9 @@ export function getPeer() {
     });
     peer.on('call', (call) => {
       // Answer the call, providing our mediaStream
-      console.log('call is -- ', call);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('call is -- ', call);
+      }
       call.answer(audioInputStream);
       call.on('stream', (stream) => {
         // should dispatch to update client audioReceiver to add stream to audio element

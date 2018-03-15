@@ -46,7 +46,9 @@ function _restart() {
 
 export default function (data) {
   const { path } = data;
-  console.log(`socket /game${path}`);
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`socket /game${path}`);
+  }
   switch (path) {
     case '/update': {
       _update(data);

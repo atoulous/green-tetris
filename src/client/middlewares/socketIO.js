@@ -2,9 +2,6 @@ import * as Socket from '../socket';
 
 export default () => next => (action) => {
   const socket = Socket.getClient();
-  if (!socket) {
-    console.log('Attention aucune socket definie');
-  }
   if (socket && action.type === 'socket') {
     switch (action.data.call) {
       case '/game': {
