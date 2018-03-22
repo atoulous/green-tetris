@@ -207,7 +207,7 @@ describe('movePieceLeft', () => {
     ];
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);
-    const store = mockStore({ ...initialState, currentPiece: curPiece });
+    const store = mockStore({ ...initialState, currentPiece: curPiece, game: true });
     store.dispatch(actions.move({ keyCode: 37 }));
     expect(store.getActions())
       .toEqual(expectedAction);
@@ -226,7 +226,7 @@ describe('movePieceRight', () => {
     ];
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);
-    const store = mockStore({ ...initialState, currentPiece: curPiece });
+    const store = mockStore({ ...initialState, currentPiece: curPiece, game: true });
     store.dispatch(actions.move({ keyCode: 39 }));
     expect(store.getActions())
       .toEqual(expectedAction);
@@ -245,7 +245,7 @@ describe('rotatePiece', () => {
     ];
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);
-    const store = mockStore({ ...initialState, currentPiece: curPiece });
+    const store = mockStore({ ...initialState, currentPiece: curPiece, game: true });
     store.dispatch(actions.move({ keyCode: 38 }));
     expect(store.getActions())
       .toEqual(expectedAction);
@@ -264,7 +264,7 @@ describe('movePieveDown', () => {
     ];
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);
-    const store = mockStore({ ...initialState, currentPiece: curPiece });
+    const store = mockStore({ ...initialState, currentPiece: curPiece, game: true });
     store.dispatch(actions.move({ keyCode: 40 }));
     expect(store.getActions())
       .toEqual(expectedAction);
@@ -282,7 +282,7 @@ describe('stickPieceDown', () => {
     ];
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);
-    const store = mockStore({ ...initialState, currentPiece: curPiece });
+    const store = mockStore({ ...initialState, currentPiece: curPiece, game: true });
     store.dispatch(actions.move({ keyCode: 32 }));
     expect(store.getActions())
       .toEqual(expectedAction);

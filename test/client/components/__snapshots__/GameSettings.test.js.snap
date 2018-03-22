@@ -4,8 +4,16 @@ exports[`renders is ready ok 1`] = `
 <div
   className="game-settings"
 >
-  <section>
-    <h1>
+  <section
+    style={
+      Object {
+        "display": "inline-grid",
+      }
+    }
+  >
+    <h1
+      className="title-settings"
+    >
       Game Settings
     </h1>
     <div
