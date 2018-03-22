@@ -49,17 +49,19 @@ const Nav = ({ nickname, isNicknameModalOpen, game, dispatch, }) => {
   };
 
   const _handleHomeButton = () => {
-    if (window.location.pathname !== '/') {
-      if (
-        regexIsPlayUrl.test(window.location.pathname)
-        || regexIsGameUrl.test(window.location.pathname)
-      ) {
-        socket.closeClient();
-        dispatch(killAudio());
-      }
-      dispatch(changeLocation('/'));
-      dispatch(updateGame(null));
-    }
+    window.location.replace('/');
+    // if (window.location.pathname !== '/') {
+    //   if (
+    //     regexIsPlayUrl.test(window.location.pathname)
+    //     || regexIsGameUrl.test(window.location.pathname)
+    //   ) {
+    //     socket.closeClient();
+    //     dispatch(killAudio());
+    //     dispatch(updateGame(null));
+    //   }
+    //   dispatch(changeLocation('/'));
+    //   dispatch(updateGame(null));
+    // }
   };
 
   const actionsModal = [

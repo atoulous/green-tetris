@@ -1,10 +1,8 @@
-import {
-  isPiecePlacable,
-  checkRowsToDelete,
-  getSpectrum,
-} from '../utils/tetris';
+import { get } from 'lodash';
+
+import { isPiecePlacable, checkRowsToDelete } from '../utils/tetris';
+import { newPiece, socketLineCompleted, socketEndGame } from './socket';
 import { keys } from '../helpers/constants';
-import { newPiece, socketLineCompleted, socketUpdateGame, socketEndGame } from './socket';
 
 // Constants
 export const DRAW_PIECE = 'DRAW_PIECE';
@@ -177,42 +175,36 @@ function drawWithNextPiece(dispatch, getState, getNextPiece) {
 }
 
 function movePieceLeft(dispatch, getState) {
-  console.log('movePieceLeft');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ y: currentPiece.y - 1 } }));
 }
 
 function movePieceRight(dispatch, getState) {
-  console.log('movePieceRight');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ y: currentPiece.y + 1 } }));
 }
 
 function rotatePiece(dispatch, getState) {
-  console.log('rotatePice');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ direction: currentPiece.direction === 3 ? 0 : currentPiece.direction + 1 } }));
 }
 
 function movePieceDown(dispatch, getState) {
-  console.log('movePieceDown');
   drawWithNextPiece(dispatch, getState, currentPiece => ({ ...currentPiece, ...{ x: currentPiece.x + 1 } }));
 }
 
 // Will move piece to the lowest posible position.
 function stickPieceDown(dispatch, getState) {
-  console.log('stickPieceDown');
-  const state = getState();
-  const { currentPiece, gridWithoutCurrent } = state;
+  const { currentPiece, gridWithoutCurrent } = getState();
 
-  function tryNextPiece(piece, gridWithoutCurrent) {
+  function tryNextPiece(piece, _gridWithoutCurrent) {
     const nextPiece = {
       ...piece,
       ...{ x: piece.x + 1 }
     };
 
-    if (isPiecePlacable(nextPiece, gridWithoutCurrent)) {
-      tryNextPiece(nextPiece, gridWithoutCurrent);
+    if (isPiecePlacable(nextPiece, _gridWithoutCurrent)) {
+      tryNextPiece(nextPiece, _gridWithoutCurrent);
     } else {
       dispatch(erasePiece());
-      dispatch(setPiece(piece));
+      dispatch(setPiece({ ...piece, isDroped: true }));
       dispatch(drawPiece());
     }
   }
@@ -224,7 +216,7 @@ function stickPieceDown(dispatch, getState) {
 export function move(event) {
   return (dispatch, getState) => {
     const state = getState();
-    if (state.onPause || !state.game) return;
+    if (state.onPause || !state.game || get(state, 'currentPiece.isDroped')) return;
     switch (event.keyCode) {
       case keys.LEFT:
         movePieceLeft(dispatch, getState);

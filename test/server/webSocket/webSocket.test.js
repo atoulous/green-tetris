@@ -5,7 +5,6 @@ describe('test socket', () => {
   it('basic test', (done) => {
     const mockServer = new Server('http://localhost:8080');
     mockServer.on('connection', server => {
-      console.log('serve -- ', server);
       mockServer.emit('test', 'test message 1');
     });
 

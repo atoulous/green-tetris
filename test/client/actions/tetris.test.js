@@ -277,7 +277,7 @@ describe('stickPieceDown', () => {
     const curPiece = { shape: { blocks: [3840, 8738, 240, 17476], color: 'cyan' }, direction: 0, x: 4, y: 0 };
     const expectedAction = [
       { type: actions.ERASE_PIECE },
-      { type: actions.SET_PIECE, piece: { direction: 0, shape: { blocks: [3840, 8738, 240, 17476], color: 'cyan' }, x: 16, y: 0 }, },
+      { type: actions.SET_PIECE, piece: { isDroped: true, direction: 0, shape: { blocks: [3840, 8738, 240, 17476], color: 'cyan' }, x: 16, y: 0 }, },
       { type: actions.DRAW_PIECE },
     ];
     const middlewares = [thunk];
