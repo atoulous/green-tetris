@@ -1,11 +1,12 @@
 import path from 'path';
 import webpack from 'webpack';
 import HappyPack from 'happypack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const NODE_MODULES = path.resolve(__dirname, 'node_modules');
 const CLIENT = path.resolve(__dirname, 'src/client');
 
-let config;
+let config; // eslint-disable-line import/no-mutable-exports
 
 if (process.env.NODE_ENV === 'production') {
   config = {
@@ -20,15 +21,22 @@ if (process.env.NODE_ENV === 'production') {
     module: {
       loaders: [
         { test: /\.js$/, loaders: ['babel-loader'], exclude: NODE_MODULES, include: CLIENT },
-        { test: [/\.css$/, /\.scss$/], loaders: ['style-loader', 'css-loader', 'sass-loader'] },
+        { test: /\.scss$/,
+          loader: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'sass-loader']
+          })
+        },
         { test: /\.png$/, loader: ['file-loader'] }
       ],
     },
     plugins: [
+      new ExtractTextPlugin({ filename: 'bundle.css' }),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } })
     ],
+    stats: { children: false }
   };
 } else {
   config = {
